@@ -1,0 +1,4 @@
+<div class="img_desc_container_min" id="shareDiv">
+    <img src="/static/images/skin1/vr-btn-share.png" onClick="getQRCodePic()">
+    <div class="img_desc_min">分享</div>
+</div>

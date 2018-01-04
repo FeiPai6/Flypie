@@ -1,0 +1,29 @@
+<div id="theme" style="height:auto!important;height:550px;min-height:550px;">
+   <ul class="tab">
+    <li><a href="javascript:;" class="selected">管理模板</a></li>
+  
+   </ul>
+   <div class="enable">
+    <h2>当前启用的模板</h2>
+    <p><img src="/template/{$theme_cur.code}/thumb.png" width="280" height="175"></p>
+    <dl>
+     <dt>{$theme_cur.name}</dt>
+     <dd>版本：{$theme_cur.version}</dd>
+     <dd>作者：<a href="{$theme_cur.authorurl}" target="_blank">{$theme_cur.author}</a></dd>
+     <dd>简介：{$theme_cur.intro}</dd>
+    </dl>
+   </div>
+   <div class="themeList">
+    <h2>可用模板</h2>
+	{foreach $themes as $v}
+	 <dl>
+     <p><img src="/template/{$v.code}/thumb.png" width="280" height="220"></p>
+     <dt>{$v.name} {$v.version}</dt>
+     <dd class="btnList">
+	  作者：<a href="{$v.authorurl}" target="_blank">{$v.author}</a>
+	  <span><a href="/{$_lang.admin_path}/?m=theme&unique={$v.code}" class="del" style="color:#0072C6">启用</a></span>
+	 </dd>
+    </dl>
+	{/foreach}
+   </div>
+</div>

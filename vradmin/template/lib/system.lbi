@@ -1,0 +1,360 @@
+<script type="text/javascript">     
+	$(function(){ $(".idTabs").idTabs(); }); 
+</script>
+<div class="idTabs">
+  <ul class="tab">
+	<li><a href="#main" class="selected">常规设置</a></li>
+	<li><a href="#cdn" class="">存储设置</a></li>
+	<li><a href="#sms" class="">短信设置</a></li>
+	<li><a href="#weixin" class="">微信设置</a></li>
+  </ul>
+  <div class="items">
+   
+	<div id="main" style="display:block;">
+	<form action="/{$_lang.admin_path}/?m=system&act=main" id="set_main_form" method="post" enctype="multipart/form-data">
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tr>
+	   <th width="131">名称</th>
+	   <th>内容</th>
+	 </tr>
+			  <tr>
+	  <td align="right">站点名称</td>
+	  <td>
+				  <input type="text" name="title" value="{$_lang.title}" placeholder="站点名称，不要带有描述语" size="80" class="inpMain">
+							</td>
+	 </tr>
+	          <tr>
+	  <td align="right">站点关键词</td>
+	  <td>
+				  <input type="text" name="subtitle" value="{$_lang.subtitle}" placeholder="多个关键词请用英文逗号隔开，不超过5个关键词" size="80" class="inpMain">
+							</td>
+	 </tr>
+	 		  <tr>
+	  <td align="right">站点描述</td>
+	  <td>
+				  <textarea name="desciption" placeholder="不超过255字符" rows="5" cols="50" style="padding:5px;border:1px solid #ddd;color:#999">{$_lang.desciption}</textarea>
+							</td>
+	 </tr>
+			  <tr>
+	  <td align="right">站点logo</td>
+	  <td>		  
+		<link rel="stylesheet" href="/static/kindeditor/themes/default/default.css" />
+		<script src="/static/kindeditor/kindeditor-min.js"></script>
+		<script>
+			KindEditor.ready(function(K) {
+				var uploadbutton = K.uploadbutton({
+					button : K('#uploadButton')[0],
+					fieldName : 'imgFile',
+					url : '/{$_lang.admin_path}/?m=system&act=site_logo',
+					afterUpload : function(data) {
+						if (data.error === 0) {
+						    $("#site_logo").attr('src','/static/images/logo.png?v'+(new Date().getTime()));
+						} else {
+							alert(data.message);
+						}
+					},
+					afterError : function(str) {
+						alert('自定义错误信息: ' + str);
+					}
+				});
+				uploadbutton.fileBox.change(function(e) {
+					uploadbutton.submit();
+				});
+			});
+		</script>
+		<img src="/static/images/logo.png" id="site_logo" height="50px"/>
+		<div class="clear" style="height:5px"></div>
+		<input type="button" id="uploadButton" value="上传图片" />
+	 </tr>
+			  <tr>
+	  <td align="right">公司地址</td>
+	  <td>
+				  <input type="text" name="address" value="{$_lang.address}" size="80" class="inpMain">
+							</td>
+	 </tr>
+			  <tr>
+	  <td align="right">ICP备案证书号</td>
+	  <td>
+				  <input type="text" name="icp" value="{$_lang.icp}" size="80" class="inpMain">
+							</td>
+	 </tr>
+			  <tr>
+	  <td align="right">合作电话</td>
+	  <td>
+				  <input type="text" name="tel" value="{$_lang.tel}" size="80" class="inpMain">
+							</td>
+	 </tr>
+	  <tr>
+	  <td align="right">客服QQ</td>
+	  <td>
+				  <input type="text" name="qq" value="{$_lang.qq}" size="80" class="inpMain">　请开启临时聊天功能
+							</td>
+	 </tr>
+			  <tr>
+	  <td align="right">URL 重写</td>
+	  <td>
+	   <label for="rewrite_1">
+		<input type="radio" name="rewrite" checked="checked" value="1">
+		是</label>
+		<span class="cue ml">本站需Rewrite支持，apache为根目录下.htaccess，nginx为根目录下nginx.htaccess，iis为根目录下web.config
+							 </td>
+	 </tr>
+	 <tr>
+	  <td align="right">关闭注册</td>
+	  <td>
+		<label><input type="radio" name="close_reg" {if !$_lang.close_reg}checked="checked"{/if} value="0"> 否</label>　
+	  	<label><input type="radio" name="close_reg" {if $_lang.close_reg}checked="checked"{/if} value="1"> 是</label>　
+	  </td>
+	 </tr>
+	 <tr>
+	  <td align="right">临时关闭站点</td>
+	  <td>
+		<label><input type="radio" name="tempclose" {if !$_lang.tempclose}checked="checked"{/if} value="0"> 否</label>　 
+	    <label><input type="radio" name="tempclose" {if $_lang.tempclose}checked="checked"{/if} value="1"> 是</label>
+	  </td>
+	 </tr>
+	 <tr>
+	  <td align="right">关闭站点原因</td>
+	  <td><textarea name="closereason" cols="40" rows="5" class="textArea">{$_lang.closereason}</textarea></td>
+	 </tr>
+	 </table>
+	 <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tr>
+	  <td width="131"></td>
+	  <td>
+	   <div id="wrong_text" class="warning" style="display:none"></div>
+	   <div class="clear"></div>
+	   <input id="sub_btn" class="btn" onclick="javascript:ajaxFormSubmit('set_main_form','提交');" type="button" value="提交">
+	  </td>
+	 </tr>
+	 </table>
+	</form>
+	</div>
+	
+	<div id="cdn" style="display: none;">
+	<form action="/{$_lang.admin_path}/?m=system&act=cdn" id="set_cdn_form" method="post" enctype="multipart/form-data">
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tbody><tr>
+	   <th width="131">存储类型</th>
+	   <th>内容</th>
+	 </tr>
+	 <tr>
+	  <td align="center"><label><input type="radio" name="global_storage" {if $_lang.global_storage=='qiniu'}checked{/if} value="qiniu" /> {$_lang.global_storage_type.qiniu}</label></td>
+	  <td style="padding:0;border:0">
+	   	<table width="100%" cellpadding="8" cellspacing="0" class="tableBasic" style="border:0">
+	    <tr>
+		  <td width="100" align="right">存储区</td>
+		  <td>
+		  {foreach $_lang.qiniu_zone as $k=>$v}
+		   <label>
+		    <input type="radio" name="qiniu[zone]" {if $_lang.qiniu_config.zone==$k}checked{/if} value="{$k}"> {$v.name}
+		   </label>　 
+		  {/foreach}
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">accessKey</td>
+		  <td>
+			<input type="text" name="qiniu[accessKey]" value="{$_lang.qiniu_config.accessKey}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">secretKey</td>
+		  <td>
+			<input type="text" name="qiniu[secretKey]" value="{$_lang.qiniu_config.secretKey}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">bucket</td>
+		  <td>
+			<input type="text" name="qiniu[bucket]" value="{$_lang.qiniu_config.bucket}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">CDN域名</td>
+		  <td>
+			<input type="text" name="qiniu[cdn_host]" value="{$_lang.qiniu_config.cdn_host}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		</table>
+	  </td>
+	 </tr>
+	 <tr>
+	  <td align="center"><label><input type="radio" name="global_storage" value="oss" {if $_lang.global_storage=='oss'}checked{/if}/> {$_lang.global_storage_type.oss}</label></td>
+	  <td style="padding:0;border:0">
+	   	<table width="100%" cellpadding="8" cellspacing="0" class="tableBasic" style="border:0">
+		 <tr>
+		  <td width="100" align="right">存储区</td>
+		  <td>
+		  {foreach $_lang.oss_zone as $k=>$v}
+		   <label><input type="radio" name="oss[zone]" {if $_lang.oss_config.zone==$k}checked{/if} value="{$k}"> {$v.name}</label>　
+		  {/foreach}
+		  </td>
+		 </tr>
+		 <tr>
+		  <td width="100" align="right">是否内网</td>
+		  <td>
+		   <label><input type="radio" name="oss[internal]" value="1" {if $_lang.oss_config.internal==1}checked{/if}> 是</label>　
+		   <label><input type="radio" name="oss[internal]" value="0" {if $_lang.oss_config.internal==0}checked{/if}> 否</label>
+		  </td>
+		 </tr>
+		 <tr>
+		  <td width="100" align="right">access_id</td>
+		  <td>
+			<input type="text" name="oss[access_id]" value="{$_lang.oss_config.access_id}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">access_secret</td>
+		  <td>
+			<input type="text" name="oss[access_secret]" value="{$_lang.oss_config.access_secret}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">bucket</td>
+		  <td>
+			<input type="text" name="oss[bucket]" value="{$_lang.oss_config.bucket}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">CDN域名</td>
+		  <td>
+			<input type="text" name="oss[cdn_host]" value="{$_lang.oss_config.cdn_host}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		</table>
+	  </td>
+	 </tr>
+	 </tbody>
+	</table>
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tr>
+	  <td width="131"></td>
+	  <td>
+	   <div id="wrong_text_cdn" class="warning" style="display:none"></div>
+	   <div class="clear"></div>
+	   <input  type="button" id="sub_btn_cdn" class="btn" onclick="javascript:ajaxFormSubmit('set_cdn_form','提交',false, 'wrong_text_cdn', 'sub_btn_cdn');" value="提交">
+	  </td>
+	 </tr>
+	 </table>
+	</form>
+	</div>
+	
+	<div id="sms" style="display: none;">
+	<form action="/{$_lang.admin_path}/?m=system&act=sms" id="set_sms_form" method="post" enctype="multipart/form-data">
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tbody><tr>
+	   <th width="131">短信接口</th>
+	   <th>内容</th>
+	 </tr>
+	 <tr>
+	  <td align="center"><label><input type="radio" name="global_sms" {if $_lang.global_sms=='yuntongxun'}checked{/if} value="yuntongxun" /> {$_lang.global_sms_type.yuntongxun}</label></td>
+	  <td style="padding:0;border:0">
+	   	<table width="100%" cellpadding="8" cellspacing="0" class="tableBasic" style="border:0">
+		 <tr>
+		  <td align="right" width="100">accountSid</td>
+		  <td>
+			<input type="text" name="yuntongxun[accountSid]" value="{$_lang.yuntongxun_config.accountSid}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">accountToken</td>
+		  <td>
+			<input type="text" name="yuntongxun[accountToken]" value="{$_lang.yuntongxun_config.accountToken}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">appId</td>
+		  <td>
+			<input type="text" name="yuntongxun[appId]" value="{$_lang.yuntongxun_config.appId}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">短信模板ID</td>
+		  <td>
+			<input type="text" name="yuntongxun[templateId]" value="{$_lang.yuntongxun_config.templateId}" size="80" class="inpMain"><br>
+			短信模板传3个参数，第1个为验证码，第2个为验证码用途，第3个为有效时间<br>
+			示例：【短信签名】验证码为{literal}{1}{/literal}，此验证码仅用于{literal}{2}{/literal}，{literal}{3}{/literal}分钟内有效
+		  </td>
+		 </tr>
+		</table>
+	  </td>
+	 </tr>
+	
+	 </tbody>
+	</table>
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tr>
+	  <td width="131"></td>
+	  <td>
+	   <div id="wrong_text_sms" class="warning" style="display:none"></div>
+	   <div class="clear"></div>
+	   <input  type="button" id="sub_btn_sms" class="btn" onclick="javascript:ajaxFormSubmit('set_sms_form','提交',false, 'wrong_text_sms', 'sub_btn_sms');" value="提交">
+	  </td>
+	 </tr>
+	 </table>
+	</form>
+	</div>
+	
+	<div id="weixin" style="display: none;">
+	<form action="/{$_lang.admin_path}/?m=system&act=wx" id="set_wx_form" method="post" enctype="multipart/form-data">
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tbody><tr>
+	   <th width="131">微信接口</th>
+	   <th>内容</th>
+	 </tr>
+	 <tr>
+	  <td align="center"><label><input type="checkbox" name="global_wx[]" value="wx" {if $_lang.wx_config.enable=='enable'}checked{/if}> {$_lang.global_wx_type.wx}</label></td>
+	  <td style="padding:0;border:0">
+	   	<table width="100%" cellpadding="8" cellspacing="0" class="tableBasic" style="border:0">
+		 <tr>
+		  <td align="right" width="100">appid</td>
+		  <td>
+			<input type="text" name="wx[appid]" value="{$_lang.wx_config.appid}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">appsecret</td>
+		  <td>
+			<input type="text" name="wx[appsecret]" value="{$_lang.wx_config.appsecret}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		</table>
+	  </td>
+	 </tr>
+	 <tr>
+	  <td align="center"><label><input type="checkbox" name="global_wx[]" value="wxweb" {if $_lang.wxweb_config.enable=='enable'}checked{/if}> {$_lang.global_wx_type.wxweb}</label></td>
+	  <td style="padding:0;border:0">
+	   	<table width="100%" cellpadding="8" cellspacing="0" class="tableBasic" style="border:0">
+		 <tr>
+		  <td width="100" align="right">appid</td>
+		  <td>
+			<input type="text" name="wxweb[appid]" value="{$_lang.wxweb_config.appid}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		 <tr>
+		  <td align="right">appsecret</td>
+		  <td>
+			<input type="text" name="wxweb[appsecret]" value="{$_lang.wxweb_config.appsecret}" size="80" class="inpMain">
+		  </td>
+		 </tr>
+		</table>
+	  </td>
+	 </tr>
+	 </tbody>
+	</table>
+	<table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+	 <tr>
+	  <td width="131"></td>
+	  <td>
+	   <div id="wrong_text_wx" class="warning" style="display:none"></div>
+	   <div class="clear"></div>
+	   <input  type="button" id="sub_btn_wx" class="btn" onclick="javascript:ajaxFormSubmit('set_wx_form','提交',false, 'wrong_text_wx', 'sub_btn_wx');" value="提交">
+	  </td>
+	 </tr>
+	 </table>
+	</form>
+	</div>
+			
+  </div>
+</div>

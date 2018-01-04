@@ -1,0 +1,58 @@
+<!--
+	krpano - image cropping example
+	- crop out and use only a part of a larger image
+	- shows also the usage of "onovercrop" and "ondowncrop" to change the crop area
+	  dynamically on different mouse staes (mouse over and mouse button down)
+-->
+
+<krpano>
+
+	<!-- text styles for startup text and onhover text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="4.0" fadeintime="1.0" fadetime="1.0"
+	           />
+
+	<textstyle name="hoverstyle"
+	           background="false" border="false" textalign="center"
+	           fontsize="20" textcolor="0xFFFFFF" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           fadetime="0.2"
+	           />
+
+
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+
+	<!-- cropped button -->
+	<plugin name="button1" url="crop-example-buttons.png"
+	        align="center" edge="center" x="-25%"
+	        crop      ="10| 45|200|100"
+	        onovercrop="10|145|200|100"
+	        ondowncrop="10|245|200|100"
+	        />
+
+
+	<!-- uncropped button to see the whole image -->
+	<plugin name="button2" url="crop-example-buttons.png"
+	        align="center" edge="center" x="+25%"
+	        onhover="showtext(source file: crop-example-buttons.png, hoverstyle);"
+	        />
+
+
+	<!-- cropped hotspot -->
+	<hotspot name="button3" url="crop-example-buttons.png"
+	        ath="-45"
+	        atv="-25"
+	        zoom="true"
+	        scale="0.5"
+	        crop      ="10| 45|200|100"
+	        onovercrop="10|145|200|100"
+	        ondowncrop="10|245|200|100"
+	        />
+
+
+
+</krpano>
+

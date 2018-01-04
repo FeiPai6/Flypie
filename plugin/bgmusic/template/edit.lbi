@@ -1,0 +1,1 @@
+ <button type="button" class="btn" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="为全景加入背景音乐" onclick="openMusic()"{/if} > 背景音乐设置 </button>

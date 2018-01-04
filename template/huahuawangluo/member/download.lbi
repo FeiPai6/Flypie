@@ -1,0 +1,116 @@
+{include file="{$_lang.moban}/library/member_paths.lbi"}	
+
+<div class="container">
+	<div class="row">
+	  <div class="col-md-13">
+			<div class="list_wrap">
+				<div id="list_wrap_content">	
+				 {if count($taskList) <1 }
+				 <div id="list_wrap_content">
+					 <span style="width:100px;text-align:center;margin-left:40%;margin-top:50px;font-size:16px;display:inline-block">
+					 没有结果!
+					 </span>
+				 </div>
+				 {else}
+				 	
+				 {foreach $taskList as $task}
+				  <div class="items">
+					  <div class="item">
+						  <div class="item-content">
+							  <div class="pull-left">
+							   <img src="{$task.thumb}" width="60" height="60" class="img-rounded">
+							  </div>
+							  <div class="pull-left works_intro">
+								  <div style="font-weight:bold">{$task.pname}</div>
+								  <div class="text-muted">
+									  <span>{$task.create_time}</span>
+								  </div>
+							  </div>
+							  <div class="pull-right">
+								  <table width="100%">
+									<tr class="download-tasking" id="down_{$task.pid}" data-pid='{$task.pid}' data-tid='{$task.id}'' data-status='{$task.status}' >
+										<td width="300px">
+											<div class="progress" style="margin-bottom:5px">
+											  <div class="progress-bar" role="progressbar"  style="width:{$task.step/23*100}%"></div>
+											</div>
+											<span class="progressbar-value">{$task.msg}</span>
+										</td>
+										<td width="200px" id="op_{$task.pid}" align="center">
+										{if $task.status<=0}
+											正在打包项目...
+										{else if $task.status==1}
+											<a onclick="createDownload({$task.pid},{$task.id},'continue')" class="btn btn-grey">继续打包</a>
+											<a onclick="createDownload({$task.pid},{$task.id},'afresh')" class="btn btn-grey">重新打包</a>
+										{else if $task.status == 2}
+											<a href="/download.php?act=project&filename={$task.folder}" class="btn btn-grey" target="_blank">下载</a>
+											<a onclick="deleteDownload({$task.id})" class="btn btn-grey">删除</a>
+										{/if}
+
+										</td>
+									</tr>
+								  </table>							
+
+							  </div> 
+						  </div> 
+					  </div>
+				  </div>
+				  {/foreach}
+				  {/if}
+				</div>
+			</div>
+	  </div>
+	</div>
+</div>
+
+<script>
+{literal}
+$(function(){
+	$("tr[class='download-tasking']").each(function(){
+		var status = $(this).data('status');
+		var pid = $(this).data('pid');
+		var tid = $(this).data('tid');
+		if(status == 0){
+			//创建下载
+			createDownload(pid,tid,'normal');
+		}
+	});
+	
+})
+function createDownload(pid,tid,operation){
+	$.post('/member/download',{
+		'pid' : pid,
+		'act' : 'build',
+		'operation':operation
+	},function(res){
+		if (res.status==1) {
+			createDownload(pid,tid,'normal');
+		}else if(res.status == 2){
+			$('#op_'+pid).html('<a href="/download.php?act=project&filename='+res.folder+'" class="btn btn-grey" target="_blank">下载</a>&nbsp;&nbsp;<a onclick="deleteDownload('+tid+')" class="btn btn-grey">删除</a>');
+		}
+		updateProgress(pid,res.step,res.msg);
+	},'json');
+}
+function updateProgress(pid,step,msg){
+	$("#down_"+pid).find('.progress-bar').css('width',parseInt(step/23*100)+'%');
+	if (msg!='') 
+		$("#down_"+pid).find('.progressbar-value').html(msg);
+}
+function deleteDownload(tid){
+	if(confirm('确认删除该离线下载吗？')){
+		$.post("/member/download",
+			{
+			'tid':tid,
+			'act':'delete',
+			},function(data){
+			if(data.status==1){
+				alert_notice("删除成功","success");
+				window.location.reload();
+			}else{
+				alert_notice("删除失败");
+			}
+		},'json');
+	}
+}
+{/literal}
+
+</script>

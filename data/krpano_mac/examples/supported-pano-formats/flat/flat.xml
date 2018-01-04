@@ -1,0 +1,10 @@
+<krpano>
+	
+	<view limitview="fullrange" maxpixelzoom="2.0" />
+
+	<image hfov="1.0">
+		<cylinder url="flat.jpg" />
+	</image>
+
+</krpano>
+

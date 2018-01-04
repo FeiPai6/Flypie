@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano.com - dynamically adding and removing panos</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<style>
+		body{font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#333333;margin:0;padding:0;background-color:#FFFFFF;clear:none;}
+	</style>
+</head>
+<body>
+
+	<script src="../../../viewer/embedpano.js"></script>
+	
+	<div style="padding:10px; border-bottom:1px solid #AAAAAA;">
+		<input type="button" value="Add Flash pano" onclick="addpano(1);" />
+		<input type="button" value="Add HTML5 pano" onclick="addpano(2);" />
+	</div>
+
+	<script>
+	
+		var panocounter = 0;
+		
+		function addpano(type)
+		{
+			panocounter++;
+			
+			var containername      = "pano" + panocounter;
+			var innercontainername = containername + "inner";
+			var viewername         = containername + "viewer";
+			
+			var container = document.createElement("div");
+			
+			container.id               = containername;
+			container.style.position   = "relative";
+			container.style.cssFloat   = "left";
+			container.style.width      = "430px";
+			container.style.border     = "1px solid #AAAAAA";
+			container.style.margin     = "4px";
+			container.style.background = "#EEEEEE";
+			
+			var innercontainer = document.createElement("div");
+			
+			innercontainer.id             = innercontainername;
+			innercontainer.style.position = "relative";
+			innercontainer.style.width    = "300px";
+			innercontainer.style.height   = "200px";
+			innercontainer.style.border   = "1px solid #AAAAAA";
+			innercontainer.style.margin   = "4px";
+			innercontainer.style.background = "#000000";
+			innercontainer.style.color      = "#FFFFFF";
+			
+			function createremovebutton(parentname,viewername)
+			{
+				var removebutton = document.createElement("input");
+				
+				removebutton.type           = "button";
+				removebutton.value          = "Remove pano";
+				removebutton.style.position = "absolute";
+				removebutton.style.right    = "2px";
+				removebutton.style.top      = "1px";
+				removebutton.style.width    = "120px";
+				
+				removebutton.onclick = function()
+				{
+					// call the removepano() function to remove the viewer:
+					removepano(viewername);
+					
+					// remove the supporting box:
+					document.body.removeChild( document.getElementById(parentname) ); 
+				};
+				
+				return removebutton;
+			}
+			
+			container.appendChild( innercontainer );
+			container.appendChild( createremovebutton(containername,viewername) );
+			
+			document.body.appendChild(container);
+			
+			// call the embedpano() function for create and adding a pano viewer
+			embedpano({swf:"../../../viewer/krpano.swf", xml:"test.xml", target:innercontainername, id:viewername, html5:(type == 1 ? "never" : "only")});
+		}
+		
+	</script>
+
+</body>
+</html>

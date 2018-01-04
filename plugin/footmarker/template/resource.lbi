@@ -1,0 +1,27 @@
+{literal}
+<script>
+	$(function(){
+		plugins_init_function.push(footmarker_init);
+	})
+	function footmarker_init(data){
+		 if (data.footmark=='0') {
+            $('#footmarkDiv').hide();
+        }
+	}
+	function hideShareAndFootmarkBtn(){
+	    //$("#shareDiv").hide();
+	    $("#footmarkDiv").hide();
+	}
+	function showFootMark(){
+	    var krpano = document.getElementById('krpanoSWFObject');
+	    var sceneName = krpano.get('xml.scene');
+	    var viewuuid = (sceneName.split('_'))[1].toUpperCase();
+	    var locationData = $('body').data(viewuuid);
+	    if(locationData){
+	        _U.mapMarkModal().openModal(locationData,true);
+	    }else{
+	        $.zui.messager.show('没有足迹', {placement: 'center', type: 'warning', time: '3000', icon: 'warning-sign'});
+	    }
+	}
+</script>
+{/literal}

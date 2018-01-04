@@ -1,0 +1,72 @@
+<!--
+	krpano
+	- interactive hotspot area example
+	- a polygonal hotspot is used as 'hitarea' for fading in a image hotspot
+-->
+
+<krpano>
+
+	<!-- pano image -->
+	<preview url="preview.jpg" />
+	<image>
+		<cube url="pano_%s.jpg" />
+	</image>
+	
+	<!-- view settings -->
+	<view hlookat="7" vlookat="5" fovtype="MFOV" fov="100" fovmin="40" fovmax="160" />
+
+
+	<!-- opened door distorted image hotspot -->
+	<hotspot name="door"
+	         url="hotspot.jpg"
+		     distorted="true"
+		     capture="false"
+		     xzorder="-100000"
+		     ath="0"
+		     atv="0"
+		     width="318.181818"
+		     height="590.909090"
+		     edge="lefttop"
+		     ox="-91.818181"
+		     oy="-167.272727"
+		     alpha="0.0"
+		     ondown="tween(alpha,1);"
+		     onup="tween(alpha,0);"
+		     />
+	
+		<!-- invisible polygonal hotsppot as 'hit area' for the door hotspot -->
+		<hotspot name="door_hitarea" devices="flash"
+			     ath="11" 
+			     atv="6"
+		         alpha="0"
+		         capture="false"
+		         onover="set(hotspot[door].visible,true); tween(hotspot[door].alpha,1,0.4);"
+			     onout="if(enabled, tween(hotspot[door].alpha,0.0,0.4,default,set(hotspot[door].visible,false)) );"
+			     onclick=""
+			>
+			<point ath="  0.2451" atv="-13.0911" />
+			<point ath="  9.5232" atv="-12.6311" />
+			<point ath=" 18.9875" atv="-12.5328" />
+			<point ath=" 19.5338" atv=" 10.7739" />
+			<point ath=" 15.7329" atv=" 11.3926" />
+			<point ath=" 15.6678" atv=" 25.4866" />
+			<point ath="  8.4078" atv=" 25.7356" />
+			<point ath="  8.4083" atv=" 27.0813" />
+			<point ath="  2.7864" atv=" 26.7555" />
+			<point ath="  1.7124" atv=" 27.8670" />
+			<point ath=" -0.9187" atv=" 27.0069" />
+			<point ath=" -1.4939" atv=" 11.6458" />
+			<point ath=" -0.6737" atv=" -5.2171" />
+		</hotspot>
+	
+	<!-- info text -->
+	<layer name="infotext" url="%SWFPATH%/plugins/textfield.swf" enabled="false" border="false" background="false"
+		align="top" x="0" y="40" width="400" autoheight="true"
+		css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-style:italic; font-size:18px;"
+		/>
+
+	<layer name="infotext" html="click the door..." devices="html5+desktop" />
+	<layer name="infotext" html="move the mouse over the door..." devices="flash+desktop" />
+	<layer name="infotext" html="press the door..." devices="mobile|tablet" />
+		
+</krpano>

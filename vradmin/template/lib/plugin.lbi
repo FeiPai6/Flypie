@@ -1,0 +1,133 @@
+<div id="idTabs">
+   {if empty($pid)}
+   <ul class="tab">
+    <li><a href="javascript:;" class="selected">管理插件</a></li>
+   
+   </ul>
+   <table class="tableBasic" border="0" cellpadding="8" cellspacing="0" width="100%;">
+			<tr>
+				<th width="200">插件名称</th>
+				<th>插件描述</th>
+				<th width="100">是否启用</th>
+				<th width="200">操作</th>
+			</tr>
+			{foreach $plugins as $k=>$v}
+			<tr>
+				<td width="200">{$v.plugin_name}</td>
+				<td>{$v.brief}</td>
+				<td><img src="/static/images/ico/{if $v.enable==1}yes.gif{else}no.gif{/if}"/></td>
+				<td width="200"><a href="/{$_lang.admin_path}/?m=plugin&pid={$k}">编辑</a></td>
+			</tr>
+			{/foreach}
+   </table>
+   {else}
+    <form action="/{$_lang.admin_path}/?m=plugin" id="plugin_form" method="post" enctype="multipart/form-data">
+	<table  class="tableBasic" border="0" cellpadding="4" cellspacing="0"  width="100%">
+			<tr>
+				<th width="120"><i class="require-red">*</i> 插件名称</th>
+				<td>{$plugin.plugin_name}</td>
+			 </tr>
+			 <tr>	
+				<th><i class="require-red">*</i> 描　　述</th>
+				<td>
+					<textarea name="brief" cols="40" rows="5" class="textArea" placeholder="关于插件的功能，使用说明等">{$plugin.brief}</textarea>
+				</td>
+			</tr>
+			{if $pid=='custom_logo'}
+			<tr>
+			 <th align="right">默认logo</th>
+			  <td>	
+			    <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css" />
+				<script src="/static/kindeditor/kindeditor-min.js"></script>
+				<script>
+					KindEditor.ready(function(K) {
+						var uploadbutton = K.uploadbutton({
+							button : K('#uploadButton')[0],
+							fieldName : 'imgFile',
+							url : '/{$_lang.admin_path}/?m=system&act=custom_logo',
+							afterUpload : function(data) {
+								if (data.error === 0) {
+									$("#custom_logo").attr('src','/plugin/custom_logo/images/custom_logo.png?v'+(new Date().getTime()));
+								} else {
+									alert(data.message);
+								}
+							},
+							afterError : function(str) {
+								alert('自定义错误信息: ' + str);
+							}
+						});
+						uploadbutton.fileBox.change(function(e) {
+							uploadbutton.submit();
+						});
+					});
+				</script>
+				<img src="/plugin/custom_logo/images/custom_logo.png" id="custom_logo" height="100px"/>
+				<div class="clear" style="height:5px"></div>
+				<input type="button" id="uploadButton" value="上传图片" />
+			  </td>
+			 </tr> 
+			{/if}
+			{if $pid=='shade_sky_floor'}
+			<tr>
+			 <th align="right">默认补天补地图标</th>
+			  <td>	
+			    <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css" />
+				<script src="/static/kindeditor/kindeditor-min.js"></script>
+				<script>
+					KindEditor.ready(function(K) {
+						var uploadbutton = K.uploadbutton({
+							button : K('#uploadButton')[0],
+							fieldName : 'imgFile',
+							url : '/{$_lang.admin_path}/?m=system&act=shade_sky_floor',
+							afterUpload : function(data) {
+								if (data.error === 0) {
+									$("#shade_sky_floor").attr('src','/plugin/shade_sky_floor/images/shade_sky_floor.png?v'+(new Date().getTime()));
+								} else {
+									alert(data.message);
+								}
+							},
+							afterError : function(str) {
+								alert('自定义错误信息: ' + str);
+							}
+						});
+						uploadbutton.fileBox.change(function(e) {
+							uploadbutton.submit();
+						});
+					});
+				</script>
+				<img src="/plugin/shade_sky_floor/images/shade_sky_floor.png" id="shade_sky_floor" height="100px"/>
+				<div class="clear" style="height:5px"></div>
+				<input type="button" id="uploadButton" value="上传图片" />
+			  </td>
+			 </tr> 
+			{/if}
+			{if $plugin.edit_container=='option_group'}
+			<tr>	
+				<th><i class="require-red">*</i> 默认值</th>
+				<td>
+				  <label><input type="radio" name="default" value="1" {if $plugin.default==1}checked{/if}> on</label>　
+				  <label><input type="radio" name="default" value="0" {if isset($plugin.default) && $plugin.default==0}checked{/if}> off</label>
+				</td>
+			</tr>
+			{/if}
+			<tr>	
+				<th><i class="require-red">*</i> 是否启用</th>
+				<td>
+				  <label><input type="radio" name="enable" value="1" {if $plugin.enable==1}checked{/if}> 是</label>　
+				  <label><input type="radio" name="enable" value="0" {if $plugin.enable==0}checked{/if}> 否</label>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<div id="wrong_text" class="warning" style="display:none"></div>
+					<div class="clear"></div>
+					<input type="hidden" name="pid" value="{$pid}">
+					<input type="button" class="btn" value="提交" id="sub_btn" onclick="javascript:ajaxFormSubmit('plugin_form','提交');">
+					<input class="btn" onClick="history.go(-1)" value="返回" type="button">
+				</td>
+			</tr>
+	</table>
+	</form>
+   {/if}
+</div>   

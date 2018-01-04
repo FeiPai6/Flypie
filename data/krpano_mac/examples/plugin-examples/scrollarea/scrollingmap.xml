@@ -1,0 +1,29 @@
+<krpano onstart="loadscene(pano1,null,MERGE);">
+
+	<style name="spot" url="spot.png" align="lefttop" edge="bottom" oy="4" ondown="set(layer[scrollarea].draggable,false);" onup="set(layer[scrollarea].draggable,true);" />
+
+	<layer name="sidebar" keep="true" type="container" align="lefttop" width="30%" height="100%" bgcolor="0x00FFFF" bgalpha="0.3">
+		<layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="768" height="1000" direction="all">
+			<layer name="map" url="korfumap.jpg" align="lefttop">
+				<layer name="spot1" style="spot" x="417" y="585" onclick="loadscene(pano1,null,MERGE,BLEND(0.5));" />
+				<layer name="spot2" style="spot" x="118" y="139" onclick="loadscene(pano2,null,MERGE,BLEND(0.5));" />
+				<layer name="spot3" style="spot" x="388" y="129" onclick="loadscene(pano3,null,MERGE,BLEND(0.5));" />
+				<layer name="spot4" style="spot" x="365" y="229" onclick="loadscene(pano4,null,MERGE,BLEND(0.5));" />
+			</layer>
+		</layer>
+	</layer>
+
+	<scene name="pano1"><preview url="pano1.jpg" /><image><cubestrip url="pano1.jpg" /></image></scene>
+	<scene name="pano2"><preview url="pano3.jpg" /><image><cubestrip url="pano3.jpg" /></image></scene>
+	<scene name="pano3"><preview url="pano6.jpg" /><image><cubestrip url="pano6.jpg" /></image></scene>
+	<scene name="pano4"><preview url="pano9.jpg" /><image><cubestrip url="pano9.jpg" /></image></scene>
+	
+	<layer name="scrolltoggle" keep="true" url="%SWFPATH%/plugins/textfield.swf"
+	       align="righttop" x="20" y="20" width="200" height="40" children="false" vcenter="true"
+	       backgroundcolor="0x000000" backgroundalpha="0.667" roundedge="10" border="false"
+	       shadow="0.1" shadowrange="8" shadowcolor="0xFFFFFF"
+	       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:10px;"
+	       html="onhover_autoscrolling=false"
+	       onclick="switch(layer[scrollarea].onhover_autoscrolling); txtadd(html,'onhover_autoscrolling=',get(layer[scrollarea].onhover_autoscrolling));"
+	       />
+</krpano>

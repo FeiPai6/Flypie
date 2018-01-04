@@ -1,0 +1,51 @@
+<krpano onstart="loadscene(pano1,null,MERGE);">
+	
+	<!-- adjust the examples backbutton position (if available), the wait(0) in the onstart action allows executing this event -->
+	<events name="backbutton_adjust" keep="true" onxmlcomplete="if(layer[backbutton], set(layer[backbutton].y,106));" />
+	
+	<style name="thumb" align="left" edge="center" ondown="tween(scale,1.1,0.1);" onup="tween(scale, 1.0, 0.25, easeOutBounce);" onover="ondown();" onout="onup();" />
+
+	<layer name="thumbs" keep="true" type="container" align="leftbottom" width="100%" height="86" bgcolor="0x000000" bgalpha="0.3">
+		<layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="1990" height="86" direction="h" onloaded="setcenter(0,0);">
+			<layer name="thumb1" url="thumb1.jpg" style="thumb" x="60"  onclick="loadscene(pano1,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb2" url="thumb2.jpg" style="thumb" x="170" onclick="loadscene(pano2,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb3" url="thumb3.jpg" style="thumb" x="280" onclick="loadscene(pano3,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb4" url="thumb4.jpg" style="thumb" x="390" onclick="loadscene(pano4,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb5" url="thumb5.jpg" style="thumb" x="500" onclick="loadscene(pano5,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb6" url="thumb6.jpg" style="thumb" x="610" onclick="loadscene(pano6,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb7" url="thumb7.jpg" style="thumb" x="720" onclick="loadscene(pano7,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb8" url="thumb8.jpg" style="thumb" x="830" onclick="loadscene(pano8,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb9" url="thumb9.jpg" style="thumb" x="940" onclick="loadscene(pano9,null,MERGE,BLEND(0.5));" />
+			<!-- repeat the scenes again now just to have more thumbs to scroll -->
+			<layer name="thumb10" url="thumb1.jpg" style="thumb" x="1050" onclick="loadscene(pano1,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb11" url="thumb2.jpg" style="thumb" x="1160" onclick="loadscene(pano2,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb12" url="thumb3.jpg" style="thumb" x="1270" onclick="loadscene(pano3,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb13" url="thumb4.jpg" style="thumb" x="1380" onclick="loadscene(pano4,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb14" url="thumb5.jpg" style="thumb" x="1490" onclick="loadscene(pano5,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb15" url="thumb6.jpg" style="thumb" x="1600" onclick="loadscene(pano6,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb16" url="thumb7.jpg" style="thumb" x="1710" onclick="loadscene(pano7,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb17" url="thumb8.jpg" style="thumb" x="1820" onclick="loadscene(pano8,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb18" url="thumb9.jpg" style="thumb" x="1930" onclick="loadscene(pano9,null,MERGE,BLEND(0.5));" />
+		</layer>
+	</layer>
+	
+	<scene name="pano1"><preview url="pano1.jpg" /><image><cubestrip url="pano1.jpg" /></image></scene>
+	<scene name="pano2"><preview url="pano2.jpg" /><image><cubestrip url="pano2.jpg" /></image></scene>
+	<scene name="pano3"><preview url="pano3.jpg" /><image><cubestrip url="pano3.jpg" /></image></scene>
+	<scene name="pano4"><preview url="pano4.jpg" /><image><cubestrip url="pano4.jpg" /></image></scene>
+	<scene name="pano5"><preview url="pano5.jpg" /><image><cubestrip url="pano5.jpg" /></image></scene>
+	<scene name="pano6"><preview url="pano6.jpg" /><image><cubestrip url="pano6.jpg" /></image></scene>
+	<scene name="pano7"><preview url="pano7.jpg" /><image><cubestrip url="pano7.jpg" /></image></scene>
+	<scene name="pano8"><preview url="pano8.jpg" /><image><cubestrip url="pano8.jpg" /></image></scene>
+	<scene name="pano9"><preview url="pano9.jpg" /><image><cubestrip url="pano9.jpg" /></image></scene>
+	
+	<layer name="scrolltoggle" keep="true" url="%SWFPATH%/plugins/textfield.swf" devices="mouse"
+	       align="righttop" x="20" y="20" width="200" height="40" children="false" vcenter="true"
+	       backgroundcolor="0x000000" backgroundalpha="0.667" roundedge="10" border="false"
+	       shadow="0.1" shadowrange="8" shadowcolor="0xFFFFFF"
+	       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:10px;"
+	       html="onhover_autoscrolling=false"
+	       onclick="switch(layer[scrollarea].onhover_autoscrolling); txtadd(html,'onhover_autoscrolling=',get(layer[scrollarea].onhover_autoscrolling));"
+	       />
+
+</krpano>

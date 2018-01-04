@@ -1,0 +1,29 @@
+<div class="container" style="padding: 0">
+
+<div class="clearfix"></div>
+
+<!--一个卡片列表行-->
+<div class="row">
+	<div class="cards" style="margin:0;">
+		<!--卡片列表循环-->
+		{foreach $list.res as $k=>$v}
+		<div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+		   <div class="card" href="###">
+			 <a target="_blank" href="{$_lang.cdn_host}video/play.html?vid={$v.id}"><img src="{$v.thumb_path}" alt="{$v.name}"></a>
+			 <div class="card-heading">
+				<div class="col-md-9 col-xs-8 of_hide padding0">
+					<strong class="text-primary">{$v.vname}</strong> 
+				</div>
+				<div class="col-md-3 col-xs-4 of_hide padding0">
+					<div class="pull-right text-danger"><i class="icon-heart-empty"></i> {$v.browsing_num}</div>
+				</div>
+			 </div> 
+		   </div>
+		 </div>
+		{/foreach}	         
+		<!--卡片列表循环结束-->	
+	</div>
+</div>
+<!--一个卡片列表行结束-->
+<div class="list-page">{include file="../library/pages.lbi"}</div>
+</div>

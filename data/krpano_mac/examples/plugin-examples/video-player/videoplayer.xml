@@ -1,0 +1,83 @@
+<krpano>
+	<!-- videoplayer.xml 1.18 -->
+
+	<action name="videoplayer_open">
+		if(layer[videoplayer_bg],
+			<!-- error -->
+			trace('videoplayer_open - there is already a videoplayer!'-);
+		  ,
+			<!-- step one - add a background layer and fade it in -->
+			addlayer(videoplayer_bg);
+			set(layer[videoplayer_bg].type, container);
+			set(layer[videoplayer_bg].zindex, 999999);
+			set(layer[videoplayer_bg].align, lefttop);
+			set(layer[videoplayer_bg].width, 100%);
+			set(layer[videoplayer_bg].height, 100%);
+			set(layer[videoplayer_bg].bgcolor, 0x000000);
+			set(layer[videoplayer_bg].bgalpha, 0.8);
+			set(layer[videoplayer_bg].bgcapture, true);
+			set(layer[videoplayer_bg].handcursor, false);
+			set(layer[videoplayer_bg].alpha, 0.0);
+			set(layer[videoplayer_bg].onclick, videoplayer_close() );
+			tween(layer[videoplayer_bg].alpha, 1.0, 0.5, default,
+				<!-- step two - after the fade-in add the videoplayer plugin -->
+				addlayer(videoplayer_plugin);
+				set(layer[videoplayer_plugin].parent, layer[videoplayer_bg]);
+				set(layer[videoplayer_plugin].align, center);
+				set(layer[videoplayer_plugin].loop, true);
+				set(layer[videoplayer_plugin].onclick, togglepause() );
+				set(layer[videoplayer_plugin].alpha, 0.0);
+				set(layer[videoplayer_plugin].scale, 0.0);
+				set(layer[videoplayer_plugin].onloaded, videoplayer_plugin_ready(%1) );
+				if('%2' != null, set(layer[videoplayer_plugin].posterurl,'%2'); );
+				if(device.flash,
+					set(layer[videoplayer_plugin].url,'%SWFPATH%/plugins/videoplayer.swf');
+				  ,
+					set(layer[videoplayer_plugin].url,'%SWFPATH%/plugins/videoplayer.js');
+				  );
+			  );
+		  );
+	</action>
+
+	<action name="videoplayer_plugin_ready">
+		if(layer[videoplayer_plugin],
+			set(events[videoplayer_events].onresize, videoplayer_plugin_resize() );
+			set(layer[videoplayer_plugin].pausedonstart, true);
+			set(layer[videoplayer_plugin].onvideoready,
+					videoplayer_plugin_resize();
+					tween(scale,1,0.5,easeOutBack);
+					tween(alpha,1,0.5,default, ifnot(device.ios, play() ) );
+			   );
+			layer[videoplayer_plugin].playvideo(%1);
+		  );
+	</action>
+
+	<action name="videoplayer_plugin_resize">
+		<!-- use 90% width or height of available screen size -->
+		div(aspect, layer[videoplayer_plugin].imagewidth, layer[videoplayer_plugin].imageheight);
+		mul(new_videowidth, stagewidth, 0.90);
+		div(new_videoheight, new_videowidth, aspect);
+		mul(max_videoheight, stageheight, 0.90);
+		if(new_videoheight GT max_videoheight,
+			copy(new_videoheight, max_videoheight);
+			mul(new_videowidth, new_videoheight, aspect);
+		  );
+		roundval(new_videowidth);
+		roundval(new_videoheight);
+		copy(layer[videoplayer_plugin].width, new_videowidth);
+		copy(layer[videoplayer_plugin].height, new_videoheight);
+	</action>
+
+	<action name="videoplayer_close">
+		set(events.[videoplayer_events].name, null);
+		if(layer[videoplayer_plugin], layer[videoplayer_plugin].pause() );
+		set(layer[videoplayer_bg].onclick, null);
+
+		tween(layer[videoplayer_plugin].scale, 0.0, 0.5, easeInBack);
+		tween(layer[videoplayer_bg].alpha, 0.0, 0.5, default,
+			removelayer(videoplayer_plugin);
+			removelayer(videoplayer_bg);
+		  );
+	</action>
+
+</krpano>

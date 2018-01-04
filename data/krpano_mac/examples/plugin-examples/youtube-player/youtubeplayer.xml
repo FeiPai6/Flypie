@@ -1,0 +1,96 @@
+<krpano>
+	<!-- youtubeplayer.xml 1.18.2 -->
+
+	<youtubeplayer_settings
+		maxsize="0.80"
+		parameters="autoplay=1&amp;autohide=1&amp;controls=1&amp;loop=0&amp;modestbranding=0&amp;rel=0&amp;showinfo=0&amp;hd=1&amp;vq=hd720"
+		/>
+
+	<!--
+		youtubeplayer_settings
+
+		o maxsize
+			- set the max. size of the screen-size (0.80 = 80%, 1.0 = 100%)
+			- depending on the available space either the screen width or height will be used
+
+		o parameters
+			- the youtube embedding parameters
+			- see for here for the documentation of all available parameters:
+				https://developers.google.com/youtube/player_parameters#Parameters
+			- e.g. set controls=0 to remove the default youtube control
+	-->
+
+	<action name="youtubeplayer_open">
+		if(layer[youtubeplayer_bg],
+			<!-- error -->
+			trace('youtubeplayer_open - there is already a youtubeplayer!'-);
+		  ,
+			<!-- step one - add a background layer and fade it in -->
+			addlayer(youtubeplayer_bg);
+			set(layer[youtubeplayer_bg].type, container);
+			set(layer[youtubeplayer_bg].zorder, 999999);
+			set(layer[youtubeplayer_bg].align, lefttop);
+			set(layer[youtubeplayer_bg].width, 100%);
+			set(layer[youtubeplayer_bg].height, 100%);
+			set(layer[youtubeplayer_bg].bgcolor, 0x000000);
+			set(layer[youtubeplayer_bg].bgalpha, 0.8);
+			set(layer[youtubeplayer_bg].bgcapture, true);
+			set(layer[youtubeplayer_bg].handcursor, false);
+			set(layer[youtubeplayer_bg].alpha, 0.0);
+			set(layer[youtubeplayer_bg].onclick, youtubeplayer_close() );
+			tween(layer[youtubeplayer_bg].alpha, 1.0, 0.5, default,
+				<!-- step two - after the fade-in add the youtube player -->
+				addlayer(youtubeplayer_plugin);
+				set(layer[youtubeplayer_plugin].parent, layer[youtubeplayer_bg]);
+				set(layer[youtubeplayer_plugin].align, center);
+				set(layer[youtubeplayer_plugin].alpha, 0.0);
+
+				<!-- fit into the available screen space (youtube videos are always 16:9) -->
+				div(aspect, 16, 9);
+				mul(new_videowidth, stagewidth, youtubeplayer_settings.maxsize);
+				div(new_videoheight, new_videowidth, aspect);
+				mul(max_videoheight, stageheight, youtubeplayer_settings.maxsize);
+				if(new_videoheight GT max_videoheight,
+					copy(new_videoheight, max_videoheight);
+					mul(new_videowidth, new_videoheight, aspect);
+				  );
+				roundval(new_videowidth);
+				roundval(new_videoheight);
+				copy(layer[youtubeplayer_plugin].width, new_videowidth);
+				copy(layer[youtubeplayer_plugin].height, new_videoheight);
+
+				if(device.html5,
+					<!-- html5 - embed iframe via the textfield plugin -->
+					txtadd(iframecode, '[iframe width="',get(layer[youtubeplayer_plugin].width),'" height="',get(layer[youtubeplayer_plugin].height),'" src="//www.youtube.com/embed/','%1','?',get(youtubeplayer_settings.parameters),'" frameborder="0" allowfullscreen][/iframe]');
+					copy(layer[youtubeplayer_plugin].html, iframecode);
+					set(layer[youtubeplayer_plugin].padding, 0);
+					set(layer[youtubeplayer_plugin].url, 'textfield.swf');
+					set(layer[youtubeplayer_plugin].onloaded, youtubeplayer_plugin_ready() );
+				  ,
+					<!-- flash - embed the youtube flashplayer player -->
+					txtadd(embedurl, 'http://www.youtube.com/v/','%1','?version=3&amp;',get(youtubeplayer_settings.parameters));
+					set(layer[youtubeplayer_plugin].onloaded, registercontentsize(640,390); youtubeplayer_plugin_ready(); );
+					copy(layer[youtubeplayer_plugin].url, embedurl);
+				  );
+			  );
+		  );
+	</action>
+
+	<action name="youtubeplayer_plugin_ready">
+		if(layer[youtubeplayer_plugin],
+			tween(layer[youtubeplayer_plugin].alpha, 1.0);
+		  );
+	</action>
+
+	<action name="youtubeplayer_close">
+		set(layer[youtubeplayer_bg].onclick, null);
+
+		tween(layer[youtubeplayer_plugin].alpha, 0.0, 0.25, default);
+
+		tween(layer[youtubeplayer_bg].alpha,0.0, 0.50, default,
+			removelayer(youtubeplayer_bg);
+			removelayer(youtubeplayer_plugin);
+		  );
+	</action>
+
+</krpano>

@@ -1,0 +1,44 @@
+ <div class="img_desc_container_min" id="praiseDiv">
+    <img id="btnpraise" src="/static/images/skin1/vr-btn-good.png" onClick="addPraise(this)">
+    <div class="img_desc_min" id = "praisedNum">0</div>
+</div>
+
+<script>
+    $(function(){
+
+         plugins_init_function.push(praise_init);
+    })
+    function praise_init(data){
+        if(data.hidepraise_flag == '1'){
+            $("#praiseDiv").hide();
+        }else{
+        	var value = $.zui.store.get(work_view_uuid);
+	    	if (value) {
+	    	    $("#btnpraise").attr('src','/static/images/skin1/vr-btn-good-click.png');
+	    	}
+	    	 $("#praisedNum").text(data.praised_num);
+        }
+    }
+   /**
+    * 赞加1，并且发起推送
+    * @param obj
+    */
+   function addPraise(obj) {
+       var value = $.zui.store.get(work_view_uuid);
+       if (!value)  {
+           $(obj).attr('src','/static/images/skin1/vr-btn-good-click.png');
+           $.zui.store.set(work_view_uuid, "1");
+
+           var num = $($(obj).next()).text();
+           num = parseInt(num);
+           $($(obj).next()).text(num + 1);
+
+           $.post("/tour.php",{
+               "view_uuid":work_view_uuid,
+               "act":"add_praise"
+           },function(data){
+               //不做处理
+           })
+       }
+   }
+</script>

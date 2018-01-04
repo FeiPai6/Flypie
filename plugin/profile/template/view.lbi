@@ -1,0 +1,5 @@
+ <div class="img_desc_container_min" id="profileDiv">
+    <img src="/static/images/skin1/vr-btn-desc.png" onClick="showProfile()">
+    <div class="img_desc_min">简介</div>
+</div>
+

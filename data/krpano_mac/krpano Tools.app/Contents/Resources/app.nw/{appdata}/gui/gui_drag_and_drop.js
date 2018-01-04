@@ -1,0 +1,1 @@
+function gui_block_external_dragging(e){var t=e||document;t.body.addEventListener("dragover",function(e){e.preventDefault(),e.stopPropagation()},!1),t.body.addEventListener("drop",function(e){e.preventDefault(),e.stopPropagation()},!1)}

@@ -1,0 +1,15 @@
+<krpano version="1.18">
+	
+	<include url="videoplayer.xml" />
+
+	<preview type="grid(cube,64,64,512,0xCCCCCC,0xFFFFFF,0x999999);" />
+	
+	<hotspot name="spot"
+	         url="media_playback_start.png"
+	         scale="0.5"
+	         zoom="true"
+	         ath="0" atv="0"
+	         onclick="looktohotspot(get(name),get(view.fov)); videoplayer_open(cats-short.mp4|cats-short.webm, cats-short-poster.jpg);"
+	         />
+
+</krpano>

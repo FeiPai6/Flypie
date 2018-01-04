@@ -1,0 +1,26 @@
+{include file="{$_lang.moban}/library/member_paths.lbi"}	
+<div class="works-container">
+	<div class="container container_works" style="margin-top: 0;">
+		<div class="row row_margin_bottom" style="margin-top: 0px;">
+			<div class="col-md-10 advanced-setting-block" style="padding-bottom:10px;">
+			   <div style="width:300px;">
+				<form id="passwd" action="/member/passwd" method="post">
+					<div class="input-group top15">
+					 <span class="input-group-addon">原&ensp;密&ensp;码</span>
+					  <input type="password" name="oldpwd" class="form-control" placeholder="为保证安全性，请输入原密码">
+					</div>
+					<div class="input-group top15">
+					 <span class="input-group-addon">新&ensp;密&ensp;码</span>
+					  <input type="password" name="newpwd" class="form-control" placeholder="请输入要修改为的密码">
+					</div>
+					<div class="input-group top15">
+					 <span class="input-group-addon">重复密码</span>
+					  <input type="password" name="repwd" class="form-control" placeholder="请再一次输入新密码">
+					</div>
+					<button class="btn btn-block btn-primary top15" type="button" id="subbtn" onclick="ajaxFormSubmit('passwd','subbtn');">确认修改</button>
+				</form>
+			   </div>	
+			</div>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<div class="modal" id="infomationModal" data-backdrop="static" data-keyboard="false" style="z-index:2002">
+    <div class="modal-dialog">
+        <div class="modal-header text-center" >
+            <button type="button" class="close" onClick="hideProfile()"><span>&times;</span></button>
+            <span style="color: #353535;font-weight:700" id="profileWorkName"></span>
+        </div>
+        <div class="modal-body" style="height:250px;overflow-y:scroll ">
+            <div class="row">
+                <div class="col-sm-offset-1 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+                    <span id="profileProfile"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+         plugins_init_function.push(profile_init);
+    })
+    function profile_init(data){
+       if(data.hideprofile_flag == '1'){
+            $("#profileDiv").hide();
+        }
+    }
+    function hideProfile() {
+        $('#infomationModal').modal('hide');
+        toggleBtns(true);
+    }
+    function showProfile() {
+        toggleBtns(false);
+        var data = $("body").data("panoData");
+        $('#profileWorkName').text('');
+        $('#profileProfile').text('');
+        $('#profileWorkName').text(data.name);
+        $('#profileProfile').text(data.profile==null?"":data.profile);
+        $('#infomationModal').modal("show");
+    }
+</script>

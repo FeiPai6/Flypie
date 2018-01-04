@@ -1,0 +1,21 @@
+<div class="modal fade" id="myCustomRightModal" data-backdrop="static" data-keyboard="false" data-position="5%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">自定义右键菜单</h2>
+            </div>
+            <div class="modal-body" style="padding:10px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" onclick="addCustomRightItem()">添加网站链接(或电话号码)</button>
+                        <span class="text-muted">可自定义三个网站地址或电话号码</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span><button class="btn btn-primary" onclick="customRightOkClick()">完成</button></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/plugin/custom_right_button/js/custom_right.js"></script>

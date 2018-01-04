@@ -1,0 +1,16 @@
+<krpano syncother="true" onstart="ifnot(haveexternalinterface, error('ExternalInterface (Javascript Interface) not avaiable![br][br]Check your Flashplayer security settings:[br][br]http://krpano.com/docu/localusage/'));">
+
+	<view fovtype="VFOV" fov="90" fovmin="90" fovmax="90" />
+
+	<include url="pano.xml" />
+	
+	<events onviewchange="calcOthers(); js( sync_FtoOthers() );" />
+
+	<plugin name="vectormath" url="vectormath.swf" keep="true" preload="true" />
+
+	<action name="calcOthers">
+		plugin[vectormath].rotatevector(l_h, l_v, l_roll, get(view.hlookat), get(view.vlookat), get(view.camroll), -90,0,0);
+		plugin[vectormath].rotatevector(r_h, r_v, r_roll, get(view.hlookat), get(view.vlookat), get(view.camroll), +90,0,0);
+	</action>
+
+</krpano>

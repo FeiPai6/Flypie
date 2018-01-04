@@ -1,0 +1,12 @@
+<script>
+$(function(){
+	plugins_init_function.push(showuser_init);
+})
+function showuser_init(data){
+	if(data.hideuser_flag=='1'){
+        $("#authorDiv").hide();
+    }else{
+    	$("#authorDiv").show();
+    }
+}
+</script>

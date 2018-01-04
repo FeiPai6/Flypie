@@ -1,0 +1,104 @@
+<h3>
+<a href="/{$_lang.admin_path}/?m=articlecat&act=edit" class="actionBtn add">添加分类</a>
+<div style="height:36px"></div>
+</h3>
+
+{if $act=='edit'}
+<form action="/{$_lang.admin_path}/?m=articlecat" method="post" id="form">
+     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+       <th width="80" align="right">分类名称</th>
+       <td>
+        <input type="text" name="cat_name" value="{$ac.cat_name}" size="40" class="inpMain" />
+       </td>
+      </tr>
+      
+      <tr>
+       <th align="right">上级分类</th>
+       <td>
+        <select name="parent_id">
+            <option value="0">请选择</option>
+            {foreach $res as $v}
+			  {if $v.id!=$ac.id}}
+                <option value="{$v.id}" {if $ac.parent_id==$v.id}selected{/if}>{$v.cat_name}</option>
+              {/if}
+			{/foreach}
+          </select>
+       </td>
+      </tr>
+      <tr>
+       <th align="right">排序</th>
+       <td>
+        <input type="text" name="sort" value="{if $ac.sort}{$ac.sort}{else}29{/if}" size="5" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <th></th>
+       <td> 
+	      <div id="wrong_text" class="warning" style="display:none"></div>
+		  <div class="clear"></div>
+          <input type="hidden" name="act" value="edit">
+          <input type="hidden" name="acid" value="{$ac.id}">
+          <input type="button" class="btn" value="提交" id="sub_btn" onclick="javascript:ajaxFormSubmit('form','提交');">
+          <input class="btn" onclick="history.go(-1)" value="返回" type="button">
+       </td>
+      </tr>
+     </table>
+    </form>
+
+{else}
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+     <tr>
+      <th width="120" align="left">分类id</th>
+        <th width="120" align="left">分类名称</th>
+     
+        <th align="left">简单描述</th>
+       <th width="60" align="center">排序</th>
+        <th width="80" align="center">操作</th>
+      </tr>
+
+      {foreach $res as $v}
+    <tr>
+      <td width="80">{$v.id}</td>
+      <td width="200">{$v.cat_name}</td>
+      <td>{$v.desc}</td>
+      <td>{$v.sort}</td>
+      <td width="120">
+      <a href="/{$_lang.admin_path}/?m=articlecat&act=edit&acid={$v.id}">编辑</a>　
+      <a href="javascript:;" onclick="javascript:delete_article_cat({$v.id});">删除</a>
+      </td>
+    </tr>
+    {foreach $v.sub as $v2}
+    <tr>
+      <td width="80">{$v2.id}</td>
+      <td width="200">　{$v2.cat_name}</td>
+      <td>{$v.desc}</td>
+      <td>{$v2.sort}</td>
+      <td width="120">
+      <a href="/{$_lang.admin_path}/?m=articlecat&act=edit&acid={$v2.id}">编辑</a>　
+      <a href="javascript:;" onclick="javascript:delete_article_cat({$v2.id});">删除</a>
+      </td>
+    </tr>
+    {/foreach}
+    {/foreach}
+            
+            
+ </table>
+ <script type="text/javascript">
+  function delete_article_cat(acid){
+    if(confirm("确认删除该文章分类吗？")){
+      $.post("/{$_lang.admin_path}/?m=articlecat&act=delete",{literal}{acid:acid}{/literal},function(data){
+        var data = json_decode(data);
+        if(data.status==0){
+          alert(data.msg);
+          return false;
+        }
+        if(data.status==1){
+          alert('删除成功！');
+          window.location.reload();
+        }
+      });
+    }
+  }
+  </script> 
+ {/if} 

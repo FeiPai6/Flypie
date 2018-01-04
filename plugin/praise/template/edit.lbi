@@ -1,0 +1,20 @@
+<div class="col-md-4">
+     <label class="col-md-6 control-label">隐藏点赞</label>
+    <div class="col-md-6" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="在全景页面显示点赞"{/if}>
+        <input id="praise" name="switch_checkbox" class="form-control" type="checkbox" {if $v.level_enable eq 0}disabled{/if}/>
+    </div>
+</div>
+
+<script>
+	$(function(){
+		//向main_edit.js 注册初始化方法
+		plugins_init_function.push(praise_init);
+		plugins_works_get_function.push(praise_get);
+	})
+	function praise_init(){
+		$("#praise").bootstrapSwitch('state', worksmain.hidepraise_flag=='1'?true:false);
+	}
+	function praise_get(worksMaindata){
+		worksMaindata.hidepraise_flag = $("#praise").bootstrapSwitch('state')?1:0;
+	}
+</script>

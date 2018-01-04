@@ -1,0 +1,35 @@
+<!--
+	krpano - (rotating) nadir logo example
+-->
+
+<krpano>
+
+	<!-- events - update logo rotation with pano rotation -->
+	<events name="nadirlogorotation"
+	        onviewchange="if(hotspot[nadirlogo].rotatewithview, set(hotspot[nadirlogo].rotate,get(view.hlookat)) );"
+	        />
+
+	<!-- startup viewing direction and angle -->
+	<view hlookat="0" vlookat="55" fov="110" />
+
+	<!-- pano image -->
+	<preview url="../../panos/p2/preview.jpg" />
+	<image>
+		<cube url="../../panos/p2/pano_%s.jpg" />
+	</image>
+
+
+	<!-- nadir logo (distored hotspot) -->
+	<hotspot name="nadirlogo"
+	         url="krpano-roundlogo.png"
+	         ath="0"
+	         atv="90"
+	         distorted="true"
+	         scale="1.0"
+	         rotate="0.0"
+	         rotatewithview="false"
+	         onclick="switch(rotatewithview); invalidatescreen();"
+	         />
+
+</krpano>
+

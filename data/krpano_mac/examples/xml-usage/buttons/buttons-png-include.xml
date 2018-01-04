@@ -1,0 +1,55 @@
+<!--
+	buttons-png-include.xml template
+	- based on the 'buttons-2.png'
+	- retina compatible
+	- the transparency is achieved by the alpha channel of the png image
+-->
+<krpano>
+
+	<!-- control buttons -->
+	<style name="defaultskin_button" url="buttons-2.png" scale="0.5" align="lefttop" />
+
+	<layer name="defaultskin_buttons" type="container" width="360" height="40" align="bottom=" y="10" scalechildren="true" scale="1.0" keep="true">
+		<layer name="btn_in"       x="0"   style="defaultskin_button" crop="320|0|80|80" onovercrop="320|80|80|80" ondown="set(fov_moveforce,-1);"     onup="set(fov_moveforce,0);"     />
+		<layer name="btn_out"      x="40"  style="defaultskin_button" crop="400|0|80|80" onovercrop="400|80|80|80" ondown="set(fov_moveforce,+1);"     onup="set(fov_moveforce,0);"     />
+		<layer name="btn_left"     x="80"  style="defaultskin_button" crop=  "0|0|80|80" onovercrop=  "0|80|80|80" ondown="set(hlookat_moveforce,-1);" onup="set(hlookat_moveforce,0);" />
+		<layer name="btn_right"    x="120" style="defaultskin_button" crop= "80|0|80|80" onovercrop= "80|80|80|80" ondown="set(hlookat_moveforce,+1);" onup="set(hlookat_moveforce,0);" />
+		<layer name="btn_up"       x="160" style="defaultskin_button" crop="160|0|80|80" onovercrop="160|80|80|80" ondown="set(vlookat_moveforce,-1);" onup="set(vlookat_moveforce,0);" />
+		<layer name="btn_down"     x="200" style="defaultskin_button" crop="240|0|80|80" onovercrop="240|80|80|80" ondown="set(vlookat_moveforce,+1);" onup="set(vlookat_moveforce,0);" />
+		<layer name="btn_ctrlmode" x="240" style="defaultskin_button" crop="800|0|80|80" onovercrop="800|80|80|80" onclick="switch(control.mousetype,moveto,drag2d); switch(control.touchtype,moveto,drag2d); update_ctrl_mode();" />
+		<layer name="btn_autorot"  x="280" style="defaultskin_button" crop="480|0|80|80" onovercrop="480|80|80|80" onclick="switch(autorotate.enabled);" />
+		<layer name="btn_fs"       x="320" style="defaultskin_button" crop="560|0|80|80" onovercrop="560|80|80|80" onclick="switch(fullscreen);" visible="true" devices="fullscreensupport" />
+	</layer>
+
+	<!-- no fullscreen support => no fullscreen button => smaller container width -->
+	<layer name="defaultskin_buttons" width="320" devices="!fullscreensupport" />
+
+
+	<events name="defaultskin_buttons" keep="true"
+	        onxmlcomplete="update_ctrl_mode(); update_fs_button();"
+	        onenterfullscreen="update_fs_button();"
+	        onexitfullscreen ="update_fs_button();"
+	        />
+
+
+	<action name="update_ctrl_mode">
+		if(control.mousetype == drag2d,
+			set(layer[btn_ctrlmode].crop,       720|0|80|80);
+			set(layer[btn_ctrlmode].onovercrop, 720|80|80|80);
+		  ,
+			set(layer[btn_ctrlmode].crop,       800|0|80|80);
+			set(layer[btn_ctrlmode].onovercrop, 800|80|80|80);
+		  );
+	</action>
+
+	<action name="update_fs_button">
+		if(fullscreen,
+			set(layer[btn_fs].crop,       640|0|80|80);
+			set(layer[btn_fs].onovercrop, 640|80|80|80);
+		  ,
+			set(layer[btn_fs].crop,       560|0|80|80);
+			set(layer[btn_fs].onovercrop, 560|80|80|80);
+		  );
+	</action>
+
+</krpano>

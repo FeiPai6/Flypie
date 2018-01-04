@@ -1,0 +1,5 @@
+<krpano>
+<events name="musicevents"
+    onnewpano="indexoftxt(result, get(scene[get(xml.scene)].bgmusic),sound); if(result GE 0,tween(sound[bgsnd].volume, 0.5)); set(music_bgmusic,get(scene[get(xml.scene)].bgmusic)); if(music_bgmusic,js(openMusicVoiceBtn());playsound(bgm,get(scene[get(xml.scene)].bgmusic),1,tween(sound[bgsnd].volume, 1)););"
+    keep="true"/>
+ </krpano>

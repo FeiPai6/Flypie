@@ -1,0 +1,28 @@
+<script>
+	$(function(){
+		plugins_init_function.push(custom_right_init);
+	})
+	function custom_right_init(data){
+		// $(".vrshow_container_3_min .img_desc_container_min:first").nextAll().remove();
+		// if (data.url_phone_nvg.linkSettings && data.url_phone_nvg.linkSettings.length > 0) {
+		//     $(data.custom_right_button.linkSettings).each(function(idx){
+		//         var title = this.title;
+		//         var htmlStr = '';
+		//         var url = this.content;
+	 //            if(!isNaN(url)){
+	 //                url = "tel://" + url;
+	 //            }else{
+	 //                if(!(url.indexOf('http://') == 0)){
+	 //                    url = 'http://' + url;
+	 //                }
+	 //            }
+	          
+		//     });
+		// }
+		
+	}
+	function lookLinkUrl(url){
+    	window.open(url);
+	}
+	
+</script>

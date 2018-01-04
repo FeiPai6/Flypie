@@ -1,0 +1,164 @@
+<style>
+	body{
+		background-color: #efefef;
+	}
+	.inline.hidden-xs {
+  		display: inline !important;
+  	}
+	.chosen_wrap{
+	}
+	.img_list{
+		margin-bottom: 10px;
+		cursor: pointer;
+	}
+	.title_cover{
+		height: 30px;
+		background-color: rgba(138,137,137,0.5);
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		color: #fff;
+		line-height: 30px;
+		font-size: 14px;
+		padding-left: 10px;
+	}
+	.more{
+		margin-top: 10px;
+		text-align: right;
+		display: block;
+	}
+	.of_hide{
+		display: block;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	}
+	.padding0{
+		padding: 0;
+	}
+	.cards .card .card-content span{
+		width: 100%;
+		height: 20px;
+	}
+	.content_nav{
+		/*margin-top: 18px;*/
+	}
+	.content_nav .col-md-2 div{
+		height: 60px;
+		line-height: 60px;
+		text-align: center;
+		font-size: 23px;
+		border-radius: 8px;
+		cursor: pointer;
+		color:#fff;
+	}
+	.content_nav .col-xs-4{
+		margin-top: 10px;
+	}
+	.kf_block{
+		background-color: #EA644A;
+	}
+	.gj_block{
+		background-color: #F1A325;
+	}
+	.ly_block{
+		background-color: #38B03F;
+	}
+	.jz_block{
+		background-color: #03B8CF;
+	}
+	.jy_block{
+		background-color: #BD7B46;
+	}
+	.xw_block{
+		background-color: #8666B8;
+	}
+</style>
+<script>
+	$(function(){
+		$("#top_frame").load(function() {
+			console.log($(this).contents().find("body").height());
+			$(this).height($(window).height()*0.7);
+		})
+	})
+</script>
+<div class="container">
+	
+	<div class="row">
+		<div class="col-md-3">
+			<h2 class="text-muted">精选全景<small style="margin-left:10px;">优质的全景作品赏析</small></h2>
+		</div>
+	</div>
+	<div class="row chosen_wrap">
+		<div class="col-md-5" style="height:380px;">
+			<div id="myNiceCarousel" class="carousel slide" data-ride="carousel">
+			  <!-- 轮播项目 -->
+			  <div class="carousel-inner">
+			   {for $i=0; $i<3; $i++}
+			    <div class="item {if $i==0}active{/if}">
+			      <a target="_blank" href="/tour/{$recommend[$i]['view_uuid']}">
+				   <img src="{$recommend[$i]['thumb_path']}"  class="img-responsive" style="width: 100%;max-height: 420px;">
+			      </a>
+				  <div class="carousel-caption">
+			        <h3>{$recommend[$i]['name']}</h3>
+			      </div>
+			    </div>
+			   {/for}    
+			  </div>
+			  <!-- 项目切换按钮 -->
+			   <a class="left carousel-control" href="#myNiceCarousel" data-slide="prev">
+			     <span class="icon icon-chevron-left"></span>
+			   </a>
+			   <a class="right carousel-control" href="#myNiceCarousel" data-slide="next">
+			     <span class="icon icon-chevron-right"></span>
+			   </a>
+			</div>
+		</div>
+
+		<div class="col-md-7">
+			<div class="row chosen_wrap">
+			    {for $i=3; $i<9; $i++}
+				<div class="col-md-4 col-sm-4 col-xs-6 img_list">
+					<a href="/tour/{$recommend[$i]['view_uuid']}" target="_blank">
+						<img src="{$recommend[$i]['thumb_path']}" class="img-responsive">
+					</a>
+					<div style="position:relative">
+						<div class="title_cover of_hide">{$recommend[$i]['name']}</div>
+					</div>
+				</div>
+			    {/for}    
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="text-muted">推荐全景<small style="margin-left:10px;">为您推荐的优质作品</small><a href="/pictures"><small class="text-muted  pull-right more">更多>></small></a></h2>
+		</div>
+	</div>
+	<!--一个卡片列表行-->
+	<div class="row">
+		<div class="cards" style="margin:0;">
+			<!--卡片列表循环-->
+			{for $i=8; $i<20; $i++}
+			<div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+			   <div class="card" href="###">
+			     <a target="_blank" href="/tour/{$recommend[$i]['view_uuid']}"><img src="{$recommend[$i]['thumb_path']}" alt="{$recommend[$i]['name']}"></a>
+			     <div class="card-heading">
+			     	<div class="col-md-9 col-xs-8 of_hide padding0">
+			     		<strong class="text-primary">{$recommend[$i]['name']}</strong> 
+			     	</div>
+			     	<div class="col-md-3 col-xs-4 of_hide padding0">
+			     		<div class="pull-right text-danger"><i class="icon-heart-empty"></i> {$recommend[$i]['browsing_num']}</div>
+			     	</div>
+			     </div>
+			     <div class="card-content text-muted">
+			     <span class="of_hide">{$recommend[$i]['profile']}</span>
+			     </div>
+			   </div>
+			 </div>
+			{/for}	         
+			<!--卡片列表循环结束-->	
+		</div>
+	</div>
+	<!--一个卡片列表行结束-->
+</div>

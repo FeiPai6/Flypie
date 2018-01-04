@@ -1,0 +1,10 @@
+<krpano onstart="ifnot(haveexternalinterface, error('ExternalInterface (Javascript Interface) not avaiable! 
+check your Flashplayer security settings
+see: http://krpano.com/docu/localaccess/'));">
+
+	<view fovmin="50" fovmax="150" />
+
+	<preview type="grid(cube,16,16,256,0x888800,0x000044,0xFFFFFF);" details="16" />
+
+</krpano>
+

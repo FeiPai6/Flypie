@@ -1,0 +1,62 @@
+<krpano>
+	<!-- dragable hotsots example -->
+
+
+	<!-- pano image -->
+	<preview url="../../panos/p2/preview.jpg" />
+	<image>
+		<cube url="../../panos/p2/pano_%s.jpg" />
+	</image>
+	
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="MFOV" fov="100" fovmin="60" fovmax="150" />
+	
+	
+	<!-- disable zooming by shift and control keys (to avoid zooming when using crtl+c or command+c to copy the hotspot xml text) -->
+	<control keycodesin="" keycodesout="" />
+
+
+	<!-- textfield with information about the currently dragged hotspot -->
+	<plugin name="hotspotinfo" keep="true"
+	        url="%SWFPATH%/plugins/textfield.swf"
+	        html="drag the hotspots..."
+	        css="font-family:Courier;"
+	        border="false"
+	        selectable="true"
+	        align="left" y="-100"
+	        width="200"
+	        height="80"
+	        />
+
+	<!-- the action for dragging the hotspot - call it once in the ondown event -->
+	<action name="draghotspot">
+	<![CDATA[
+		if(%1 != dragging,
+			spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery);
+			sub(drag_adjustx, mouse.stagex, hotspotcenterx); 
+			sub(drag_adjusty, mouse.stagey, hotspotcentery); 
+			draghotspot(dragging);
+		  ,
+			if(pressed,
+				sub(dx, mouse.stagex, drag_adjustx);
+				sub(dy, mouse.stagey, drag_adjusty);
+				screentosphere(dx, dy, ath, atv);
+				copy(print_ath, ath);
+				copy(print_atv, atv);
+				roundval(print_ath, 3);
+				roundval(print_atv, 3);
+				txtadd(plugin[hotspotinfo].html, '&lt;hotspot name="',get(name),'"[br]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ath="',get(print_ath),'"[br]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;atv="',get(print_atv),'"[br]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...[br]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&gt;');
+				delayedcall(0, draghotspot(dragging) );
+			  );
+		  );
+	]]>
+	</action>
+
+	<!-- the example hotspots -->	
+	<hotspot name="spot1" url="hotspot.png" zoom="true"      scale="0.5" ath="-35" atv="+6"  ondown="draghotspot();" />
+	<hotspot name="spot2" url="hotspot.png" zoom="true"      scale="0.5" ath="-1"  atv="+24" ondown="draghotspot();" />
+	<hotspot name="spot3" url="hotspot.png" distorted="true" scale="0.5" ath="+20" atv="+8"  ondown="draghotspot();" />
+	<hotspot name="spot4" url="hotspot.png" distorted="true" scale="0.5" ath="+32" atv="+16" ondown="draghotspot();" />
+
+	
+</krpano>

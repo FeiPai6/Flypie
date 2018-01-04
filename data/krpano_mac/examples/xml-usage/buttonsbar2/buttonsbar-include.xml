@@ -1,0 +1,53 @@
+<!--
+	buttonsbar-include.xml template
+-->
+<krpano>
+	
+	<!-- <style name="button" type="container" align="lefttop" edge="center" width="40" height="40" bgcolor="0x000000" bgalpha="0.5" bgcapture="true" children="false" scalechildren="true" onover="tween(scale,1.2,0.1);" onout="tween(scale,1,0.1);" /> -->
+	<style name="button" url="button.png" align="lefttop" edge="center" children="false" scalechildren="true" onover="tween(scale,1.2,0.1);" onout="tween(scale,1,0.1);" />
+
+	<!-- use the textfield with border, background, rounded edges and shadow as container for the buttons -->
+	<layer name="buttonbar" type="container" width="250" height="50" align="bottom" y="10" keep="true">
+		<layer name="lb" style="button" x="20" y="20" ondown="set(hlookat_moveforce,-1);tween(scale,1.2,0.1);" onup="set(hlookat_moveforce,0);tween(scale,1,0.1);">
+			<layer name="lico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="0|192|64|64" />
+		</layer>
+		<layer name="rb" style="button" x="58" y="20" ondown="set(hlookat_moveforce,+1);tween(scale,1.2,0.1);" onup="set(hlookat_moveforce,0);tween(scale,1,0.1);">
+			<layer name="rico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="64|192|64|64" />
+		</layer>
+		<layer name="ub" style="button" x="96" y="20" ondown="set(vlookat_moveforce,-1);tween(scale,1.2,0.1);" onup="set(vlookat_moveforce,0);tween(scale,1,0.1);">
+			<layer name="uico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="0|256|64|64" />
+		</layer>
+		<layer name="db" style="button" x="134" y="20" ondown="set(vlookat_moveforce,+1);tween(scale,1.2,0.1);" onup="set(vlookat_moveforce,0);tween(scale,1,0.1);">
+			<layer name="dico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="64|256|64|64" />
+		</layer>
+		<layer name="ib" style="button" x="172" y="20" ondown="set(fov_moveforce,-1);tween(scale,1.2,0.1);" onup="set(fov_moveforce,0);">
+			<layer name="iico"  url="vtourskin.png" scale="0.5" align="lefttop" x="6" y="4" crop="0|320|64|64" />
+		</layer>
+		<layer name="ob" style="button" x="210" y="20" ondown="set(fov_moveforce,+1);tween(scale,1.2,0.1);" onup="set(fov_moveforce,0);">
+			<layer name="oico"  url="vtourskin.png" scale="0.5" align="lefttop" x="6" y="4" crop="64|320|64|64" />
+		</layer>
+		<layer name="fs" style="button" x="248" y="20" onclick="switch(fullscreen);" devices="fullscreensupport">
+			<layer name="ofico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="0|576|64|64"  visible="true" />
+			<layer name="cfico"  url="vtourskin.png" scale="0.5" align="lefttop" x="4" y="4" crop="64|576|64|64" visible="false" />
+		</layer>
+	</layer>
+
+	<!-- events to change the fullscreen buttons -->
+	<events name="buttonbarevents" keep="true" devices="fullscreensupport"
+	        onxmlcomplete="buttonbar_update_fullscreenbuttons();" 
+	        onenterfullscreen="buttonbar_update_fullscreenbuttons();"
+	        onexitfullscreen ="buttonbar_update_fullscreenbuttons();"
+	        />
+	
+	<action name="buttonbar_update_fullscreenbuttons">
+		if(fullscreen,
+			set(layer[ofico].visible,false);
+			set(layer[cfico].visible,true);
+		  ,
+			set(layer[ofico].visible,true);
+			set(layer[cfico].visible,false);
+		  );
+	</action>
+
+
+</krpano>

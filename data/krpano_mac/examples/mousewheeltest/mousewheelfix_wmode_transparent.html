@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano - mouse wheel scrolling / zooming test</title>
+
+	<style>
+		body{ font-family:Arial,Helvetica,sans-serif; font-size:10px; color:#333333; background-color:#FFFFFF; }
+		h1{ font-size: 20px; padding-top:30px; padding-bottom:0px; text-decoration: underline; }
+		h2{ font-size: 13px; padding:0px; }
+		h3{ font-size: 13px; padding:0px; }
+		a{ color: #555555; text-decoration: underline; }
+		a:hover{ color: #AAAAAA; text-decoration: underline; }
+		.lli{ padding-bottom:5px; }
+	</style>
+
+</head>
+
+<body>
+	<script src="../../viewer/embedpano.js"></script>
+
+	<center>
+
+	<h1><i>krpano</i> - Mouse-Wheel Scrolling / Zooming Test</h1>
+	<h2>Flashplayer / Browser Mouse-Wheel fixes via Javascript (embedpano.js)</h2>
+
+	<div style="font-size:12px; text-align:left; width:650px;">
+		<h3>Functions / Fixes:</h3>
+		<ul>
+			<li class="lli">Mouse-wheel <b>Page</b> scrolling fix - don't scroll the html page when scrolling / zooming inside the viewer.</li>
+			<li class="lli">Flashplayer <b>wmode = transparent / opaque</b> fixes:
+				<ul>
+					<li>Enable mouse-wheel usage.</li>
+					<li>Detect mouse button releases (mouse-up) outside the viewer.</li>
+				</ul>
+			</li>
+			<li class="lli">Enable mouse-wheel usage on <b>Mac OSX</b>.</li>
+			<li class="lli">Use the native Browser mouse-wheel events and wheel-delta values instead of the Flashplayer ones:
+				<ul>
+					<li>The Flashplayer wheel-delta values are 'integer' only and because of this, slow wheel moves 
+						(e.g. by touch-pads or continuous mouse wheels) were ignored or skipped in some browsers.</li>
+					<li>The Browser native events and wheel-delta values instead are much more accurate and allow the 
+						detection of any kind of mouse-wheel movement.</li>
+					
+				</ul>
+			</li>
+		</ul>
+		<h3>How it works:</h3>
+		<ul>
+			<li class="lli">When the mouse is over a krpano viewer and the mouse-wheel will be used, then do zooming/scrolling in the krpano viewer and avoid scrolling the html page.</li>
+			<li class="lli"><b>Note:</b> When testing <b>locally / offline</b> the Flashplayer <b>security settings</b> must be adapted!<br/>
+				Have a look here for more information:
+				<a href="http://krpano.com/docu/localusage/#top" target="_blank">http://krpano.com/docu/localusage/</a>
+			</li>
+		</ul>
+		<h3>Testcase:</h3>
+		<ul>
+			<li>krpano Version: <b>1.17</b></li>
+			<li><b>wmode=transparent</b> (1.pano) and <b>wmode=opaque</b> (2.pano)<br/><br/></li>
+			<li>Known problems / Browser limitations:</u>
+				<ul>	
+					<li>Chrome - The embedded Flashplayer of Chrome ignores the Flashplayer security settings, so the Javascript Interface is locally always disabled.
+						That means the mouse-wheel fixes can't work locally.</li>
+				</ul>
+			</li>
+		</ul>
+		
+		<h3>Other testcases:</h3>
+		<ul>
+			<li><a href="mousewheelfix.html"><b>No wmode</b> setting</a>.</li>
+			<li><a href="mousewheelfix_fullwindow.html">Full windowed</a>.</li>
+		</ul>
+	</div>
+
+	<br/>
+	<hr/>
+	<br/>
+
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+
+	<div id="pano1" style="width:640px; height:480px;">
+		<noscript><table width="640" height="480"><tr style="vertical-align:middle;"><td><center>ERROR:<br/><br/>Javascript not activated<br/><br/></center></td></tr></table></noscript>
+	</div>
+	
+	<!-- overlap the pano with logo as demo for the transparent/opaque setting -->
+	<div style="position:relative; top:-25px;">
+		<img src="krpano_logo.png" />
+	</div>
+
+	<script>
+	
+		embedpano({swf:"../../viewer/krpano.swf", xml:"krpano1.xml", wmode:"transparent", target:"pano1", id:"krpanoSWFObject1", width:"640", height:"480"});
+	
+	</script>
+
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+
+	<div id="pano2" style="width:640px; height:480px;">
+		<noscript><table width="640" height="480"><tr style="vertical-align:middle;"><td><center>ERROR:<br/><br/>Javascript not activated<br/><br/></center></td></tr></table></noscript>
+	</div>
+	
+	<!-- overlap the pano with logo as demo for the transparent/opaque setting -->
+	<div style="position:relative; top:-25px;">
+		<img src="krpano_logo.png" />
+	</div>
+	
+	<script>
+		
+		embedpano({swf:"../..//viewer/krpano.swf", xml:"krpano2.xml", wmode:"opaque", target:"pano2", id:"krpanoSWFObject2", width:"640", height:"480"});
+		
+	</script>
+
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+	...krpano-mouse-wheel-scrolltest...<br/>
+
+	</center>
+</body>
+</html>

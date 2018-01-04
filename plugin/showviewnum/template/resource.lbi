@@ -1,0 +1,12 @@
+<script>
+$(function(){
+	plugins_init_function.push(showviewnum_init);
+})
+function showviewnum_init(data){
+	if(data.hideviewnum_flag=='1'){
+        $("#viewnumDiv").hide();
+    }
+    
+  
+}
+</script>

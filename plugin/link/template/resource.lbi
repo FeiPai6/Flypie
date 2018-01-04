@@ -1,0 +1,58 @@
+<script>
+	$(function(){
+		plugins_init_function.push(link_init);
+	   $('#mapMarkModal').on('hide.zui.modal', function (e) {
+	        toggleBtns(true);
+	    });
+	})
+	function link_init(data){
+		$(".vrshow_container_3_min .img_desc_container_min:first").nextAll().remove();
+		if (data.url_phone_nvg.linkSettings && data.url_phone_nvg.linkSettings.length > 0) {
+		    $(data.url_phone_nvg.linkSettings).each(function(idx){
+		        var imgSrc = this.imgPath;
+		        var title = this.title;
+		        var htmlStr = '';
+		        if(this.type == 0){
+		            var locationData = this.content;
+		            htmlStr += '<div class="img_desc_container_min img_add" >'+
+		                '<img src="'+imgSrc+'" onclick="openMapModal(this,true)">'+
+		                '<div class="img_desc_min">'+title+'</div>'+
+		                '</div>';
+		            $(".vrshow_container_3_min").append(htmlStr);
+		            $(".vrshow_container_3_min > div:last img").data("locationData",locationData);
+		        }else{
+		            var url = this.content;
+		            if(!isNaN(url)){
+		                url = "tel://" + url;
+		            }else{
+		                if(url.indexOf('http://') != 0&&url.indexOf('https://') != 0){
+		                    url = 'http://' + url;
+		                }
+		            }
+		            htmlStr += '<div class="img_desc_container_min img_add" >'+
+		                '<img src="'+imgSrc+'" onclick="lookLinkUrl(\''+url+'\')" '+(isIos()?'':'data-toggle="tooltip"')+' title="'+(url.length > 20 ? url.substring(0,20)+'...' : url)+'">'+
+		                '<div class="img_desc_min">'+title+'</div>'+
+		                '</div>';
+		            $(".vrshow_container_3_min").append(htmlStr);
+		        }
+		    });
+		    $('.vrshow_container_3_min [data-toggle=tooltip]').tooltip({});
+		}
+	}
+	function isIos(){
+		var ua = navigator.userAgent.toLowerCase();	
+		if (/iphone|ipad|ipod/.test(ua)) {
+				return true;	
+		} 
+		return false;
+	}
+	function lookLinkUrl(url){
+	
+    	window.open(url);
+	}
+	function openMapModal(el,readonly){
+		// toggleBtns();
+	    mapModalEl = el;
+	    _U.mapMarkModal().openModal($(mapModalEl).data("locationData"),readonly);
+	}
+</script>

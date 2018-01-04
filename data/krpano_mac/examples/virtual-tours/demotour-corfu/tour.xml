@@ -1,0 +1,129 @@
+<!-- 
+	krpano Virtual Tour Demo - Corfu
+		http://krpano.com/tours/corfu/
+	
+	This tour was build fully automatic with the MAKE VTOUR (Normal) Droplet from the 1.16 krpano tools version.
+	Note - this is an reduced example (smaller images, stronger compression, fewer panos) to keep the download package small!
+-->
+<krpano version="1.18" title="Corfu Holiday Trip" onstart="wait(0);startup();">
+	
+	
+	<!-- adjust the examples backbutton position (if available), the wait(0) in the onstart action allows executing this event -->
+	<events name="backbutton_adjust" onxmlcomplete="if(layer[backbutton], set(layer[backbutton].y,190));" />
+	
+
+	<include url="skin/vtourskin.xml" />
+
+	<!-- set skin settings: bingmaps? gyro? -->
+	<skin_settings maps="true"
+	               maps_type="bing"
+	               maps_bing_api_key="An4-9WoANqtASVorNezSjENest2VC0zoAzvMhEpdTjb3uY-k6u6bMkPxYpDsolsF"
+	               maps_zoombuttons="false"
+	               gyro="true"
+	               title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop=""
+	               thumbs_opened="false"
+	               thumbs_text="true"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="true"
+	               thumbs_scrollindicator="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="false"
+	               tooltips_mapspots="false"
+	               controlbar_offset="20"
+	               />
+
+
+	<action name="startup">
+		if(startscene === null, copy(startscene,scene[0].name));
+		loadscene(get(startscene), null, MERGE);
+	</action>
+
+	
+	<scene name="scene_achilleion-hof-unten" title="Achilleion - Garden" onstart="" thumburl="panos/achilleion-hof-unten.tiles/thumb.jpg" lat="39.563340" lng="19.904324" heading="0.0">
+
+		<view hlookat="-1" vlookat="11" fovtype="MFOV" fov="120" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/achilleion-hof-unten.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/achilleion-hof-unten.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_canaldemure5" title="Canal d&#180;Amour 2" onstart="" thumburl="panos/canaldemure5.tiles/thumb.jpg" lat="39.796233694" lng="19.70181763" heading="0.0">
+
+		<view hlookat="-118" vlookat="4" fovtype="MFOV" fov="132" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/canaldemure5.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/canaldemure5.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_kalamaki-strand" title="Kalamaki Beach 2" onstart="" thumburl="panos/kalamaki-strand.tiles/thumb.jpg" lat="39.7989065" lng="19.8847845" heading="0.0">
+
+		<view hlookat="18" vlookat="1" fovtype="MFOV" fov="120" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/kalamaki-strand.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/kalamaki-strand.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_kassiopi-felsen" title="Kassiopi Beach 2" onstart="" thumburl="panos/kassiopi-felsen.tiles/thumb.jpg" lat="39.79083003" lng="19.92507129" heading="0.0">
+
+		<view hlookat="-4" vlookat="18" fovtype="MFOV" fov="110" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/kassiopi-felsen.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/kassiopi-felsen.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_korfu-stadt-alte-festung-ganz-oben" title="Corfu Old Fortress 1" onstart="" thumburl="panos/korfu-stadt-alte-festung-ganz-oben.tiles/thumb.jpg" lat="39.62343265" lng="19.9288907" heading="0.0">
+
+		<view hlookat="123" vlookat="17" fovtype="MFOV" fov="133" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/korfu-stadt-alte-festung-ganz-oben.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/korfu-stadt-alte-festung-ganz-oben.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_pantokrator-antenne" title="Mount Pantokrator - Communication Station" onstart="" thumburl="panos/pantokrator-antenne.tiles/thumb.jpg" lat="39.74802500" lng="19.87182944" heading="0.0">
+
+		<view hlookat="-3" vlookat="4" fovtype="MFOV" fov="130" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/pantokrator-antenne.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/pantokrator-antenne.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_pantokrator-kloster" title="Mount Pantokrator - Monastery" onstart="" thumburl="panos/pantokrator-kloster.tiles/thumb.jpg" lat="39.74836333" lng="19.87214583" heading="0.0">
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/pantokrator-kloster.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/pantokrator-kloster.tiles/mobile_%s.jpg" />
+		</image>
+
+	</scene>
+
+</krpano>

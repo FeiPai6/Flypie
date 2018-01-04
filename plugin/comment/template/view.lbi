@@ -1,0 +1,28 @@
+<style>
+.vrshow_comment {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -200px;
+    width: 400px;
+    min-height: 100px;
+    background-color: rgba(51, 51, 51, 0.8);
+    z-index: 4300;
+    color: #fff;
+    border-radius: 5px;
+    display: none;
+}
+@media screen and (max-width: 767px) {
+    .vrshow_comment {
+        width: 250px;
+        margin-left: -125px;
+    }
+
+}
+</style>
+<div class="img_desc_container_min" id="comment_div">
+    <img src="/static/images/skin1/vr-btn-comment.png" onClick="show_comment()">
+    <div class="img_desc_min">说一说</div>
+</div>
+
+<script src="{$_lang.host}plugin/comment/js/comment.js"></script>

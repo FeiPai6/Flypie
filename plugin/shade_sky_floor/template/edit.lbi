@@ -1,0 +1,1 @@
+  <button type="button" class="btn" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="为天空/地面增加一张遮罩图片，可加入自定义信息或用来遮住脚架" onclick="openSky()"{/if}>天空/地面遮罩</button>

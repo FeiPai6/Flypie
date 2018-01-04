@@ -1,0 +1,4 @@
+ <div class="img_desc_container_min" id="footmarkDiv">
+	<img src="/static/images/skin1/footmark.png"  onClick="showFootMark()">
+	<div class="img_desc_min">足迹</div>
+</div>		

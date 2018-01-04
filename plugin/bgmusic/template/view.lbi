@@ -1,0 +1,67 @@
+<!-- <style>
+.btn_bgmusic {
+    background: url("/plugin/bgmusic/images/bgmusic-open.png") no-repeat;
+}
+
+.btn_bgmusic_off {
+    background: url("/plugin/bgmusic/images/bgmusic-close.png") no-repeat;
+}
+</style>
+ --><div class="btn_bgmusic" onClick="pause_bgMusic(this)" style="display:none"></div>
+<script>
+	$(function(){
+		plugins_init_function.push(bgmusic_init);
+	})
+	function bgmusic_init(data,settings){
+		 //背景音乐
+        var musicObj = data.bg_music;
+        if (musicObj.isWhole=='1') {
+            if (musicObj.useMusic=='1') {
+                settings["onstart"] += "playsound(bgmusic, '" + musicObj.mediaUrl + "', 0);";
+            }
+        } else {
+            $(musicObj.sceneSettings).each(function (idx) {
+                if (this.useMusic=='1') {
+                    settings['scene[scene_' + this.imgUuid + '].bgmusic'] = this.mediaUrl;
+                }
+            });
+        }
+       settings["events[skin_events].onloadcomplete"]+="js(toggleMusicBtn(get(xml.scene)));";
+	}
+	function toggleMusicBtn(sceneName) {
+	    var musicObj = $("body").data("panoData").bg_music;
+	    if (musicObj.isWhole=='1') {
+	        if (musicObj.useMusic=='1') {
+	            $('.btn_bgmusic,.btn_bgmusic_off').show();
+	        } else {
+	            $('.btn_bgmusic,.btn_bgmusic_off').hide();
+	        }
+	    } else {
+	        var imgUuid = sceneName.substring(sceneName.indexOf("_") + 1, sceneName.length).toLowerCase();
+	        $(musicObj.sceneSettings).each(function (idx) {
+	            if (imgUuid == this.imgUuid) {
+	                if (this.useMusic=='1') {
+	                    $('.btn_bgmusic,.btn_bgmusic_off').show();
+	                } else {
+	                    $('.btn_bgmusic,.btn_bgmusic_off').hide();
+	                }
+	            }
+	        });
+	    }
+	}
+	function pause_bgMusic(el) {
+	    var krpano = document.getElementById('krpanoSWFObject');
+	    // krpano.call("pausesoundtoggle(bgmusic);pausesoundtoggle(bgm);");
+	    krpano.call("pausesoundtoggle(bgmusic);pausesoundtoggle(bgm);");
+	    toggleMusic(el);
+	}
+	function toggleMusic(el) {
+	    if ($(el).hasClass("btn_bgmusic")) {
+	        $(el).removeClass("btn_bgmusic");
+	        $(el).addClass("btn_bgmusic_off");
+	    } else {
+	        $(el).removeClass("btn_bgmusic_off");
+	        $(el).addClass("btn_bgmusic");
+	    }
+	}
+</script>

@@ -1,0 +1,233 @@
+<!--
+	krpano - a krpano xml controlled thumbnails image bar
+-->
+
+<krpano>
+
+
+	<action name="create_thumbbar">
+		set(thumbbar_images,      %1);
+		set(thumbbar_align,       %2);
+		set(thumbbar_orientation, %3);
+		set(thumbbar_x,           %4);
+		set(thumbbar_y,           %5);
+		set(thumbbar_thumbwidth,  %6);
+		set(thumbbar_thumbheight, %7);
+		set(thumbbar_border,      %8);
+		set(thumbbar_image_index, 0);
+
+		set(thumbbar_xoffset, get(thumbbar_border) );
+		set(thumbbar_yoffset, get(thumbbar_border) );
+		set(thumbbar_xborder, 0);
+		set(thumbbar_yborder, 0);
+
+		if(thumbbar_orientation == h,
+			add(thumbbar_yborder, thumbbar_y, thumbbar_thumbheight);
+			add(thumbbar_yborder, thumbbar_yborder, thumbbar_border);
+			add(thumbbar_yborder, thumbbar_yborder, thumbbar_border);
+			add(thumbbar_yborder, thumbbar_yborder, thumbbar_border);
+			mul(thumbbar_yborder, thumbbar_yborder, 2);
+			mul(thumbbar_xborder, thumbbar_border, 2);
+			if(%2 == left,   set(thumbbar_yoffset,0); );
+			if(%2 == right,  set(thumbbar_yoffset,0); );
+			if(%2 == top,    mul(thumbbar_xoffset,thumbbar_border,0.5); );
+			if(%2 == bottom, mul(thumbbar_xoffset,thumbbar_border,0.5); );
+			if(%2 == center, mul(thumbbar_xoffset,thumbbar_border,0.5); set(thumbbar_yoffset,0); mul(thumbbar_yborder,thumbbar_border,2); );
+		  ,
+			add(thumbbar_xborder, thumbbar_x, thumbbar_thumbwidth);
+			add(thumbbar_xborder, thumbbar_xborder, thumbbar_border);
+			add(thumbbar_xborder, thumbbar_xborder, thumbbar_border);
+			add(thumbbar_xborder, thumbbar_xborder, thumbbar_border);
+			mul(thumbbar_xborder, thumbbar_xborder, 2);
+			mul(thumbbar_yborder, thumbbar_border, 2);
+			if(%2 == left,   mul(thumbbar_yoffset,thumbbar_border,0.5); );
+			if(%2 == right,  mul(thumbbar_yoffset,thumbbar_border,0.5); );
+			if(%2 == top,    set(thumbbar_xoffset,0); );
+			if(%2 == bottom, set(thumbbar_xoffset,0); );
+			if(%2 == center, set(thumbbar_xoffset,0); mul(thumbbar_yoffset,thumbbar_border,0.5); mul(thumbbar_xborder,thumbbar_border,2); );
+		  );
+
+		addplugin(thumbbar);
+		set(plugin[thumbbar].align, get(thumbbar_align));
+		set(plugin[thumbbar].x, get(thumbbar_x));
+		set(plugin[thumbbar].y, get(thumbbar_y));
+		set(plugin[thumbbar].type, container);
+		set(plugin[thumbbar].bgcolor, 0xFFFFFF);
+		set(plugin[thumbbar].bgalpha, 0.5);
+		set(plugin[thumbbar].zorder, 1);
+		set(plugin[thumbbar].enabled, false);
+	</action>
+
+
+	<action name="thumbbar_addimage">
+		txtadd(pname, 'thumbbar_image_', get(thumbbar_image_index));
+		addplugin(get(pname));
+		set(plugin[%pname].zorder, 2);
+		set(plugin[%pname].url, %CURRENTXML%/%1);
+		set(plugin[%pname].align,  get(thumbbar_align));
+		set(plugin[%pname].width,  get(thumbbar_thumbwidth));
+		set(plugin[%pname].height, get(thumbbar_thumbheight));
+
+		if (thumbbar_orientation == 'v',
+			<!-- vertical thumbs -->
+			add(plugin[%pname].x, thumbbar_x, thumbbar_xoffset);
+
+			add(tmp, thumbbar_border, thumbbar_thumbheight);
+			mul(tmp, tmp, thumbbar_image_index);
+			add(tmp, tmp, thumbbar_yoffset);
+			add(plugin[%pname].y, thumbbar_y, tmp );
+
+			set(thumbbar_vcenter,false);
+			if(thumbbar_align == left,   set(thumbbar_vcenter,true));
+			if(thumbbar_align == center, set(thumbbar_vcenter,true));
+			if(thumbbar_align == right,  set(thumbbar_vcenter,true));
+
+			if(thumbbar_vcenter,
+				add(tmp2, thumbbar_border, thumbbar_thumbheight);
+				mul(tmp2, tmp2, thumbbar_images);
+				mul(tmp2, tmp2, 0.5);
+				sub(plugin[%pname].y, plugin[%pname].y, tmp2 );
+				mul(tmp3, thumbbar_thumbheight, 0.5);
+				add(plugin[%pname].y, plugin[%pname].y, tmp3 );
+			  );
+
+			sub(tmp, tmp, thumbbar_yoffset);
+			add(tmp, tmp, thumbbar_border);
+			add(tmp, tmp, thumbbar_thumbheight);
+			add(tmp, tmp, thumbbar_border);
+			set(plugin[thumbbar].height, get(tmp));
+
+			mul(tmp, thumbbar_border, 2);
+			add(plugin[thumbbar].width, tmp, thumbbar_thumbwidth);
+		   ,
+
+			<!-- horizontal thumbs -->
+			add(plugin[%pname].y, thumbbar_y, thumbbar_yoffset);
+
+			add(tmp, thumbbar_border, thumbbar_thumbwidth);
+			mul(tmp, tmp, thumbbar_image_index);
+			add(tmp, tmp, thumbbar_xoffset);
+			add(plugin[%pname].x, thumbbar_x, tmp );
+
+			set(thumbbar_hcenter,false);
+			if(thumbbar_align == top,    set(thumbbar_hcenter,true));
+			if(thumbbar_align == center, set(thumbbar_hcenter,true));
+			if(thumbbar_align == bottom, set(thumbbar_hcenter,true));
+
+			if(thumbbar_hcenter,
+				add(tmp2, thumbbar_border, thumbbar_thumbwidth);
+				mul(tmp2, tmp2, thumbbar_images);
+				mul(tmp2, tmp2, 0.5);
+				sub(plugin[%pname].x, plugin[%pname].x, tmp2 );
+				mul(tmp3, thumbbar_thumbwidth, 0.5);
+				add(plugin[%pname].x, plugin[%pname].x, tmp3 );
+			  );
+
+			sub(tmp, tmp, thumbbar_xoffset);
+			add(tmp, tmp, thumbbar_border);
+			add(tmp, tmp, thumbbar_thumbwidth);
+			add(tmp, tmp, thumbbar_border);
+			set(plugin[thumbbar].width, get(tmp));
+
+			mul(tmp, thumbbar_border, 2);
+			add(plugin[thumbbar].height, tmp, thumbbar_thumbheight);
+		   );
+
+		copy(plugin[%pname].thumbx, plugin[%pname].x);
+		copy(plugin[%pname].thumby, plugin[%pname].y);
+
+		set(plugin[%pname].onclick, thumbbar_showimage(get(name)) );
+
+		inc(thumbbar_image_index);
+	</action>
+
+
+	<action name="thumbbar_showimage">
+		thumbbar_hide_allimages();
+
+		set(plugin[%1].zorder, 3);
+
+		push(plugin[%1].width);
+		push(plugin[%1].height);
+		plugin[%1].resetsize();
+		copy(plugin[%1].originalwidth, plugin[%1].width);
+		copy(plugin[%1].originalheight, plugin[%1].height);
+		pop(plugin[%1].height);
+		pop(plugin[%1].width);
+
+		set(imgwidth, get(plugin[%1].originalwidth));
+		set(imgheight, get(plugin[%1].originalheight));
+
+		set(maxwidth, get(stagewidth));
+		sub(maxwidth, maxwidth, thumbbar_xborder);
+
+		set(maxheight, get(stageheight));
+		sub(maxheight, maxheight, thumbbar_yborder);
+
+		if(imgwidth GT maxwidth,
+		   mul(imgheight, imgheight, maxwidth);
+		   div(imgheight, imgheight, imgwidth);
+		   copy(imgwidth, maxwidth);
+		  );
+
+		if(imgheight GT maxheight,
+		   mul(imgwidth, imgwidth, maxheight);
+		   div(imgwidth, imgwidth, imgheight);
+		   copy(imgheight, maxheight);
+		  );
+
+		tween(plugin[%1].width, get(imgwidth));
+		tween(plugin[%1].height, get(imgheight));
+
+		mul(tmp, thumbbar_border, 3);
+		add(tmp, tmp, thumbbar_thumbwidth);
+
+		plugin[%1].changeorigin(center,center);
+
+		tween(plugin[%1].x, 0);
+		tween(plugin[%1].y, 0);
+
+		set(plugin[%1].onclick, thumbbar_hideimage(%1) );
+	</action>
+
+
+	<action name="thumbbar_hideimage">
+		plugin[%1].changeorigin(get(thumbbar_align),get(thumbbar_align));
+
+		set(plugin[%1].zorder, 2);
+
+		tween(plugin[%1].width, get(thumbbar_thumbwidth));
+		tween(plugin[%1].height, get(thumbbar_thumbheight));
+		tween(plugin[%1].x, get(plugin[%1].thumbx));
+		tween(plugin[%1].y, get(plugin[%1].thumby));
+
+		set(plugin[%1].onclick, thumbbar_showimage(%1) );
+	</action>
+
+
+	<action name="thumbbar_hide_allimages">
+		if(%1 != NEXT, set(i,0));
+		txtadd(pname, 'thumbbar_image_', get(i));
+
+		thumbbar_hideimage(get(pname));
+
+		inc(i);
+		if(i LT thumbbar_images, thumbbar_hide_allimages(NEXT));
+	</action>
+	
+	
+	<action name="thumbbar_set_visible">
+		if(%2 != NEXT, set(i,0));
+		txtadd(pname, 'thumbbar_image_', get(i));
+
+		set(plugin[get(pname)].visible,%1);
+
+		inc(i);
+		if(i LT thumbbar_images, thumbbar_set_visible(%1,NEXT), set(plugin[thumbbar].visible,%1));
+	</action>
+
+
+</krpano>
+
+
+

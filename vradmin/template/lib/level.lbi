@@ -1,0 +1,71 @@
+<h3>
+	<a href="/{$_lang.admin_path}/?m=level&act=detail" class="actionBtn add">添加用户组</a>
+	<div style="height:36px"></div>
+</h3>
+{if $act=='list'}
+	<table  class="tableBasic" border="0" cellpadding="8" cellspacing="0"  width="100%">
+			<tr>
+				<th width="80">组ID</th>
+				<th width="200">组名称</th>
+				<th>模块权限</th>
+				<th width="120">操作</th>
+			</tr>
+			{foreach $list as $v}
+			 <tr>
+				<td width="80">{$v.id}{if $v.id==1}(不可删除){/if}</td>
+				<td width="200">{$v.level_name}</td>
+				<td>
+					{foreach $v.privileges_name as $v2}
+						<label style="display:inline-table"><input type="checkbox" checked="checked">{$v2}　</label>
+					{/foreach}
+				</td>
+				<td width="120">
+				<a href="/{$_lang.admin_path}/?m=level&act=detail&level={$v.id}">编辑</a>　
+				<a href="javascript:;" onClick="javascript:delete_user_level({$v.id});">删除</a>
+				</td>
+			</tr>
+			{/foreach}
+	</table>
+	<script type="text/javascript">
+	function delete_user_level(level){
+		if(confirm("确认删除该用户组吗？")){
+			$.post("/{$_lang.admin_path}/?m=level&act=delete",{literal}{level:level}{/literal},function(data){
+				var data = json_decode(data);
+				alert(data.msg);
+				if(data.status==1){
+					window.location.reload();
+				}
+			});
+		}
+	}
+	</script>
+{/if}
+{if $act=='detail'}
+    <form action="/{$_lang.admin_path}/?m=level" id="level_form" method="post" enctype="multipart/form-data">
+	<table  class="tableBasic" border="0" cellpadding="4" cellspacing="0"  width="100%">
+			<tr>
+				<th width="120"><i class="require-red">*</i> 组名称</th>
+				<td><input type="text" name="level_name" value="{$level_desc.level_name}"></td>
+			 </tr>
+			 <tr>	
+				<th><i class="require-red">*</i> 组权限</th>
+				<td>
+					{foreach $plugins as $k=>$v}
+						<label style="display:inline-table"><input type="checkbox" name="privileges[]" value="{$k}" {if in_array($k,$level_desc.privileges)}checked{/if}> {$v.plugin_name}</label>　
+					{/foreach}
+				</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<div id="wrong_text" class="warning" style="display:none"></div>
+					<div class="clear"></div>
+					<input type="hidden" name="act" value="detail">
+					<input type="hidden" name="level" value="{$level_desc.id}">
+					<input type="button" class="btn" value="提交" id="sub_btn" onclick="javascript:ajaxFormSubmit('level_form','提交');">
+					<input class="btn" onClick="history.go(-1)" value="返回" type="button">
+				</td>
+			</tr>
+	</table>
+	</form>
+{/if}

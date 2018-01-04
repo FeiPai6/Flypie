@@ -1,0 +1,121 @@
+<!--
+	krpano - xml slider / blending cubes example
+-->
+
+<krpano version="1.16" onstart="start();">
+	
+	<!-- text style for startup text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="4.0" fadeintime="1.0" fadetime="1.0"
+	           />
+	
+	<view hlookat="110" vlookat="40" fovtype="MFOV" fov="130" fovmin="60" fovmax="160" />
+	
+
+	<plugin name="slider_bg" url="slider_background.png" align="bottom" x="0" y="30" handcursor="false" zorder="1" />
+	
+	<plugin name="slider_grip" url="slider_grip.png" align="left" edge="center" parent="slider_bg" x="0" zorder="2" 
+			dragging="if(pressed, 
+						sub(dx, mouse.stagex, drag_stagex); 
+						add(newx, drag_currentx, dx); 
+						if(newx LT 0, set(newx,0));
+						if(newx GT plugin[slider_bg].pixelwidth, copy(newx,plugin[slider_bg].pixelwidth));
+						copy(x,newx);
+						div(val, newx, plugin[slider_bg].pixelwidth);
+						setblend(get(val));
+						delayedcall(0,dragging());
+					  );"
+			ondown="copy(drag_currentx,x); copy(drag_stagex,mouse.stagex); dragging();"
+			/>
+
+
+	<action name="addface">
+		addhotspot(%1);
+		set(hotspot[%1].url, %2);
+		set(hotspot[%1].ath, %3);
+		set(hotspot[%1].atv, %4);
+		set(hotspot[%1].width,  1000);
+		set(hotspot[%1].height, 1000);
+		if(device.html5, if(device.desktop,
+			<!-- desktop html5 browsers need overlapping cube faces -->
+			set(hotspot[%1].width,  1002);
+			set(hotspot[%1].height, 1002);
+		  ));
+		set(hotspot[%1].distorted, true);
+		set(hotspot[%1].enabled, false);
+		if(isflash, set(hotspot[%1].visible, false));
+		set(hotspot[%1].alpha, 0.0);
+		set(hotspot[%1].details, 16);
+	</action>
+
+
+	<action name="addcube">
+		addface(face_%1_F, '%CURRENTXML%/%1_f.jpg',    0,   0);
+		addface(face_%1_L, '%CURRENTXML%/%1_l.jpg',  -90,   0);
+		addface(face_%1_R, '%CURRENTXML%/%1_r.jpg',  +90,   0);
+		addface(face_%1_B, '%CURRENTXML%/%1_b.jpg', +180,   0);
+		addface(face_%1_Z, '%CURRENTXML%/%1_u.jpg',    0, -90);
+		addface(face_%1_N, '%CURRENTXML%/%1_d.jpg',    0, +90);
+	</action>
+
+
+	<action name="setalpha" devices="flash">
+		set(%1.alpha, %2);
+		if(%1.alpha == 0.0, set(%1.visible,false), set(%1.visible,true));
+	</action>
+	
+	<action name="setalpha" devices="html5">
+		<!-- safari has some framerate stops/problems when toggling the visibility - so keep here the spots always visible -->
+		set(%1.alpha, %2);
+	</action>
+
+
+	<action name="setcubealpha">
+		setalpha(hotspot[face_%1_F], %2);
+		setalpha(hotspot[face_%1_L], %2);
+		setalpha(hotspot[face_%1_R], %2);
+		setalpha(hotspot[face_%1_B], %2);
+		setalpha(hotspot[face_%1_Z], %2);
+		setalpha(hotspot[face_%1_N], %2);
+	</action>
+
+
+	<action name="start">
+		showtext('[b][i]krpano[br]xml slider / blending cubes example[/i][/b]', infostyle);
+		
+		addcube(pano1);
+		addcube(pano2);
+
+		setblend(0);
+	</action>
+
+
+	<action name="setblend" devices="flash">
+		sub(blend2, 1.0, %1);
+		setcubealpha(pano1, get(blend2));
+		setcubealpha(pano2, %1);
+	</action>
+	
+	<action name="setblend" devices="html5">
+		set(blend1, %1);
+		sub(blend2, 1.0, %1);
+		copy(hotspot[face_pano1_F].alpha, blend1);
+		copy(hotspot[face_pano1_L].alpha, blend1);
+		copy(hotspot[face_pano1_R].alpha, blend1);
+		copy(hotspot[face_pano1_B].alpha, blend1);
+		copy(hotspot[face_pano1_Z].alpha, blend1);
+		copy(hotspot[face_pano1_N].alpha, blend1);
+		copy(hotspot[face_pano2_F].alpha, blend2);
+		copy(hotspot[face_pano2_L].alpha, blend2);
+		copy(hotspot[face_pano2_R].alpha, blend2);
+		copy(hotspot[face_pano2_B].alpha, blend2);
+		copy(hotspot[face_pano2_Z].alpha, blend2);
+		copy(hotspot[face_pano2_N].alpha, blend2);
+	</action>
+
+</krpano>
+
+
+

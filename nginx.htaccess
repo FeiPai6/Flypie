@@ -1,0 +1,22 @@
+location ~* .(ini|sh|lbi|tpl|conf)$ {  
+     deny all;  
+}  
+
+rewrite ^/passport/$                                  /passport.php        		last;
+rewrite ^/passport/([a-zA-Z0-9_]+)$                   /passport.php?module=$1   last; 
+rewrite ^/passport/([a-zA-Z0-9_]+)?redirectUrl=(.*)$               /passport.php?module=$1&redirectUrl=$2     last;
+
+rewrite ^/member/$                                  /member.php        		last;
+rewrite ^/member/([a-zA-Z0-9_]+)$                   /member.php?module=$1   last; 
+
+rewrite ^/tour/([a-zA-Z0-9_]+)$                   /tour.php?view_uuid=$1   last;  
+
+rewrite ^/edit/$                                  /edit.php        		last;
+rewrite ^/edit/([a-zA-Z0-9_]+)$                   /edit.php?module=$1   last; 
+
+rewrite ^/add/$                                  /add.php        		last;
+rewrite ^/add/([a-zA-Z0-9_]+)$                   /add.php?module=$1   last; 
+
+rewrite ^/index.html$                             /index.php         		last;
+rewrite ^/([a-zA-Z0-9_]+)$                   /index.php?module=$1   last; 
+rewrite ^/people/([0-9]+)$                   /index.php?module=people&uid=$1   last; 

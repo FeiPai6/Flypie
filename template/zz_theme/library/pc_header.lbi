@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>{if $title}{$title}-{$_lang.title}{else}{$_lang.title}-{$_lang.subtitle}{/if}</title>
+<link rel="stylesheet" href="/static/css/zui.min.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/zui-theme.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/redefine.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/common.css">
+<script language="JavaScript" type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/datetimepicker.js"></script>
+</head>
+
+<body>
+<header>
+	<nav class="navbar navbar-default" >
+	  <div class="container">
+	    	<div class="row">
+	    		<div class="col-md-1 pull-left top_nav_sc" ><i class="icon-star-empty"></i>&nbsp;<span  onclick="JavaScript:addFavorite2()">加入收藏</span></div>
+	    		<div class="col-md-1 pull-left top_nav_sj">
+	    			<div class="top_nav_qr">
+	    				<span style="margin-left: 33px;">请打开微信扫一扫</span>
+	    				<img src="/template/{$_lang.moban}/images/mobile_qr.png" alt="">
+	    			</div>
+	    			<i class="icon-mobile"></i>&nbsp;手机版
+	    		</div>
+	    		<div class="col-md-2 pull-right navbar_top_right">
+	    		{if $user.pk_user_main lt 1}
+	    			<ul class="not_login">
+	    				<li>
+	    					<a href="/passport/" style="margin-right: 10px;">登录</a>
+		    				<span class="sep-lines"></span>
+	    				</li>
+	    				<li>
+	    					<a href="/passport/register" style="margin-left: 10px;">注册</a>
+	    				</li>
+	    			</ul>
+		    	{else}	
+		    		<ul class="a_login">
+		    		   <li class="dropdown">
+    		               <a  class="dropdown-toggle" data-toggle="dropdown" style="background:none;text-decoration: none;cursor: pointer;">{$user.nickname}<b class="caret"></b></a>
+    		               <ul class="dropdown-menu pull-right" role="menu">
+    		                 <li><a href="/member/profile">账户管理</a></li>
+    		                 <li class="divider"></li>
+    		                 <li><a href="/member/project">图片管理</a></li>
+    		                 <li><a href="/member/project?act=videos">视频管理</a></li>
+    		                 <li><a href="/member/mediares">素材管理</a></li>
+    						 <li><a href="/member/logout">退　　出</a></li>
+    		               </ul>
+    		             </li>
+					</ul>
+		    	{/if}
+
+	    		</div>
+	    	</div>
+	  </div>
+	</nav>
+
+</header>
+	<div class="container">
+		<div class="row ">
+			<div class="col-md-2" style="padding: 0;">
+				<a href="/"><img src="/template/{$_lang.moban}/images/logo.png" width="100%" height="60px"></a>
+			</div>
+			<div class="col-md-4 col-md-offset-5" style="margin-top:6px">
+				<div class="input-group">
+				  <input type="text" id="search_box" class="form-control input-lg" placeholder="搜索VR漫游">
+				  <span class="input-group-btn">
+				    <button class="btn btn-default btn-lg" type="button" onclick="search()"><i class="icon-search"></i></button>
+				  </span>
+				</div>
+			</div>
+			<div class="col-md-1" style="margin-top:6px;margin-left: -7px;">
+				 <button  type="button" class="btn btn-warning btn-lg" onclick="javascript:window.location.href='/add/pic'">
+				   <i class="cloud-upload"></i> 发布
+				  </button>
+			</div>
+		</div>
+		<div class="row cate_top">
+			<div class="col-md-2 all_cate_span">
+				<span>全部分类</span>
+				<span class="pull-right" style="margin-right: 15px;"><i id="cate_up_down" class="icon-chevron-down"></i></span>
+				<div class="sub_cate">
+					<ul>
+						{if $video_tag}
+							{foreach $p_tags as $v}
+								<li><a href="/videos?tag={$v.id}">{$v.name}</a></li>
+							{/foreach}
+
+							{else}
+							
+							{foreach $p_tags as $v}
+								<li><a href="/pictures?tag={$v.id}">{$v.name}</a></li>
+							{/foreach}
+
+						{/if}
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-1"><a href="/" style="clear: both">首页</a></div>
+			<div class="col-md-1"><a href="/videos" style="clear: both">全景视频</a></div>
+			<div class="col-md-1"><a href="/#jxpp" style="clear: both">精选品牌</a></div>
+			<div class="col-md-1"><a href="/#new_join" style="clear: both">最新入驻</a></div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$(".all_cate_span").mouseover(function(){
+				$('#cate_up_down').attr("class",'icon-chevron-up');
+			}).mouseout(function(){
+				$('#cate_up_down').attr("class",'icon-chevron-down');
+			})
+			$('#search_box').bind('keyup', function(event) {
+				if (event.keyCode == "13") {
+					//回车执行查询
+					search();
+				}
+			});
+			$(".top_nav_sc").mouseover(function(){
+				$(this).children("i").addClass("icon-star top_nav_sc_check").removeClass("icon-star-empty");
+			}).mouseout(function(){
+				$(this).children("i").removeClass("icon-star top_nav_sc_check").addClass("icon-star-empty");
+			})
+		})
+		function search(){
+			var word = $.trim($("#search_box").val());
+			if (word.length<=0) {
+				alert_notice("请输入搜索关键词");
+				return false;
+			}
+			window.location.href = "/search?word="+word;
+		}
+		function addFavorite2() {
+		    var url = window.location;
+		    var title = document.title;
+		    var ua = navigator.userAgent.toLowerCase();
+		    if (ua.indexOf("360se") > -1) {
+		      alert_notice('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+		    }
+		    else if (ua.indexOf("msie 8") > -1) {
+		        window.external.AddToFavoritesBar(url, title); //IE8
+		    }
+		    else if (document.all) {
+		  try{
+		   window.external.addFavorite(url, title);
+		  }catch(e){
+		   alert_notice('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+		  }
+		    }
+		    else if (window.sidebar) {
+		        window.sidebar.addPanel(title, url, "");
+		    }
+		    else {
+		  alert_notice('您的浏览器不支持,请按 Ctrl+D 手动收藏!');
+		    }
+		}
+	</script>

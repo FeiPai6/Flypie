@@ -1,0 +1,22 @@
+<div class="vrshow_comment">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 style="margin-left:10px">评论</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="padding-left:20px;padding-right:20px">
+                <textarea id="usercomm" class="form-control" rows="3" placeholder="说点什么吧！最多不要超过15个字哦" maxlength="15"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right" style="padding:10px 20px">
+                <div class="hide-comment" onClick="switch_show_comment(false)">
+                    <img src="{$_lang.host}plugin/comment/images/hide-comment.png">
+                    <span>隐藏</span>
+                </div>
+                <button  class="btn btn-primary disabled" type="button" id="doComm">发表</button>
+                <button class="btn" type="button" onClick="cancel_comment()">取消</button>
+            </div>
+        </div>
+</div>

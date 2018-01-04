@@ -1,0 +1,37 @@
+<style type="text/css">
+    .map-sug-custom {
+        z-index: 1051;
+    }
+</style>
+
+<div class="modal fade" id="mapMarkModal" data-backdrop="static" data-keyboard="false" data-position="5%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">地图导航 <small>点击地图添加标记，拖动标记到指定位置</small></h2>
+            </div>
+            <div class="modal-body" style="padding:0">
+                <div class="map-mark-search-div">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon-search"></i></span>
+                        <input type="text" class="form-control" id="mapSearchLocationInput">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="map-sug-custom">
+
+                </div>
+                <div id="mapMarkContainer" class="map-mark-container">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" disabled>保存</button>
+                <button class="btn btn-danger" disabled>清除</button>
+                <button class="btn" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

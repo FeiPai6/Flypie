@@ -1,0 +1,52 @@
+<!--
+	krpano - buttons example
+	- changeable moveto/drag cursors
+-->
+
+<krpano version="1.16" onstart="showtext('[b][i]krpano[br]hotspot onover change[/i][/b]', infostyle);">
+
+	<!-- text style for startup text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="4.0" fadeintime="1.0" fadetime="1.0"
+	           />
+
+    <view hlookat="15" vlookat="10" fov="100" />
+
+    <preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+    
+    <hotspot name="spot"
+             url="image1.jpg"
+             distorted="true"
+             ath="0"
+             atv="0"
+             scale="1.0"
+             rx="0" ry="0" rz="0"
+             zorder="1"
+             onover="set(hotspot[spot_over].visible,true); tween(hotspot[spot_over].alpha,1,0.5,default);"
+             onout="tween(hotspot[spot_over].alpha,0,0.5,default, set(hotspot[spot_over].visible,false));"
+             onclick="looktohotspot(get(name), 60);"
+             />
+             
+    <hotspot name="spot_over"
+             url="image2.jpg"
+             zorder="2"
+             visible="false"
+             enabled="false"
+             alpha="0"
+             onloaded="copyhotspotsettingsfrom(spot);"
+             />          
+             
+    <action name="copyhotspotsettingsfrom">
+        copy(distorted, hotspot[%1].distorted);
+        copy(ath, hotspot[%1].ath);
+        copy(atv, hotspot[%1].atv);
+        copy(scale, hotspot[%1].scale);
+        copy(rx, hotspot[%1].rx);
+        copy(ry, hotspot[%1].ry);
+        copy(rz, hotspot[%1].rz);
+    </action>
+
+</krpano>
+

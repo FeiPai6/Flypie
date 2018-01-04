@@ -1,0 +1,50 @@
+<krpano>
+
+	<preview type="grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);" />
+
+
+	<!-- the image -->
+	<layer name="image" url="image1.jpg" scale="1.0" align="center" edge="center"
+		onover="
+			set(iszoom, true);
+			set(startzoom, true);
+			copy(copy_mousefovchange, control.mousefovchange);
+			copy(copy_touchzoom, control.touchzoom);
+			set(control.mousefovchange, 0);
+			set(control.touchzoom, false);
+		"
+		onout="
+			set(iszoom, false);
+			copy(control.mousefovchange, copy_mousefovchange);
+			copy(control.touchzoom, copy_touchzoom);
+		"
+		ondown.touch="onover();"
+		onup.touch="onout();"
+	/>
+
+	<!-- mouse wheel event for zooming -->
+	<events name="image_zoom_events"  onmousewheel="image_onmousewheel();" />
+
+	<!-- the action for zooming either via the mouse wheel for via touch gestures -->
+	<action name="image_onmousewheel">
+		if(iszoom,
+			if(wheeldelta_touchscale GT 0,
+				<!-- touch zoom -->
+				if(startzoom,
+					set(startzoom,false);
+					copy(start_wheeldelta_touchscale, wheeldelta_touchscale);
+					copy(start_imagescale, layer[image].scale);
+				  );
+
+				div(tmp, wheeldelta_touchscale, start_wheeldelta_touchscale);
+				mul(layer[image].scale, start_imagescale, tmp);
+			  ,
+				<!-- mouse wheel zoom -->
+				mul(sit,get(wheeldelta),0.05);
+				mul(sit,layer[image].scale);
+				add(layer[image].scale,sit);
+			  );
+		);
+	</action>
+
+</krpano>

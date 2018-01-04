@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-ch" class="screen-desktop-wide device-desktop"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport">
+<title>{if $title}{$title}-{$_lang.title}{else}{$_lang.title}-{$_lang.subtitle}{/if}</title>
+<meta name="description" content="{$_lang.desciption}">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/zui.min.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/zui-theme.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/bootstrap.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/styles.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/media.css">
+<script language="JavaScript" type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/datetimepicker.js"></script>	
+<style>
+.navbar-default .navbar-nav > .active1 > a{
+	color:#fff;
+	    border-top: 2px solid #fff;
+}
+.navbar-default .navbar-nav > li > a:hover{
+color:#fff;
+	    border-top: 2px solid #fff;
+}
+</style>
+</head>
+
+<body>

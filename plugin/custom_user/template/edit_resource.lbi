@@ -1,0 +1,23 @@
+<div id="userModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">自定义作者名</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">作者名称不能超过20个字符</p>
+                <div class="row" style="margin-top:10px">
+                    <label class="col-md-3 text-right" style="height:32px;line-height:32px;">作者姓名：</label>
+                    <div class="col-md-8">
+                        <input type="text" name="user" placeholder="请输入作者姓名" class="form-control" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">完成</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/plugin/custom_user/js/custom_user.js"></script>

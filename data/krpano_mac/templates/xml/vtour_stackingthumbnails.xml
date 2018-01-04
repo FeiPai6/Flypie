@@ -1,0 +1,12 @@
+<krpano version="1.18" onstart="startup();">
+
+	<include url="skin/vtourskin_stackingthumbs.xml" />
+
+	<action name="startup">
+		if(startscene === null, copy(startscene,scene[0].name));
+		loadscene(get(startscene), null, MERGE);
+	</action>
+
+	[SCENES]
+
+</krpano>

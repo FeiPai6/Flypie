@@ -1,0 +1,1 @@
+ <button type="button" class="btn btn-custom-logo"  data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="下载项目到本地浏览" onclick="openProjectDownModal()"{/if} >离线下载</button>

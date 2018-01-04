@@ -1,0 +1,10 @@
+<krpano>
+
+	<display details="24" />
+
+	<image type="SPHERE">
+		<sphere url="sphere.png" />
+	</image>
+
+</krpano>
+

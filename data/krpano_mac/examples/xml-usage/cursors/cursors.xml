@@ -1,0 +1,125 @@
+<!--
+	krpano - cursors example
+	- shows the usage of different mouse curos images
+-->
+
+<krpano version="1.16" onstart="showtext('[b][i]krpano[br]cursors example[/i][/b]', infostyle);">
+
+	<!-- text styles for startup text and onhover text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="4.0" fadeintime="1.0" fadetime="1.0"
+	           />
+
+	<!-- set the qtvr cursor after the xml was loaded -->
+	<events onxmlcomplete="action(qtvrcursor);" />
+
+
+	<action name="qtvrcursor">
+		set(control.mousetype, moveto);
+		set(cursors.url,  %CURRENTXML%/qtvr-cursors.png);
+		set(cursors.type, 8way);
+		set(cursors.move,       0|0|16|16);
+		set(cursors.drag,      16|0|16|16);
+		set(cursors.arrow_u,   32|0|16|16);
+		set(cursors.arrow_d,   48|0|16|16);
+		set(cursors.arrow_l,   64|0|16|16);
+		set(cursors.arrow_r,   80|0|16|16);
+		set(cursors.arrow_lu,  96|0|16|16);
+		set(cursors.arrow_ru, 112|0|16|16);
+		set(cursors.arrow_rd, 128|0|16|16);
+		set(cursors.arrow_ld, 144|0|16|16);
+	</action>
+
+	<action name="dragcursor">
+		set(control.mousetype, drag2D);
+		set(cursors.url,  %CURRENTXML%/drag-cursors.png);
+		set(cursors.type, drag);
+		set(cursors.move,  2|0|30|32);
+		set(cursors.drag, 37|0|30|32);
+	</action>
+
+	<action name="arrowcursor">
+		set(control.mousetype, moveto);
+		set(cursors.url,  %CURRENTXML%/arrow-cursors.png);
+		set(cursors.type, 4way);
+		set(cursors.move,      112|0|28|28);
+		set(cursors.drag,      112|0|28|28);
+		set(cursors.arrow_r,    0|0|28|28);
+		set(cursors.arrow_d,   28|0|28|28);
+		set(cursors.arrow_l,   56|0|28|28);
+		set(cursors.arrow_u,   84|0|28|28);
+	</action>
+
+	<action name="animatedcursor">
+		set(control.mousetype, moveto);
+		set(cursors.url, %CURRENTXML%/animated-cursor.swf);
+		set(cursors.type, drag);
+		set(cursors.move, null);
+		set(cursors.drag, null);
+	</action>
+
+	<action name="movecursor">
+		set(control.mousetype, moveto);
+		set(cursors.url,  %CURRENTXML%/move-cursors.png);
+		set(cursors.type, drag);
+		set(cursors.move,  0|0|32|32);
+		set(cursors.drag, 32|0|32|32);
+	</action>
+
+
+
+	<!-- use only a grid preview pano to save download space ;-) -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+
+
+
+	<!-- buttons to change the cursor
+	     (<style> is used for all identical attributes of all buttons to reduce the code size)
+	-->
+
+	<style name="buttonstyle"
+	       url="%SWFPATH%/plugins/textfield.swf" keep="true" children="false"
+	       css="p{color:#000000; font-family:Arial; font-weight:bold; font-size:14; margin-left:5; margin-right:5; text-align:center; }"
+	       backgroundcolor="0xFFFFFF" roundedge="5" shadow="1" borderwidth="0" glow="4" glowcolor="0xFFFFFF" visible="false"
+	       onover="tween(alpha,0.7,distance(0.3,0.2));"
+	       onout="tween(alpha,1.0,distance(0.3,0.2));"
+	       onloaded="set(alpha,0);set(textblur,15);set(blur,15); set(visible,true); tween(alpha,1,0.3); tween(textblur,0,0.3); tween(blur,0,0.3);"
+	       width="100" height="22"
+	       />
+
+	<plugin name="b1" style="buttonstyle"
+	        html="[p]move[/p]"
+	        align="bottom" x="-240" y="25"
+	        onclick="action(movecursor);"
+	        />
+
+	<plugin name="b2" style="buttonstyle"
+	        html="[p]arrow[/p]"
+	        align="bottom" x="-120" y="25"
+	        onclick="action(arrowcursor);"
+	        />
+
+	<plugin name="b3" style="buttonstyle"
+	        html="[p]QTVR[/p]"
+	        align="bottom" x="0" y="25"
+	        onclick="action(qtvrcursor);"
+	        />
+
+	<plugin name="b4" style="buttonstyle"
+	        html="[p]drag cursor[/p]"
+	        align="bottom" x="120" y="25"
+	        onclick="action(dragcursor);"
+	        />
+
+	<plugin name="b5" style="buttonstyle"
+	        html="[p]animated[/p]"
+	        align="bottom" x="240" y="25"
+	        onclick="action(animatedcursor);"
+	        />
+
+
+</krpano>
+

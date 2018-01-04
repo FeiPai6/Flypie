@@ -1,0 +1,10 @@
+<script>
+	$(function(){
+		plugins_init_function.push(open_alert_init);
+	})
+	function open_alert_init(data,settings){
+		if (data.open_alert.useAlert=='1') {
+            settings["events[skin_events].onloadcomplete"] += "show_open_alert('" + data.open_alert.imgPath + "');";
+        }
+	}
+</script>

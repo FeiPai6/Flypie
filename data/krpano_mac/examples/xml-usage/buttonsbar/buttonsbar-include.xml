@@ -1,0 +1,50 @@
+<!--
+	buttonsbar-include.xml template
+-->
+<krpano>
+
+	<!-- use the Flashplayer BEST rendering quality for better rounded textfield edges -->
+	<display movequality10="BEST" stillquality10="BEST" />
+
+	<!-- use the textfield with border, background, rounded edges and shadow as container for the buttons -->
+	<layer name="buttons" keep="true" url="%SWFPATH%/plugins/textfield.swf" align="bottom" width="252" height="44" y="12"
+		background="true" backgroundcolor="0x000000" backgroundalpha="0.667"
+		border="true" bordercolor="0xFFFFFF" roundedge="28"
+		shadow="0.1" shadowrange="12" shadowcolor="0xFFFFFF"
+	>
+		<layer name="left"  url="vtourskin.png" scale="0.5" align="lefttop" x="10"  y="6" crop="0|192|64|64"  ondown="buttonglow(get(name));set(hlookat_moveforce,-1);"  onup="buttonglow(null);set(hlookat_moveforce,0);" />
+		<layer name="right" url="vtourskin.png" scale="0.5" align="lefttop" x="50"  y="6" crop="64|192|64|64" ondown="buttonglow(get(name));set(hlookat_moveforce,+1);"  onup="buttonglow(null);set(hlookat_moveforce,0);" />
+		<layer name="up"    url="vtourskin.png" scale="0.5" align="lefttop" x="90"  y="6" crop="0|256|64|64"  ondown="buttonglow(get(name));set(vlookat_moveforce,-1);"  onup="buttonglow(null);set(vlookat_moveforce,0);" />
+		<layer name="down"  url="vtourskin.png" scale="0.5" align="lefttop" x="130" y="6" crop="64|256|64|64" ondown="buttonglow(get(name));set(vlookat_moveforce,+1);"  onup="buttonglow(null);set(vlookat_moveforce,0);" />
+		<layer name="in"    url="vtourskin.png" scale="0.5" align="lefttop" x="170" y="6" crop="0|320|64|64"  ondown="buttonglow(get(name));set(fov_moveforce,-1);"      onup="buttonglow(null);set(fov_moveforce,0);"     />
+		<layer name="out"   url="vtourskin.png" scale="0.5" align="lefttop" x="210" y="6" crop="64|320|64|64" ondown="buttonglow(get(name));set(fov_moveforce,+1);"      onup="buttonglow(null);set(fov_moveforce,0);"     />
+	</layer>
+
+	<!-- add flashplayer fullscreen buttons and make the container larger -->
+	<layer name="buttons" width="295" devices="flash">
+		<layer name="openfs"  url="vtourskin.png" scale="0.5" align="lefttop" x="250" y="6" crop="0|576|64|64"  ondown="buttonglow(get(name));" onup="buttonglow(null);" onclick="set(fullscreen,true);"  visible="true"  />
+		<layer name="closefs" url="vtourskin.png" scale="0.5" align="lefttop" x="250" y="6" crop="64|576|64|64" ondown="buttonglow(get(name));" onup="buttonglow(null);" onclick="set(fullscreen,false);" visible="false" />
+	</layer>
+
+	<!-- glow image -->
+	<layer name="buttonglow" keep="true" url="vtourskin.png" crop="64|384|64|64" align="center" x="0" y="1" alpha="0.0" visible="false" enabled="false" />
+
+	<!-- action for adding or removing the glow image -->
+	<action name="buttonglow">
+		if(%1 != null,
+			set(layer[buttonglow].parent, %1);
+			set(layer[buttonglow].visible, true);
+			tween(layer[buttonglow].alpha, 0.7, 0.07);
+		  ,
+			tween(layer[buttonglow].alpha, 0.0, 0.1, default, set(layer[buttonglow].parent, null); set(layer[buttonglow].visible, false); );
+		  );
+	</action>
+
+	<!-- events to change the fullscreen buttons -->
+	<events name="buttonevents" keep="true" devices="flash"
+	        onenterfullscreen="set(layer[openfs].visible,false); set(layer[closefs].visible,true);"
+	        onexitfullscreen ="set(layer[openfs].visible,true);  set(layer[closefs].visible,false);"
+	        />
+
+
+</krpano>

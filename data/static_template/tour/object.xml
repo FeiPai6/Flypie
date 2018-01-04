@@ -1,0 +1,145 @@
+<krpano version="1.0.8.15">
+
+	<events onresize="updateframes()" onviewchange="updateframesscale()" />
+	
+	<style name="frame" keep="true" visible="false"
+		align="center" zorder="100"
+		onloaded="updateframesize(get(name));set(plugin[loadingtext].visible,false);"
+		ondown="copy(oldmousex,mouse.x);domouserotate();"
+	/>
+	<layer name="obj_bg" keep="true" type="container" bgcolor="0x000000"   bgalpha="0.3"  align="lefttop" x="0"
+	           y="0" width="100%" height="100%" visible="false" zorder="99" bgcapture="true" onclick="obj_clsoe()">
+         <layer parent="obj_bg" keep="true" name="obj_close" url="%SWFPATH%/skin/gallerybtns.png" align="righttop" background="false"
+                 crop="200|0|100|100" onclick="obj_clsoe()">
+        </layer>
+	</layer>
+
+	<plugin name="loadingtext" url="%SWFPATH%/plugins/textfield.swf" keep="true" zorder="100" enabled="false"
+		preload="true"
+		align="center"
+		autoheight="true"
+		width="100"
+		background="false"
+		html="[p]环物加载中...[/p]"
+		css="p {color:#FFFFFF; font-family:arial; font-size:16px }"
+		visible="false"
+	/>
+	
+	<layer name="gallerynext" url="resource/images/gallerybtns.png" keep="true" 
+		align="right" x="0" y="0" zorder="100"
+		crop="100|0|100|100"
+		onovercrop="100|100|100|100"
+		ondowncrop="100|100|100|100"
+		ondown="set(y,1);dorotate();"
+		onup="set(y,0)"
+		direction="-1"
+		visible="false"
+	/>
+	
+	<layer name="galleryprev" url="resource/images/gallerybtns.png" keep="true" 
+		align="left" x="0" y="0" zorder="100"
+		crop="0|0|100|100"
+		onovercrop="0|100|100|100"
+		ondowncrop="0|100|100|100"
+		ondown="set(y,1);dorotate();"
+		onup="set(y,0)"
+		direction="1"
+		visible="false"
+	/>	
+	
+	<action name="buildframes">
+		for(set(i,0), i LT %2, inc(i),
+			txtadd(fname,frame,get(i));
+			txtadd(furl,%1,get(i),.jpg);
+			addplugin(get(fname));
+			plugin[get(fname)].loadstyle(frame);
+			copy(plugin[get(fname)].url,furl);
+		);
+		set(currentframe,0);
+		set(framecount,%2);
+		set(oldmousex,0);
+		showframe(0);
+	</action>
+	
+	<action name="updateframesize">
+		if(plugin[%1].imagewidth GT stagewidth,
+			set(plugin[%1].width,100%);
+			set(plugin[%1].height,prop);
+		,
+			if(plugin[%1].imageheight GT stageheight,
+				set(plugin[%1].width,prop);
+				set(plugin[%1].height,100%);
+			,
+				plugin[%1].resetsize();
+			);
+		);
+	</action>
+	
+	<action name="obj_clsoe">
+		for(set(i,0), i LT framecount, inc(i),
+			txtadd(fname,frame,get(i));
+			removeplugin(get(fname));
+		);
+		set(currentframe,0);
+		set(layer[gallerynext].visible,false);
+		set(layer[galleryprev].visible,false);
+		set(layer[obj_bg].visible,false);
+		jscall(toggleBtns(true));
+	</action>
+
+	<action name="updateframesscale">
+		for(set(i,0), i LT framecount, inc(i),
+			txtadd(fname,frame,get(i));
+			sub(temp,180,view.fov);
+			div(newscale,temp,70);
+			copy(plugin[get(fname)].scale,newscale);
+		);	
+	</action>
+	
+	<action name="updateframes">
+		for(set(i,0), i LT framecount, inc(i),
+			txtadd(fname,frame,get(i));
+			updateframesize(get(fname));
+		);		
+	</action>
+	
+	<action name="showframe">
+		set(plugin[loadingtext].visible,true);
+		txtadd(fname,frame,get(currentframe));
+		txtadd(tempstr,'set(plugin[',get(fname),'].visible,false);');
+		ifnot(%1 == 0, delayedcall(0.03,get(tempstr)); );
+		add(currentframe,%1);
+		if(currentframe LT 0, sub(currentframe,framecount,1); );
+		if(currentframe == framecount, set(currentframe,0); );
+		txtadd(fname,frame,get(currentframe));
+		set(plugin[get(fname)].visible,true);
+		ifnot(plugin[get(fname)].loaded, set(plugin[loadingtext].visible,true);, set(plugin[loadingtext].visible,false); );
+		set(layer[gallerynext].visible,true);
+		set(layer[galleryprev].visible,true);
+		set(layer[obj_bg].visible,true);
+		<!-- ifnot(%2,set(layer[obj_bg].visible,true);); -->
+
+		
+	</action>
+
+	<action name="dorotate">
+		if(pressed,
+			showframe(get(direction));
+			delayedcall(0.05,dorotate(););
+		);
+	</action>
+
+	<action name="domouserotate">
+		if(pressed,
+			sub(temp,oldmousex,mouse.x);
+			if(temp GT 0, set(temp,1); );
+			if(temp LT 0, set(temp,-1); );
+			showframe(get(temp));
+			copy(oldmousex,mouse.x);
+			delayedcall(0.03,domouserotate(););
+		);
+	</action>
+
+	
+	
+</krpano>

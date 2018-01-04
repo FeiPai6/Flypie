@@ -1,0 +1,362 @@
+<!--
+	krpano - textstyle examples (for Flash and HTML5)
+-->
+
+<krpano version="1.18">
+
+	<include url="%SWFPATH%/plugins/showtext.xml" />
+
+	<contextmenu touch="false" />
+
+	<preview type="grid(cube,32,32,256,0x223344,0x000011,0xFFFFFF);" details="8" />
+
+	<view hlookat="15" vlookat="-20" fovtype="HFOV" fisheye="0.5" fov="120" fovmax="140" />
+
+
+	<style name="letter"
+	       capture="false" handcursor="false"
+	       fillcolor="0xffff00" fillalpha="0.30"
+	       bordercolor="0xffff00" borderalpha="0.80"
+	       onover="tween(alpha, 0.1, 0.25);"
+	       onout="tween(alpha, 1.0, 0.25);"
+	       ondown.touch="onover(); asyncloop(pressed, onhover(); );"
+	       onup.touch="onout();"
+	       />
+
+
+	<!-- Default Textstyle-->
+	<hotspot name="h1_t" style="letter" onhover="showtext(Textstyle DEFAULT);">
+		<point ath="-72.9589" atv="-30.4572" />
+		<point ath="-70.4091" atv="-27.2998" />
+		<point ath="-67.2064" atv="-31.3229" />
+		<point ath="-59.0580" atv="-16.6194" />
+		<point ath="-55.6416" atv="-18.9404" />
+		<point ath="-64.4720" atv="-33.8924" />
+		<point ath="-59.5064" atv="-37.4353" />
+-		<point ath="-63.7152" atv="-42.0385" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE1 -->
+	<textstyle name="STYLE1"
+	           font="Arial" fontsize.no-mobile="14" fontsize.mobile="28" bold="true" italic="true"
+	           background="true" backgroundcolor="0xEEEECC"
+	           border="true" bordercolor="0x777700"
+	           textcolor="0x333300"
+	           padding="2 4"
+	           roundedge="3"
+	           origin="cursor"
+	           edge="bottom"
+	           textalign="none"
+	           xoffset="0"
+	           yoffset.no-touch="-5"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h2_e" style="letter" onhover="showtext(Textstyle STYLE1,STYLE1);">
+		<point ath="-56.6233" atv="-37.5551" />
+		<point ath="-48.2821" atv="-21.7764" />
+		<point ath="-40.4096" atv="-22.5966" />
+		<point ath="-40.1212" atv="-27.2638" />
+		<point ath="-47.2280" atv="-26.8896" />
+		<point ath="-48.2008" atv="-29.8786" />
+		<point ath="-45.2454" atv="-31.7670" />
+		<point ath="-47.3317" atv="-35.2486" />
+		<point ath="-49.3959" atv="-33.4768" />
+		<point ath="-51.9742" atv="-36.4485" />
+		<point ath="-48.7434" atv="-39.6989" />
+		<point ath="-52.2168" atv="-43.0692" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE2 -->
+	<textstyle name="STYLE2"
+	           font="Arial" fontsize.no-mobile="18" fontsize.mobile="28" bold="true"
+	           background="false" border="false"
+	           textcolor="0xFFFFFF"
+	           textalign="center"
+	           textshadow="0.01" textshadowrange="3" textshadowcolor="0x000000"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h3_x" style="letter" onhover="showtext(Textstyle[br]STYLE2,STYLE2);">
+		<point ath="-49.2304" atv="-45.3128" />
+		<point ath="-37.9226" atv="-38.2654" />
+		<point ath="-37.0980" atv="-22.9855" />
+		<point ath="-31.1866" atv="-24.5562" />
+		<point ath="-31.6545" atv="-35.9112" />
+		<point ath="-21.0987" atv="-26.9081" />
+		<point ath="-13.3231" atv="-28.9798" />
+		<point ath="-29.6066" atv="-41.6111" />
+		<point ath="-28.5883" atv="-56.1656" />
+		<point ath="-36.9412" atv="-52.3019" />
+		<point ath="-36.4842" atv="-43.3404" />
+		<point ath="-45.5119" atv="-48.8976" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE3 -->
+	<textstyle name="STYLE3"
+	           font="Arial" fontsize.no-mobile="18" fontsize.mobile="28" italic="true"
+	           background="true" backgroundcolor="0xFFFFFF"
+	           border="false"
+	           textalign="center"
+	           roundedge="2"
+	           padding="4 10"
+	           shadow="4" shadowrange="4" shadowcolor="0x333333" shadowangle="70" shadowalpha="0.7"
+	           xoffset="20"
+	           yoffset.no-touch="-5"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h4_t" style="letter" onhover="showtext(Textstyle STYLE3, STYLE3);">
+		<point ath="-21.7531" atv="-59.6196" />
+		<point ath="-18.0819" atv="-54.5174" />
+		<point ath=" -6.7423" atv="-57.5624" />
+		<point ath=" -3.8498" atv="-30.0903" />
+		<point ath="  4.6525" atv="-30.3558" />
+		<point ath="  3.4781" atv="-57.5117" />
+		<point ath=" 13.7904" atv="-58.2835" />
+		<point ath=" 15.5770" atv="-63.2797" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE4 -->
+	<textstyle name="STYLE4"
+	           font="Arial" fontsize.no-mobile="18" fontsize.mobile="28" bold="true"
+	           background="true" backgroundcolor="0x000000" backgroundalpha="0.667"
+	           border="true" borderwidth="2" bordercolor="0xFFFFFF" roundedge="10"
+	           textcolor="0xFFFFFF"
+	           padding="6 10"
+	           textalign="center"
+	           yoffset.no-touch="-5"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h5_s" style="letter" onhover="showtext(Textstyle STYLE4, STYLE4);">
+		<point ath=" 32.8879" atv="-61.8603" />
+		<point ath=" 21.1137" atv="-58.1546" />
+		<point ath=" 22.0142" atv="-52.6582" />
+		<point ath=" 28.0996" atv="-48.2677" />
+		<point ath=" 35.4589" atv="-40.6513" />
+		<point ath=" 34.4531" atv="-35.2667" />
+		<point ath=" 28.3083" atv="-35.2405" />
+		<point ath=" 24.2403" atv="-39.1223" />
+		<point ath=" 15.4319" atv="-38.1975" />
+		<point ath=" 23.5631" atv="-30.0472" />
+		<point ath=" 31.8537" atv="-26.7426" />
+		<point ath=" 40.4429" atv="-27.4415" />
+		<point ath=" 44.3404" atv="-32.5696" />
+		<point ath=" 43.3316" atv="-40.4139" />
+		<point ath=" 34.5458" atv="-49.4117" />
+		<point ath=" 32.7426" atv="-54.1195" />
+		<point ath=" 39.6394" atv="-53.1297" />
+		<point ath=" 45.3793" atv="-49.4494" />
+		<point ath=" 49.5887" atv="-47.6725" />
+		<point ath=" 50.7742" atv="-52.9661" />
+		<point ath=" 43.8400" atv="-58.6423" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE5 -->
+	<textstyle name="STYLE5"
+	           font="Arial" fontsize="24" bold="true"
+	           width="140" height="140" roundedge="70"
+	           background="true" backgroundcolor="0x224466" backgroundalpha="0.667"
+	           border="false"
+	           textcolor="0xFFFFFF"
+	           textalign="center" vcenter="true"
+	           edge="center" xoffset="0" yoffset="0"
+	           />
+
+	<hotspot name="h6_t" style="letter" onhover="showtext(Textstyle STYLE5, STYLE5);">
+		<point ath=" 56.4347" atv="-53.1863" />
+		<point ath=" 54.0918" atv="-48.1785" />
+		<point ath=" 60.1719" atv="-44.8978" />
+		<point ath=" 45.0255" atv="-21.6729" />
+		<point ath=" 51.2228" atv="-20.9180" />
+		<point ath=" 65.0002" atv="-41.2714" />
+		<point ath=" 70.4741" atv="-39.7132" />
+		<point ath=" 72.0746" atv="-43.6247" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE6 -->
+	<textstyle name="STYLE6"
+	           font="Arial" fontsize="20" bold="true" italic="true"
+	           background="false" border="false"
+	           textcolor="0x000000"
+	           effect.flash="glow(0xFFFFFF,0.85,4,4);dropshadow(4,45,0x000000,4,1);"
+	           css.html5="text-shadow:0px 0px 1px #FFFFFF, 0px 0px 2px #FFFFFF, 0px 0px 3px #FFFFFF, 0px 0px 4px #FFFFFF, 2px 2px 4px #000000, 3px 3px 8px #000000;"
+	           yoffset.no-touch="-5"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h7_y" style="letter" onhover="showtext(Textstyle STYLE6, STYLE6);">
+		<point ath=" 74.1240" atv="-41.1903" />
+		<point ath=" 70.2301" atv="-29.5454" />
+		<point ath=" 57.7777" atv="-20.2425" />
+		<point ath=" 61.7856" atv="-16.4652" />
+		<point ath=" 84.0995" atv="-30.9801" />
+		<point ath=" 80.3520" atv="-34.0554" />
+		<point ath=" 74.9091" atv="-31.8693" />
+		<point ath=" 76.9210" atv="-38.7167" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE7 -->
+	<textstyle name="STYLE7"
+	           font="Arial" fontsize="14" padding="4"
+	           edge="left" textalign="left" xoffset="15" yoffset="0"
+	           />
+
+	<hotspot name="h8_l" style="letter" onhover="showtext(Textstyle STYLE7[br]left aligned text[br]right of the cursor..., STYLE7);">
+		<point ath=" 70.3682" atv="-15.9427" />
+		<point ath=" 86.5703" atv="-28.7254" />
+		<point ath=" 88.8151" atv="-26.0631" />
+		<point ath=" 77.4270" atv="-16.9742" />
+		<point ath=" 81.6608" atv="-13.8244" />
+		<point ath=" 78.1112" atv="-10.7870" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE8 -->
+	<textstyle name="STYLE8"
+	           font="Arial" bold="false"  fontsize="14"
+	           border="false" padding="4"
+	           origin="cursor" edge="bottom" yoffset.no-touch="-10" yoffset.touch="-40"
+	           />
+
+	<hotspot name="h9_e" style="letter"
+	         onhover="showtext(Textstyle STYLE8[br][u]HTML Tags Test[/u][br][b]bold[/b] [i]italic[/i][br]
+	                     [font color='#FF0000']red[/font]
+	                     [font color='#00FF00']green[/font]
+	                     [font color='#0000FF']blue[/font][br]
+	                     [font face='times'   size='20' style='font-family:times; font-size:20px']Times[/font][br]
+	                     [font face='courier' size='15' style='font-family:courier; font-size:15px']Courier[/font]
+	                     ,STYLE8);"
+		>
+		<point ath=" 94.5842" atv="-21.0296" />
+		<point ath=" 92.9346" atv="-18.6639" />
+		<point ath=" 90.0671" atv="-20.1674" />
+		<point ath=" 87.8016" atv="-16.4809" />
+		<point ath=" 90.4013" atv="-14.6354" />
+		<point ath=" 88.6805" atv="-12.6224" />
+		<point ath=" 86.3404" atv="-13.7661" />
+		<point ath=" 84.3795" atv="-10.6818" />
+		<point ath=" 87.1655" atv=" -7.7536" />
+		<point ath=" 85.1965" atv=" -5.2469" />
+		<point ath=" 80.9285" atv=" -8.1819" />
+		<point ath=" 90.1080" atv="-23.8076" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE9 -->
+	<textstyle name="STYLE9"
+	           font="Arial" fontsize="20" bold="false"
+	           border="false"
+	           padding="4"
+	           origin="leftbottom" edge="leftbottom" textalign="left" xoffset="20" yoffset="-20"
+	           />
+
+	<hotspot name="h10_t" style="letter" onhover="showtext(Text at Left-Bottom Screen Position (STYLE9),STYLE9);">
+		<point ath="-42.8037" atv=" -9.7548" />
+		<point ath="-15.5443" atv="-17.6045" />
+		<point ath="-14.4724" atv=" -6.4546" />
+		<point ath="-23.0199" atv=" -4.9783" />
+		<point ath="-19.7419" atv=" 20.3879" />
+		<point ath="-28.5720" atv=" 19.5072" />
+		<point ath="-31.8567" atv=" -2.9649" />
+		<point ath="-40.2208" atv=" -2.2321" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE10 -->
+	<textstyle name="STYLE10"
+	           font="Arial" fontsize="24" bold="false"
+	           width="100%" height="100%" vcenter="true"
+	           border="false" background="true" backgroundcolor="0x000000" backgroundalpha="0.75"
+	           textcolor="0xFFFFFF"
+	           origin="center" edge="center" textalign="center" xoffset="0" yoffset="0"
+	           fadeintime="0.25" fadetime="0.25"
+	           />
+
+	<hotspot name="h11_e" style="letter" onhover="showtext(Fullscreen Textfield...[br](STYLE10)[br][br][br][br][br][br][br],STYLE10);">
+		<point ath=" -6.5768" atv="-17.9930" />
+		<point ath=" -5.5524" atv=" 22.3498" />
+		<point ath=" 13.9464" atv=" 22.4313" />
+		<point ath=" 14.2668" atv=" 14.6862" />
+		<point ath="  2.1590" atv=" 13.6767" />
+		<point ath="  2.2743" atv="  5.5185" />
+		<point ath="  9.8160" atv="  5.4976" />
+		<point ath=" 11.4417" atv=" -1.8950" />
+		<point ath="  3.3895" atv=" -1.1436" />
+		<point ath="  3.2768" atv=" -9.6135" />
+		<point ath=" 18.8661" atv=" -8.8850" />
+		<point ath=" 17.8879" atv="-20.7037" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE11 -->
+	<textstyle name="STYLE11"
+	           font="Arial" fontsize="20" bold="true" italic="true"
+	           background="false" border="false"
+	           textcolor="0xFFFFFF"
+	           edge="top"
+	           yoffset="20" yoffset.touch="-40"
+	           />
+
+	<hotspot name="h12_s" style="letter" onhover="txtadd(msg,'mouse:',get(mouse.x),'/',get(mouse.y));showtext(get(msg),STYLE11);">
+		<point ath=" 34.4149" atv="-17.7978" />
+		<point ath=" 26.6319" atv="-14.2782" />
+		<point ath=" 26.0499" atv=" -5.0699" />
+		<point ath=" 29.3551" atv="  3.7009" />
+		<point ath=" 36.4072" atv="  6.6735" />
+		<point ath=" 40.5720" atv=" 13.5258" />
+		<point ath=" 32.9407" atv=" 14.5182" />
+		<point ath=" 25.0089" atv=" 12.6399" />
+		<point ath=" 22.8927" atv=" 20.1934" />
+		<point ath=" 34.9736" atv=" 21.5580" />
+		<point ath=" 45.6450" atv=" 20.0164" />
+		<point ath=" 50.7472" atv=" 16.2118" />
+		<point ath=" 52.4291" atv=" 11.0495" />
+		<point ath=" 46.6748" atv="  2.4310" />
+		<point ath=" 38.7538" atv=" -1.9006" />
+		<point ath=" 40.0612" atv=" -5.0303" />
+		<point ath=" 46.6784" atv=" -4.7897" />
+		<point ath=" 49.6039" atv=" -2.4492" />
+		<point ath=" 54.4478" atv=" -1.3713" />
+		<point ath=" 56.0626" atv=" -8.8575" />
+		<point ath=" 51.7545" atv="-14.4968" />
+		<point ath=" 43.9059" atv="-17.6669" />
+	</hotspot>
+
+
+	<!-- Textstyle STYLE12 -->
+	<textstyle name="STYLE12"
+	           font="Arial" fontsize.no-mobile="20" fontsize.mobile="28" bold="true" italic="true"
+	           background="true" backgroundcolor="0x333333" backgroundalpha="0.5"
+	           border="false"
+	           textcolor="0xFFFFFF"
+	           padding="6 12"
+	           roundedge="2"
+	           origin="cursor"
+	           edge="bottom"
+	           textalign="none"
+	           xoffset="0"
+	           yoffset.no-touch="-5"
+	           yoffset.touch="-40"
+	           />
+
+	<hotspot name="h13_t" style="letter"  onhover="showtext('Textstyle STYLE12', STYLE12);">
+		<point ath=" 61.7747" atv="-11.2726" />
+		<point ath=" 60.2910" atv=" -2.4939" />
+		<point ath=" 65.8860" atv=" -1.6851" />
+		<point ath=" 58.3967" atv=" 19.4810" />
+		<point ath=" 64.7556" atv=" 19.2616" />
+		<point ath=" 71.6409" atv=" -0.4924" />
+		<point ath=" 76.8222" atv="  1.7952" />
+		<point ath=" 79.6784" atv=" -5.0611" />
+	</hotspot>
+
+</krpano>

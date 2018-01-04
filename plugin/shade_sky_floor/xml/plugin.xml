@@ -1,0 +1,26 @@
+<krpano>
+	 <hotspot name="shadelogo" url="" ath="0" atv="90" distorted="true" scale="1.0" rotate="0.0" rotatewithview="true"
+             visible="false" keep="true" onloaded="set(hotspot[shadelogo].rotate,get(view.hlookat));"/>
+    <events name="shadelogorotation" keep="true"
+            onviewchange="if(hotspot[shadelogo].rotatewithview, set(hotspot[shadelogo].rotate,get(view.hlookat)) );"/>
+	<action name="show_shade">
+	    set(hotspot[shadelogo].url,%1);
+	    set(hotspot[shadelogo].atv,%2);
+	    set(hotspot[shadelogo].visible,true);
+	    set(hotspot[shadelogo].depth,2000);
+	</action>
+	<action name="addShade">
+	    txtadd(shade_name, 'shade_',%1); 
+	    addhotspot(get(shade_name));
+	    set(hotspot[get(shade_name)].url,%2); 
+	    <!-- set(hotspot[get(shade_name)].ath,0);  -->
+	    set(hotspot[get(shade_name)].atv,%3);
+	    set(hotspot[get(shade_name)].distorted,true); 
+	    set(hotspot[get(shade_name)].scale,"1.0");
+	    set(hotspot[get(shade_name)].rotate,"0.0");
+	     set(hotspot[get(shade_name)].rotatewithview,"true");
+	    set(hotspot[get(shade_name)].visible,"true"); 
+	    set(hotspot[get(shade_name)].keep,"false");
+	    set(hotspot[get(shade_name)].onloaded,"set(hotspot[get(shade_name)].rotate,get(view.hlookat));");
+	</action>
+</krpano>

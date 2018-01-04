@@ -1,0 +1,81 @@
+<!--
+	krpano - parent-child system demonstration
+-->
+
+<krpano>
+
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,2,1,256,0x000000,0x000000,0x222222);" details="16" />
+
+
+	<!-- some changing elements, used as parent for the child in this example -->
+
+
+	<!-- scaleing button (with scale9grid) -->
+	<plugin name="button1" url="button.png"
+	        align="center" edge="center" x="-25%"
+	        scale9grid="12|9|74|71"
+	        onclickA="tween(scale,2);set(onclick,onclickB());"
+	        onclickB="tween(scale,1);set(onclick,onclickA());"
+	        onclick="onclickA();"
+	        />
+
+	<!-- rotating button -->
+	<plugin name="button2" url="button.png"
+	        align="center" edge="center" x="0"
+	        onclickA="tween(rotate,180);set(onclick,onclickB());"
+	        onclickB="tween(rotate,0);set(onclick,onclickA());"
+	        onclick="onclickA();"
+	        />
+
+	<!-- moving button -->
+	<plugin name="button3" url="button.png"
+	        align="center" edge="center" x="+25%"
+	        destpos="0"
+	        onclick="switch(destpos, -100,0,+100);tween(y,get(destpos));"
+	        />
+
+
+	<!-- scaling and rotating hotspot -->
+	<hotspot name="button4" url="button.png"
+	        ath="-30"
+	        atv="30"
+	        zoom="true"
+	        scalechildren="true"
+	        onclickA="tween(rotate,223);tween(scale,2);set(onclick,onclickB());"
+	        onclickB="tween(rotate,0);tween(scale,1);set(onclick,onclickA());"
+	        onclick="onclickA();"
+	        />
+
+
+	<!-- the child, start as parent of the scaling button -->
+	<plugin name="child" url="smiley.png"
+	        parent="button1"
+	        align="lefttop"
+	        edge="center"
+	        x="10%"
+	        y="10%"
+	        onclickA="tween(x,90%,1);tween(y,90%,1);set(onclick,onclickB());"
+	        onclickB="tween(x,10%,1);tween(y,10%,1);set(onclick,onclickA());"
+	        onclick="onclickA();"
+	        />
+
+
+
+    <!-- button to change the parent of the child plugin -->
+
+	<plugin name="changebutton" 
+		    url="%SWFPATH%/plugins/textfield.swf" 
+		    children="false"
+		    css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:10px;"
+		    vcenter="true"
+		    backgroundcolor="0x000000" backgroundalpha="0.667" roundedge="10" border="false"
+		    shadow="0.1" shadowrange="8" shadowcolor="0xFFFFFF"
+	        html="Change Parent"
+	        align="bottom" x="0" y="35" width="120" height="22"
+	        onclick="switch(plugin[child].parent, null, button1, button2, button3, hotspot[button4], changebutton);"
+	        />
+
+
+</krpano>
+

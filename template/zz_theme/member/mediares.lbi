@@ -1,0 +1,384 @@
+{include file="{$_lang.moban}/library/member_paths.lbi"}	
+<div class="container">
+
+<div class="content">
+{if $act =="panos"}
+    <div class="nav_wrap">
+      <ul class="nav nav-secondary">
+        <li class="active"><a href="/member/mediares?act=panos">全景图片</a></li>
+        <li><a href="/member/mediares?act=material">素材</a></li>
+        <li><a href="/member/mediares?act=msc">音乐</a></li>
+      <button class="btn btn-primary up_btn" data-toggle="modal" data-target="#panos_up_modal">上传全景图</button>
+
+      </ul>
+    </div>
+      
+    <div class="list_wrap">
+        <div class="cards">
+        </div>
+      
+        <div id="pager_wrap" style="margin-top:-10px;"></div>
+    </div>
+    <div class="modal fade" id="panos_up_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+        <h4 class="modal-title">上传资源：</h4>
+      </div>
+        <div class="modal-body">
+             <input id="imgUpload" name="file" type="file" multiple="" accept="image/jpeg,image/tiff" class="">
+        </div>
+      </div>
+    </div>
+  </div>
+<link rel="stylesheet" href="/static/css/fileinput.min.css">
+<script language="JavaScript" type="text/javascript" src="/static/js/fileinput-v4.34.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/fileinput_locale_zh.js"></script>
+<script>
+var up_url = "{$up_url}";
+{literal}
+ var type = 1;
+ var qn_token ={} ; 
+ var upload_flag = false;
+$(function(){
+      list(1);
+      $("#imgUpload").fileinput({
+          language: 'zh',
+          showUpload: false,
+          showRemove: false,
+          showCancel: false,
+          maxFileCount: 1,
+          // showPreview:false;
+          previewFileType: "image",
+          allowedFileExtensions: ["jpg","tif", "tiff"],
+          msgInvalidFileExtension: '不支持文件类型"{name}"。只支持扩展名为"{extensions}"的文件。',
+          browseClass: "btn btn-primary",
+          browseLabel: "选择本地全景图片",
+          browseIcon: "<i class=\"icon icon-picture\"></i> ",
+          removeClass: "btn btn-danger",
+          removeLabel: "删除",
+          removeIcon: "<i class=\"icon icon-trash\"></i> ",
+          uploadUrl: up_url,
+          uploadAsync: true,
+          // previewSettings: {
+          //     image: {width: "auto", height: "100px"}
+          // },
+          fileActionSettings: {},
+          // maxFileSize:"",
+          dropZoneTitle: "拖拽图片或点击下面按钮上传",
+          textEncoding: "UTF-8",
+         uploadExtraData: get_token
+      }).on('fileloaded', function(event, file, previewId, index, reader) {
+          var filename = file.name.substr(file.name.lastIndexOf("."));
+         if(filename=='.tiff' || filename=='.tif'){
+              var tiff = new Tiff({buffer: reader.result});
+              var width = tiff.width();
+              var height = tiff.height();
+              checkImgWidthAndHeight(width,height,previewId);
+              return ;
+          }
+          var objUrl = window.URL || window.webkitURL;
+          var url = objUrl.createObjectURL(file);
+          var img = new Image();
+          img.src = url;
+          img.onload = function(){
+              checkImgWidthAndHeight(img.naturalWidth,img.naturalHeight,previewId);
+              objUrl.revokeObjectURL(url);
+          }
+          var extraData = $("#imgUpload").fileinput('uploadExtraData');
+          extraData.key = qn_token.prefix+generic_name()+filename;
+          extraData.filename = file.name;
+          $("#imgUpload").fileinput("upload");
+           $("#imgUpload").hide();
+
+         var alert_obj = alert_notice("上传图片成功，等待程序处理....","success","top",0);
+    }).on('filebatchuploadcomplete', function (event, files, extra) {
+         upload_flag = true;
+         var files = $('#imgUpload').fileinput('getFileStack');
+         $.post("/member/mediares",{
+              "act":"pano_add",
+              "imgsrc":extra.key,
+              "imgname":extra.filename
+         },function(data){
+            data = eval("("+data+")");
+            if (data.flag) {
+                alert_notice("上传成功","success");
+                setTimeout(function(){
+                  window.location.reload();
+                },1500);
+            }else{
+                alert_notice(data.msg);
+            }
+            $("#imgUpload").show();
+            $("#imgUpload").fileinput("clear");
+            $("#panos_up_modal").modal("hide");
+         })
+    });
+})
+function get_token() {
+  if (qn_token.prefix||upload_flag) {
+    if (upload_flag) {
+       qn_token={};
+       upload_flag=false;
+    }
+    return qn_token;
+  }
+
+  $.ajax({
+      url:'/get_token.php',
+      method:'post',
+      data:{'act':'qj_img'},
+      async: false,
+      success:function(res){
+          var obj = eval ("(" + res + ")");
+          qn_token.prefix= obj.prefix;
+          if (obj.token) 
+            qn_token.token = obj.token;
+          else if(obj.policy){
+            qn_token.policy = obj.policy;
+            qn_token.OSSAccessKeyId = obj.accessid;
+            qn_token.host = obj.host;
+            qn_token.signature = obj.signature;
+          }
+          return qn_token;
+    }
+  })
+
+ return qn_token;
+
+}
+function generic_name() {
+　　var $chars = 'abcdefghijklmnopqrstwxyz0123456789';  
+　　var maxPos = $chars.length;
+　　var pwd = '';
+　　for (i = 0; i < 3; i++) {
+　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+　　}
+　　return new Date().getTime()+pwd;
+}
+function checkImgWidthAndHeight(width,height,previewId){
+  if(width != 2*height){
+      $('#imgUpload').fileinput('_showError','球面全景图片必须为2:1比例');
+      return false;
+  }
+  return true;
+}
+{/literal}
+</script>
+{elseif $act =="material"}
+  <div class="nav_wrap">
+    <ul class="nav nav-secondary">
+      <li><a href="/member/mediares?act=panos">全景图片</a></li>
+      <li class="active"><a href="/member/mediares?act=material">素材</a></li>
+      <li><a href="/member/mediares?act=msc">音乐</a></li>
+    <!-- <button class="btn btn-primary up_btn">上传素材</button> -->
+
+    </ul>
+  </div>
+    
+  <div class="list_wrap">
+      <div class="cards">
+      </div>
+    
+      <div id="pager_wrap" style="text-align:center"></div>
+  </div>
+  <script>
+      var type = 2;
+      $(function(){
+          list(1);
+          
+      })
+
+  </script>
+{elseif $act =="msc"}
+  <div class="nav_wrap">
+    <ul class="nav nav-secondary">
+      <li><a href="/member/mediares?act=panos">全景图片</a></li>
+      <li ><a href="/member/mediares?act=material">素材</a></li>
+      <li class="active"><a href="/member/mediares?act=msc">音乐</a></li>
+    <!-- <button class="btn btn-primary up_btn">上传素材</button> -->
+
+    </ul>
+  </div>
+    
+  <div class="list_wrap">
+      <div class="cards">
+      </div>
+    
+      <div id="pager_wrap" style="text-align:center"></div>
+  </div>
+  <script>
+    var type = 3;
+    $(function(){
+        list(1);
+        $(".cards").on("click",".audio_wrap",function(){
+            
+            var audio =document.getElementById("audio_"+$(this).data("aid"));
+            if(audio!==null){             
+             if(audio.paused){                
+                 audio.play();
+                 $(this).children("img").attr("src","/static/images/pause.png");
+                 $(this).children("span").text("暂停");
+               }else{
+                audio.pause();
+                $(this).children("img").attr("src","/static/images/play.png");
+                 $(this).children("span").text("试听");
+               }
+            } 
+          });
+    })
+   
+  </script>
+{/if}
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function list(page){
+      $.post("/member/mediares",{
+          "act":"list_media_res",
+          "type":type,
+          "page":page,
+          "pageSize":12
+      },function(data){
+        var data = eval("("+data+")");
+        var list = data.list;
+        var h="";
+        if (list.length>0) {
+            for (var i = 0; i <list.length; i++) {
+                var o = list[i];
+                if(type==1){
+                   h += ' <div class="col-md-4 col-sm-6 col-lg-3">'+
+                  ' <a class="card" href="###">'+
+                  '<div class="top_cover"><span class="pull-right" onclick="del('+o.pk_img_main+',1)"><i class="icon-trash"></i>删除</span></div>'+
+                  '<img src="'+o.thumb_path+'" style="height:200px;width:100%" alt="'+o.filename+'">'+
+                    ' <div class="card-content">'+
+                   '<div class="row">'+
+                   '<div class="col-md-8"><span class="text-muted card_text" id="panos_name_'+o.pk_img_main+'">'+o.filename+'</span></div>'+
+                  '        <div class="col-md-4">'+
+                  '<button class="btn btn-link card_rename" type="button" onclick="edit('+o.pk_img_main+',1,\''+o.filename+'\')">重命名</button>'+
+                   '</div>'+
+                   '</div>'+
+                   '</div>'+
+                  '</a>'+
+                 '</div>';
+               }else if(type==2){
+                   h += ' <div class="col-md-4 col-sm-6 col-lg-3">'+
+                  ' <a class="card" href="###">'+
+                  '<div class="top_cover"><span class="pull-right" onclick="del('+o.pk_media_res+',2)"><i class="icon-trash"></i>删除</span></div>'+
+                  '<img src="'+o.absolutelocation+'" style="height:200px;width:100%" alt="'+o.media_name+'">'+
+                    ' <div class="card-content">'+
+                   '<div class="row">'+
+                   '<div class="col-md-8"><span class="text-muted card_text" id="panos_name_'+o.pk_media_res+'">'+o.media_name+'</span></div>'+
+                  '        <div class="col-md-4">'+
+                  '<button class="btn btn-link card_rename" type="button" onclick="edit('+o.pk_media_res+',2,\''+o.media_name+'\')">重命名</button>'+
+                   '</div>'+
+                   '</div>'+
+                   '</div>'+
+                  '</a>'+
+                 '</div>';
+               }else if(type ==3){
+                 h += ' <div class="col-md-4 col-sm-6 col-lg-3">'+
+                    '<audio id="audio_'+o.pk_media_res+'" src="'+o.absolutelocation+'" ></audio>'+
+                  ' <a class="card" >'+
+                  '<div class="top_cover"><span class="pull-right" onclick="del('+o.pk_media_res+',3)"><i class="icon-trash"></i>删除</span></div>'+
+                  '<div class="audio_wrap" data-aid="'+o.pk_media_res+'"><img src="/static/images/play.png" alt="'+o.media_name+'"><span>试听</span></div>'+
+                    ' <div class="card-content">'+
+                   '<div class="row">'+
+                   '<div class="col-md-8"><span class="text-muted card_text" id="panos_name_'+o.pk_media_res+'">'+o.media_name+'</span></div>'+
+                  '        <div class="col-md-4">'+
+                  '<button class="btn btn-link card_rename" type="button" onclick="edit('+o.pk_media_res+',3,\''+o.media_name+'\')">重命名</button>'+
+                   '</div>'+
+                   '</div>'+
+                   '</div>'+
+                  '</a>'+
+                 '</div>';
+               }
+            }
+         var pg = new Page('list',data.pageCount,data.currentPage);
+         $("#pager_wrap").html(pg.printHtml());
+        }else{
+            h+="<div style='text-align: center;font-size: 18px; margin-top: 30px; ' class='text-muted'>没有结果!</div>"
+        }
+        $(".cards").html(h);
+
+      })
+  }
+function edit(media_id,type,value){
+        bootbox.prompt({
+          buttons: {
+                  confirm: {  
+                      label: '确认',  
+                      className: 'btn-primary'  
+                  },  
+                  cancel: {  
+                      label: '取消',  
+                      className: 'btn-default'  
+                  }  
+              },
+              value: value?value:"", 
+              title:"重命名：",
+              callback:function(result) {
+                if (result!=null) {
+                  result = $.trim(result);
+                  if (result.length<1||result.length>100) {
+                      alert_notice("名字长度在1到100之间");
+                      return false;
+                  }else{
+                      $.post("/member/mediares",{
+                              "media_id":media_id,
+                              "type":type,
+                              "name":result,
+                              'act':"media_rename"
+                      },function(res){
+                         res = eval("("+res+")");
+                         if (res.flag) {
+                            alert_notice("编辑成功","success");
+                           $("#panos_name_"+media_id).text(result);
+                         }else{
+                            alert_notice(res.msg);
+                           
+                        }
+                      })
+                }
+              }
+           }
+      })
+}
+function del(media_id,type){
+        bootbox.confirm({
+          message:"确定要永久删除吗?",
+          buttons: {
+                  confirm: {  
+                      label: '确认',  
+                      className: 'btn-primary'  
+                  },  
+                  cancel: {  
+                      label: '取消',  
+                      className: 'btn-default'  
+                  }  
+              },
+              title:"提示: ",
+              callback:function(result) {
+                if(result){
+                  alert_notice("等待执行...","success",'top',5000);
+                  $.post("/member/mediares",{
+                    'act':'media_delete',
+                    'media_id':media_id,
+                    "type":type
+                  },function(result){
+                    result = eval("("+result+")");
+                    if (result.flag) {
+                      alert_notice("操作成功","success");
+                      window.location.reload();
+                    }else{
+                      alert_notice(result.msg);
+                    }
+                   })
+                }
+            }
+           })
+      }
+</script>

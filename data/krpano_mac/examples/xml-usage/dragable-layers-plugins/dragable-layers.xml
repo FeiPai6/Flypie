@@ -1,0 +1,102 @@
+<krpano>
+	<!-- dragable layers/plugins example -->
+
+
+	<!-- use a grid preview pano as background -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xF6F6F6,0x999999);" details="16" />
+
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="VFOV" fov="100" fovmin="60" fovmax="150" />
+
+
+	<!-- the action for dragging the layer/plugin elements - call it once in the ondown event -->
+	<action name="draglayer">
+		if(%1 != dragging,
+			copy(drag_currentx, x);
+			copy(drag_currenty, y);
+			copy(drag_stagex, mouse.stagex);
+			copy(drag_stagey, mouse.stagey);
+			set(drag_sx, +1);
+			set(drag_sy, +1);
+			if(align == righttop,    set(drag_sx,-1); );
+			if(align == right,       set(drag_sx,-1); );
+			if(align == rightbottom, set(drag_sx,-1); set(drag_sy,-1); );
+			if(align == bottom,      set(drag_sy,-1); );
+			if(align == leftbottom,  set(drag_sy,-1); );
+			draglayer(dragging);
+		  ,
+			if(pressed,
+				sub(dx, mouse.stagex, drag_stagex);
+				sub(dy, mouse.stagey, drag_stagey);
+				mul(dx, drag_sx);
+				mul(dy, drag_sy);
+				add(x, drag_currentx, dx);
+				add(y, drag_currenty, dy);
+				delayedcall(0, draglayer(dragging) );
+			  );
+		  );
+	</action>
+	
+	
+	<!-- a special action for dragging the text only vertically with a certain range -->
+	<action name="draglayer_text">
+		if(%1 != dragging,
+			copy(drag_currenty, y);
+			copy(drag_stagey, mouse.stagey);
+			draglayer_text(dragging,%2);
+		  ,
+			if(pressed,
+				sub(dy, mouse.stagey, drag_stagey);
+				add(y1, drag_currenty, dy);
+				add(y2, y1, pixelheight);
+				sub(y2, %2);
+				if(y1 GT 0, set(y1,0));
+				if(y2 LT 0, sub(y1,y2));
+				copy(y,y1);
+				delayedcall(0, draglayer_text(dragging,%2) );
+			  );
+		  );
+	</action>
+	
+
+	<!-- the example layers -->
+	<layer name="box1" type="container" align="lefttop" x="10" y="10" width="250" height="250" bgcolor="0x000000" bgalpha="0.5" bgcapture="true" maskchildren="true" ondown="draglayer();">
+		<layer name="box2" type="container" align="center" x="0" y="0" width="100" height="100" bgcolor="0x44AADD" bgalpha="1.0" bgcapture="true" ondown="draglayer();" />
+	</layer>
+
+	<layer name="box3" type="container" align="rightbottom" x="10" y="150" width="300" height="200" bgcolor="0x0033FF" bgalpha="0.5" bgcapture="true" maskchildren="false" ondown="draglayer();">
+		<layer name="box4" type="container" align="right" x="0" y="0" width="100" height="100" bgcolor="0x33FF33" bgalpha="0.7" bgcapture="true" ondown="draglayer();" />
+	</layer>
+	
+	<layer name="textbox" type="container" align="center" x="0" y="0" width="300" height="300" bgcolor="0x333333" bgalpha="0.7" bgcapture="true" ondown="draglayer();">
+		<layer name="title" url="%SWFPATH%/plugins/textfield.swf" children="false" enabled="false" align="top" y="5" width="100%" autoheight="true"
+		           border="false" background="false" 
+			       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;"
+			       html="Textbox"
+			       />
+		<layer name="textmask" type="container" align="lefttop" x="10" y="30" width="280" height="260" bgcolor="0xFFFFFF" bgalpha="1.0" maskchildren="true">
+			<layer name="text" url="%SWFPATH%/plugins/textfield.swf" children="false" align="lefttop" x="0" y="0" width="100%" autoheight="true"
+			       border="false" background="false"
+			       css="text-align:left; color:#000000; font-family:Arial; font-size:15px;"
+			       html="data:testtext"
+			       ondown="draglayer_text(start,260);"
+			       />
+		</layer>
+	</layer>
+	
+	<data name="testtext">
+		The [b]krpano Viewer[/b] is a small and very flexible high-performance viewer for all kind of panoramic images and interactive virtual tours.
+		The viewer is available as Flash and HTML5 application.
+		The viewer is designed for the usage inside the Browser on Desktop (Windows, Mac, Linux) and on Mobiles/Tablets (iPhone, iPad, Android, ...).[br/]
+		[br/]
+		In addition to the [b]krpano Viewer[/b] there are the [b]krpano Tools[/b] - this are small tools and droplets 
+		which are helping to automatically prepare the panoramic images for viewing and making them ready-to-use. 
+		Making a pano or a tour is possible just by drag-and-drop.[br/]
+		[br/]
+		Convince yourself by viewing the examples and / or by downloading the krpano Viewer and krpano Tools for free and try using 
+		them with your own panoramic images.[br/]
+		[br/]
+	</data>
+
+
+</krpano>

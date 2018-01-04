@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<krpano>
+    <plugin name="abs" keep="true" url="abs.swf" alturl="abs.js"/>
+    <settings name="tooltip" oy="0" visible="true"/>
+    <events name="tooltip" keep="true" onxmlcomplete="        set_tooltip_style(default_tooltip_style);        reset_tooltip_style();      "/>
+    <style name="default_tooltip_style" font_family="sans-serif" font_size="13" font_weight="normal" font_color="FFFFFF" embeddedfonts="false" padding="6 8" roundedge="10" background="true" backgroundcolor="0x000000" backgroundalpha="1" border="false" bordercolor="0x000000" borderalpha="1.0" borderwidth="1.0" shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="0" textshadow="0.0" textshadowrange="4.0" textshadowangle="45" textshadowcolor="0x000000" textshadowalpha="1.0" css=""/>
+    <layer name="tooltip" keep="true" url="textfield.swf" align="lefttop" edge="bottom" x="0" y="0" oy="0" zorder="9998" alpha=".5" enabled="false" visible="false" handcursor="false" embeddedfonts="true" autowidth="true" autoheight="true" vcenter="true" html="." onloaded="" onautosized="sub(height_error, pixelheight, height);add(oy, height_error);"/>
+    <layer name="tooltip_arrow" type="container" keep="true" enabled="false" visible="false" align="lefttop" edge="bottom" x="0" y="0" ox="0" oy="0" width="8" height="8" scalechildren="true" maskchildren="true" zorder="9999" background="true" bgalpha="0" bgcolor="0xaa2266">
+        <layer name="tooltip_arrow_square" url="textfield.swf" enabled="false" keep="true" align="center" edge="center" x="0" y="-8" width="10" height="10" rotate="45" zorder="999"/>
+    </layer>
+    <style name="tooltip" onloaded="setup_tooltip(get(name));"/>
+    <action name="reset_tooltip_style">if(settings[tooltip].style, set_tooltip_style(get(settings[tooltip].style)); , set_tooltip_style(default_tooltip_style); );</action>
+    <action name="set_tooltip_style">
+        if(layer[tooltip].style != %1, set(layer[tooltip].style, %1);
+        ifnot(style[%1].generated, set(style[%1].generated, true);
+        set(style[%1].css, '');
+        <!--if(device.pixelratio GT 1,-->
+            <!--set(layer[tooltip_arrow].scale, 2);-->
+            <!--mul(style[%1].roundedge, 2);-->
+            <!--mul(style[%1].font_size, 2);-->
+            <!--if(style[%1].padding_2x, copy(style[%1].padding, style[%1].padding_2x);-->
+            <!--,-->
+            <!--set(style[%1].padding_2x, '');-->
+            <!--mul_padding(%1, 0);-->
+            <!--copy(style[%1].padding, style[%1].padding_2x);-->
+        <!--);-->
+        <!--);-->
+        txtadd(color, 'color:#', get(style[%1].font_color), '; ');
+        txtadd(font_family, 'font-family:', get(style[%1].font_family), '; ');
+        txtadd(font_size, 'font-size:', get(style[%1].font_size), 'px; '); 
+        txtadd(font_weight, 'font-weight:', get(style[%1].font_weight), '; '); 
+        if(device.html5, 
+            if(style[%1].html5_font_family, 
+                txtadd(font_family, 'font-family:', get(style[%1].html5_font_family), '; '); 
+            );
+        ); 
+        txtadd(style[%1].css, get(color)); 
+        txtadd(style[%1].css, get(font_family)); 
+        txtadd(style[%1].css, get(font_size)); 
+        txtadd(style[%1].css, get(font_weight)); 
+        ); 
+        copy_style(tooltip, %1); 
+        copy_style(tooltip_arrow_square, %1); 
+        set(layer[tooltip_arrow_square].roundedge, 0); );</action>
+    <action name="copy_style">copy(layer[%1].css, style[%2].css); copy(layer[%1].embeddedfonts, style[%2].embeddedfonts); copy(layer[%1].padding, style[%2].padding); copy(layer[%1].padding_2x, style[%2].padding_2x); copy(layer[%1].roundedge, style[%2].roundedge); copy(layer[%1].background, style[%2].background); copy(layer[%1].backgroundcolor, style[%2].backgroundcolor); copy(layer[%1].backgroundalpha, style[%2].backgroundalpha); copy(layer[%1].border, style[%2].border); copy(layer[%1].bordercolor, style[%2].bordercolor); copy(layer[%1].borderalpha, style[%2].borderalpha); copy(layer[%1].borderwidth, style[%2].borderwidth); copy(layer[%1].shadow, style[%2].shadow); copy(layer[%1].shadowrange, style[%2].shadowrange); copy(layer[%1].shadowangle, style[%2].shadowangle); copy(layer[%1].shadowcolor, style[%2].shadowcolor); copy(layer[%1].shadowalpha, style[%2].shadowalpha); copy(layer[%1].textshadow, style[%2].textshadow); copy(layer[%1].textshadowrange, style[%2].textshadowrange); copy(layer[%1].textshadowangle, style[%2].textshadowangle); copy(layer[%1].textshadowcolor, style[%2].textshadowcolor); copy(layer[%1].textshadowalpha, style[%2].textshadowalpha);</action>
+    <action name="setup_tooltip">
+        if (ath !== null, 
+            ifnot(hotspot[%1].tooltip_oy, 
+                set(hotspot[%1].tooltip_oy, 000); 
+            ); 
+            ifnot(hotspot[%1].tooltip, 
+                set(hotspot[%1].tooltip, ''); 
+            ); 
+            ifnot(hotspot[%1].edge, 
+                set(hotspot[%1].edge, center); 
+            ); 
+            if(hotspot[%1].edge == center, 
+                copy(new_tooltip_oy, hotspot[%1].height); 
+                div(new_tooltip_oy, 2); 
+                mul(new_tooltip_oy, -1); 
+                add(hotspot[%1].tooltip_oy, new_tooltip_oy); 
+            ); 
+            if(device.touchdevice, 
+                ifnot(hotspot[%1].ondown, 
+                    set(hotspot[%1].ondown, '')
+                ); 
+                ifnot(hotspot[%1].onup, 
+                    set(hotspot[%1].onup, '')
+                ); 
+                txtadd(hotspot[%1].ondown, 'show_tooltip();'); 
+                txtadd(hotspot[%1].onup, 'hide_tooltip();'); 
+                , 
+                ifnot(hotspot[%1].onover, set(hotspot[%1].onover, '')); 
+                ifnot(hotspot[%1].onout, set(hotspot[%1].onout, '')); 
+                txtadd(hotspot[%1].onover, 'show_tooltip();'); 
+                txtadd(hotspot[%1].onout, 'hide_tooltip();'); 
+            ); 
+            , 
+            ifnot(layer[%1].tooltip_oy, 
+                set(layer[%1].tooltip_oy, 000); 
+            ); 
+            ifnot(layer[%1].tooltip, set(layer[%1].tooltip, ''); ); 
+            if(device.touchdevice, 
+                ifnot(layer[%1].ondown, set(layer[%1].ondown, '')); 
+                ifnot(layer[%1].onup, set(layer[%1].onup, '')); 
+                txtadd(layer[%1].ondown, 'show_tooltip();'); 
+                txtadd(layer[%1].onup, 'hide_tooltip();'); 
+                , 
+                ifnot(layer[%1].onover, set(layer[%1].onover, '')); 
+                ifnot(layer[%1].onout, set(layer[%1].onout, '')); 
+                txtadd(layer[%1].onover, 'show_tooltip();'); 
+                txtadd(layer[%1].onout, 'hide_tooltip();'); 
+            ); 
+        );
+    </action>
+    <action name="fadein_tooltip">set(layer[tooltip].visible, true); set(layer[tooltip_arrow].visible, true); tween(layer[tooltip].alpha, 1, .10); tween(layer[tooltip_arrow].alpha, 1, .10);</action>
+    <action name="show_tooltip">
+        if(tooltip,
+            if(settings[tooltip].visible
+            ,
+            copy(layer[tooltip].html, tooltip);
+            copy(layer[tooltip].current, name);
+            if(tooltip_oy != '000',
+                copy(layer[tooltip_arrow].oy, tooltip_oy);
+                copy(layer[tooltip].oy, tooltip_oy);
+                sub(layer[tooltip].oy, layer[tooltip_arrow].pixelheight);
+                ,
+                copy(layer[tooltip_arrow].oy, settings[tooltip].oy);
+                copy(layer[tooltip].oy, settings[tooltip].oy);
+                sub(layer[tooltip].oy, layer[tooltip_arrow].pixelheight);
+            );
+            set(arrow_offset, 5);
+            <!--if(device.pixelratio GT 1, mul(arrow_offset, 2););-->
+            add(layer[tooltip_arrow].oy, arrow_offset);
+            add(layer[tooltip].oy, arrow_offset);
+            if(tooltip_style,
+                set_tooltip_style(get(tooltip_style));
+                ,
+                reset_tooltip_style();
+            );
+            delayedcall(.06, 
+                if(device.touchdevice, 
+                    if(layer[get(layer[tooltip].current)].pressed, 
+                        fadein_tooltip(); 
+                        , 
+                        if(hotspot[get(layer[tooltip].current)].pressed, 
+                            fadein_tooltip(); 
+                        ); 
+                    ); 
+                    , 
+                    if(layer[get(layer[tooltip].current)].hovering, 
+                        fadein_tooltip(); 
+                        , 
+                        if(hotspot[get(layer[tooltip].current)].hovering, 
+                            fadein_tooltip(); 
+                        ); 
+                    ); 
+                ); 
+            ); 
+            set(i, 0); 
+            update_tooltip_posiition(); 
+            if(device.touchdevice, 
+                asyncloop(pressed, update_tooltip_posiition(); ); 
+                , 
+                if (ath !== null, 
+                    asyncloop(hotspot[get(name)].hovering, update_tooltip_posiition(); , hide_tooltip(); ); 
+                    , 
+                    asyncloop(layer[get(name)].hovering, update_tooltip_posiition(); ); 
+                ); 
+            ); 
+        ));</action>
+    <action name="hide_tooltip">stoptween(layer[tooltip].alpha); stoptween(layer[tooltip_arrow].alpha); set(layer[tooltip].alpha, 0); set(layer[tooltip_arrow].alpha, 0); set(layer[tooltip].visible,false); set(layer[tooltip_arrow].visible,false);</action>
+    <action name="update_tooltip_posiition">
+        if (ath !== null,
+            spheretoscreen(ath, atv, abs_x, abs_y);
+            ,
+            plugin[abs].get_y(abs_y, get(name));
+            plugin[abs].get_x(abs_x, get(name), center);
+        );
+        copy(layer[tooltip].y, abs_y);
+        copy(layer[tooltip_arrow].y, abs_y);
+        copy(layer[tooltip].x, abs_x);
+        copy(layer[tooltip_arrow].x, abs_x);
+        div(half_tooltip, layer[tooltip].width, 2);
+        sub(tooltip_left, layer[tooltip].x, half_tooltip);
+        set(max_tooltip, 4);
+        <!--if(device.pixelratio GT 1, mul(max_tooltip, 2)); -->
+        if(tooltip_left LT max_tooltip,
+            copy(layer[tooltip].x, tooltip_left);
+            mul(layer[tooltip].x, -1);
+            add(layer[tooltip].x, abs_x);
+            add(layer[tooltip].x, max_tooltip);
+            ,
+            div(half_tooltip, layer[tooltip].width, 2);
+            add(tooltip_right, layer[tooltip].x, half_tooltip);
+            sub(tooltip_right, stagewidth, tooltip_right);
+            if(tooltip_right LT max_tooltip,
+                add(layer[tooltip].x, tooltip_right);
+                sub(layer[tooltip].x, max_tooltip);
+            );
+        );
+        set(max_arrow, 14);
+        <!--if(device.pixelratio GT 1, mul(max_arrow, 2)); -->
+        if(layer[tooltip_arrow].x LT max_arrow, copy(layer[tooltip_arrow].x, max_arrow); , sub(arrow_limit, stagewidth, max_arrow); if(layer[tooltip_arrow].x GT arrow_limit, copy(layer[tooltip_arrow].x, arrow_limit); ); );</action>
+    <action name="mul_padding">indexoftxt(p_index, get(style[%1].padding), ' ', %2); add(p_next_start, 1, p_index); sub(p_length, p_index, %2); set(p_start, %2); if(p_index LT 0, set(p_length, 3); ); subtxt(padding_value, style[%1].padding, get(p_start), get(p_length)); mul(padding_value, 2); txtadd(style[%1].padding_2x, get(padding_value)); if(p_index GT 0, txtadd(style[%1].padding_2x, ' '); mul_padding(%1, get(p_next_start)); );</action>
+</krpano>

@@ -1,0 +1,36 @@
+<krpano>
+
+	<!--
+		hotspot styles
+			- for Flash and HTML5 usage
+
+		usage:
+			<hotspot ... style="name-of-the-style" ... />
+
+		avialable styles:
+			- hotspot_ani_black
+			- hotspot_ani_white
+	-->
+
+	<style name="hotspot_ani_black"
+	       url="hotspot_ani_black_64x64x20.png"
+	       crop="0|0|64|64"
+	       framewidth="64" frameheight="64" frame="0" lastframe="19"
+	       onloaded="hotspot_animate();"
+	       />
+
+	<style name="hotspot_ani_white"
+	       url="hotspot_ani_white_64x64x20.png"
+	       crop="0|0|64|64"
+	       framewidth="64" frameheight="64" frame="0" lastframe="19"
+	       onloaded="hotspot_animate();"
+	       />
+
+	<action name="hotspot_animate">
+		inc(frame,1,get(lastframe),0);
+		mul(ypos,frame,frameheight);
+		txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+		delayedcall(0.03, if(loaded, hotspot_animate() ) );
+	</action>
+
+</krpano>

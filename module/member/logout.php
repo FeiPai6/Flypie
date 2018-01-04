@@ -1,0 +1,9 @@
+<?php
+//退出登录
+if(!defined('IN_T')){
+   die('禁止访问！');
+} 
+Transaction::logout();
+Common::base_header("Location:".$_lang['host']."passport/login\n");
+exit;
+?>

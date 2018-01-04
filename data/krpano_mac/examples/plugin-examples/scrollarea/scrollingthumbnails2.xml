@@ -1,0 +1,49 @@
+<krpano onstart="loadscene(pano1,null,MERGE);">
+	
+	<!-- adjust the examples backbutton position (if available), the wait(0) in the onstart action allows executing this event -->
+	<events name="backbutton_adjust" keep="true" onxmlcomplete="if(layer[backbutton], set(layer[backbutton].y,106));" />
+	
+	<layer name="thumbs" keep="true" type="container" align="leftbottom" width="100%" height="86" bgcolor="0x000000" bgalpha="0.3">
+		<!-- scroll buttons - call the scrollarea scrollby() action as long as pressing down the button -->
+		<layer name="arrow_left"  url="arrow2_l.png" align="left"  scale="0.5" zorder="2" alpha="0.3" onover="tween(alpha,1);" onout="tween(alpha,0.3);" ondown="onover(); asyncloop(pressed, layer[scrollarea].scrollby(+2,0));" onup="onout();" />
+		<layer name="arrow_right" url="arrow2_r.png" align="right" scale="0.5" zorder="2" alpha="0.3" onover="tween(alpha,1);" onout="tween(alpha,0.3);" ondown="onover(); asyncloop(pressed, layer[scrollarea].scrollby(-2,0));" onup="onout();" />
+		
+		<layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="1990" height="86" zorder="1" direction="h" onloaded="setcenter(0,0);">
+			<layer name="thumb1" url="thumb1.jpg" align="left" edge="center" x="60"  onclick="hit(); loadscene(pano1,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb2" url="thumb2.jpg" align="left" edge="center" x="170" onclick="hit(); loadscene(pano2,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb3" url="thumb3.jpg" align="left" edge="center" x="280" onclick="hit(); loadscene(pano3,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb4" url="thumb4.jpg" align="left" edge="center" x="390" onclick="hit(); loadscene(pano4,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb5" url="thumb5.jpg" align="left" edge="center" x="500" onclick="hit(); loadscene(pano5,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb6" url="thumb6.jpg" align="left" edge="center" x="610" onclick="hit(); loadscene(pano6,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb7" url="thumb7.jpg" align="left" edge="center" x="720" onclick="hit(); loadscene(pano7,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb8" url="thumb8.jpg" align="left" edge="center" x="830" onclick="hit(); loadscene(pano8,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb9" url="thumb9.jpg" align="left" edge="center" x="940" onclick="hit(); loadscene(pano9,null,MERGE,BLEND(0.5));" />
+			<!-- repeat the scenes again now just to have more thumbs to scroll -->
+			<layer name="thumb10" url="thumb1.jpg" align="left" edge="center" x="1050" onclick="hit(); loadscene(pano1,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb11" url="thumb2.jpg" align="left" edge="center" x="1160" onclick="hit(); loadscene(pano2,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb12" url="thumb3.jpg" align="left" edge="center" x="1270" onclick="hit(); loadscene(pano3,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb13" url="thumb4.jpg" align="left" edge="center" x="1380" onclick="hit(); loadscene(pano4,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb14" url="thumb5.jpg" align="left" edge="center" x="1490" onclick="hit(); loadscene(pano5,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb15" url="thumb6.jpg" align="left" edge="center" x="1600" onclick="hit(); loadscene(pano6,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb16" url="thumb7.jpg" align="left" edge="center" x="1710" onclick="hit(); loadscene(pano7,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb17" url="thumb8.jpg" align="left" edge="center" x="1820" onclick="hit(); loadscene(pano8,null,MERGE,BLEND(0.5));" />
+			<layer name="thumb18" url="thumb9.jpg" align="left" edge="center" x="1930" onclick="hit(); loadscene(pano9,null,MERGE,BLEND(0.5));" />
+		</layer>
+	</layer>
+	
+	<!-- small visual button hit/pressed effect -->
+	<action name="hit">
+		tween(scale, 0.9, 0.1, default, tween(scale, 1.0, 0.1, easeOutBounce));
+	</action>
+
+	<scene name="pano1"><preview url="pano1.jpg" /><image><cubestrip url="pano1.jpg" /></image></scene>
+	<scene name="pano2"><preview url="pano2.jpg" /><image><cubestrip url="pano2.jpg" /></image></scene>
+	<scene name="pano3"><preview url="pano3.jpg" /><image><cubestrip url="pano3.jpg" /></image></scene>
+	<scene name="pano4"><preview url="pano4.jpg" /><image><cubestrip url="pano4.jpg" /></image></scene>
+	<scene name="pano5"><preview url="pano5.jpg" /><image><cubestrip url="pano5.jpg" /></image></scene>
+	<scene name="pano6"><preview url="pano6.jpg" /><image><cubestrip url="pano6.jpg" /></image></scene>
+	<scene name="pano7"><preview url="pano7.jpg" /><image><cubestrip url="pano7.jpg" /></image></scene>
+	<scene name="pano8"><preview url="pano8.jpg" /><image><cubestrip url="pano8.jpg" /></image></scene>
+	<scene name="pano9"><preview url="pano9.jpg" /><image><cubestrip url="pano9.jpg" /></image></scene>
+
+</krpano>

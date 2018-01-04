@@ -1,0 +1,5 @@
+<iframe id='m-iframe' src="/tour/817d99cb3f4b59b5" id="map_tour" frameborder="no" border="0" allowfullscreen="true"></iframe>
+<script>
+    _height =$(window).height()-$('.row').height();
+    $("#m-iframe").css({ width:'100%',height:_height});
+</script>

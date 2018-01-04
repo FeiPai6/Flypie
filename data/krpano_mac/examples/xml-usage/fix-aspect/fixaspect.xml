@@ -1,0 +1,58 @@
+<!--
+	krpano - fixed aspect example
+	- use always the same screen aspect (regardless of the browser or screen size) 
+	- in this example 16:9
+-->
+
+<krpano version="1.16" onstart="start();">
+
+	<!-- text styles for startup text and onhover text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="2.0" fadeintime="1.0" fadetime="1.0"
+	           />
+	           
+	<action name="start">
+		showtext('[b][i]krpano[br]fixed aspect example[/i][/b]', infostyle);
+		delayedcall(4.0, showtext('try to resize the browser', infostyle); );
+	</action>
+
+
+	<!-- pano -->
+	<preview url="../../panos/p2/preview.jpg" />
+	<image>
+		<cube url="../../panos/p2/pano_%s.jpg" />
+	</image>
+	
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="MFOV" fov="90" fovmin="60" fovmax="120" />
+
+
+
+	<events onresize="fixaspectresize(16,9);"  />
+	
+	
+	<action name="fixaspectresize">
+		div(aspect,%1,%2);
+        mul(destwidth,  stagewidth, aspect); 
+        copy(destheight, stagewidth); 
+		if(destwidth GT stagewidth, div(dwnscale,stagewidth,destwidth), set(dwnscale,1.0) );
+		mul(destwidth,  destwidth, dwnscale);
+		mul(destheight, destheight, dwnscale);
+		if(destheight GT stageheight, div(dwnscale,stageheight,destheight), set(dwnscale,1.0) );
+		mul(destwidth,  destwidth, dwnscale);
+		mul(destheight, destheight, dwnscale);
+		sub(destx, stagewidth,  destwidth);
+		sub(desty, stageheight, destheight);
+		mul(destx, destx, 0.5);
+		mul(desty, desty, 0.5);
+		copy(area.x,      destx);
+		copy(area.y,      desty);
+		copy(area.width,  destwidth);
+		copy(area.height, destheight);
+	</action>
+
+
+</krpano>
+

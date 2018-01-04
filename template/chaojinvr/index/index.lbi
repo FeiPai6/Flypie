@@ -1,0 +1,150 @@
+
+<script>
+	$(function(){
+		$("#top_frame").load(function() {
+			console.log($(this).contents().find("body").height());
+			$(this).height($(window).height()*0.7);
+		})
+	})
+</script>
+<!-- 页顶banner图开始 -->
+<script type="text/javascript" src="/template/{$_lang.moban}/css/jquery-1.8.3.min.js"></script> 
+<script type="text/javascript" src="/template/{$_lang.moban}/css/jquery.easing.min.js"></script> 
+<script type="text/javascript" src="/template/{$_lang.moban}/css/jquery.db_tabarrowbackground.min.js"></script>
+
+
+<div class="DB_tab25">
+	<ul class="DB_imgSet">
+		<li style="background:url('/template/{$_lang.moban}/css/banner1.jpg') no-repeat 49%"></li>
+		<li style="background:url('/template/{$_lang.moban}/css/banner2.jpg') no-repeat 49%"></li>
+	</ul>
+	<ul class="DB_btnSet">
+		<li><img src="/template/{$_lang.moban}/css/btn_off.gif"/></li>
+		<li><img src="/template/{$_lang.moban}/css/btn_off.gif"/></li>
+	</ul>
+	<span class="DB_prevBtn"><img src="/template/{$_lang.moban}/css/arrow_prev.png" alt="PREV" onmouseover="this.src='/static/images/arrow_prev_over.png'" onmouseout="this.src='/static/images/arrow_prev.png'"/></span>
+	<span class="DB_nextBtn"><img src="/template/{$_lang.moban}/css/arrow_next.png" alt="Next" onmouseover="this.src='/static/images/arrow_next_over.png'" onmouseout="this.src='/static/images/arrow_next.png'"/></span>		
+</div>
+<script type="text/javascript">
+	$('.DB_tab25').DB_tabArrowBackground({
+		key:'b28551',                     
+		moveSpeed:1000,                   
+		autoRollingTime:5000           
+	})
+</script>
+<div class="result"></div>
+
+<!-- 代码 结束 -->
+
+
+<!-- 主体内容 -->
+<div class="container">
+  
+  <!-- 精选推荐标题 -->
+  <div class="row" id="content">
+		<div class="col-md-6">
+		  <h2 class="title_font">首页精品推荐<small style="margin-left:10px;">为您推荐站内优秀的VR全景作品</small></h2>
+		</div>
+  </div>
+  
+  <!-- 精选推荐内容 -->
+  <div class="row chosen_wrap">
+		<div class="col-md-7">
+			<div class="row chosen_wrap">
+			{for $i=0; $i<20; $i++}
+			                          <div class="col-md-4x col-sm-4 col-xs-6 img_list">
+                            <a href="/tour/{$recommend[$i]['view_uuid']}" target="_blank">
+                                <img src="{$recommend[$i]['thumb_path']}" class="img_list_img">
+                            </a>
+                            <div style="position:relative">
+                                <div class="title_cover of_hide"  style="font-size:12px;font-style:normal;">人气 {$recommend[$i]['browsing_num']} <div class="pull-right2" style="color:#FFF;font-style:normal;">❤ {$recommend[$i]['praised_num']}</div> </div>
+                            </div>
+                            <div class="pano_title of_hide">{$recommend[$i]['name']}</div>
+                            <!--<div ><img src="/template/{$_lang.moban}/css/fc2180e6ee912b7ebb747a1629786c5a.jpg" class="avatar" /><font class="author">大熊摄影师</font></div>-->
+                      </div>
+			                 {/for}	       
+			    			</div>
+		</div>
+  </div>
+    
+  <!-- 广告banner1 -->
+  <div><a href="http://www.hi7717.cn/" target="_blank"><img src="/template/{$_lang.moban}/css/gzvr_banner1190x120.gif" ></a></div>
+    
+    <!-- 最新上传 -->
+   <div class="row">
+	  <div class="title_font">
+			<h2 class="text-muted">最新上传<small style="margin-left:10px;">刚刚上传的新鲜全景</small>
+            <a href="/pictures"><small class="text-muted  pull-right more">更多>></small></a></h2>
+  	  </div>
+  </div>
+  
+  <div class="row">
+		<div class="cards" style="margin:0;">
+		{foreach from=$new_join key=k item=v}
+			                      <div class="col-md-4x col-sm-4 col-xs-6 img_list">
+                            <a href="/tour/{$v['view_uuid']}" target="_blank">
+                                <img src="{$v['thumb_path']}" class="img_list_img">
+                            </a>
+                            <div style="position:relative">
+                                <div class="title_cover of_hide"  style="font-size:12px;font-style:normal;">人气 {$v['browsing_num']} <div class="pull-right2" style="color:#FFF;font-style:normal;">❤ {$v['praised_num']}</div> </div>
+                            </div>
+                            <div class="pano_title of_hide">{$v['name']}</div>
+                           <!--<div ><img src="/template/{$_lang.moban}/css/fc2180e6ee912b7ebb747a1629786c5a.jpg" class="avatar" /><font class="author">大熊摄影师</font></div>-->
+                      </div>
+			                  {/foreach}       
+			    		</div>
+	</div>
+
+    
+
+    
+  <!-- 广告banner2 -->
+  <div><a href="http://www.hi7717.cn/" target="_blank" title="2017第三届中国（北京）国际虚拟现实、增强现实及游乐设施展览会"><img src="/template/{$_lang.moban}/css/ad2323.jpg" width="1200"></a></div>
+  
+</div>
+<!-- 主体内容结束 -->
+
+<div class="link-container">
+      <div class="links"><span class="link_title">友情链接（申请链接qq：{$_lang.qq}）</span>
+      <ul><li ><a href="http://chaoquanjing.com" target="_blank">北京超全景720</a></li>
+        <li ><a href="http://vr.youku.com/" target="_blank">优酷VR</a></li>
+        <li ><a href="http://www.insta360.com" target="_blank">insta360全景相机</a></li>
+        <li ><a href="http://bbs.ivr.baidu.com/" target="_blank">百度VR论坛</a></li>
+        <li ><a href="http://bbs.lingvr.com/" target="_blank">灵镜社区</a></li>
+        <li ><a href="http://www.vrjie.com/" target="_blank">VR界</a></li>
+        <li ><a href="http://bbs.deepoon.com/" target="_blank">大朋VR</a></li>
+        <li ><a href="http://www.xuguwang.com" target="_blank">虚谷网</a></li>
+        <li ><a href="http://www.vr5008.com" target="_blank">VR地带</a></li>
+        <li ><a href="http://vr.99.com" target="_blank">99VR视界</a></li>
+        <li ><a href="http://www.vrdigger.com" target="_blank">VR挖掘者</a></li>
+        <li ><a href="http://www.yaojievr.com" target="_blank">妖界VR</a></li>
+        <li ><a href="http://vrguancha.net/" target="_blank">VR观察网</a></li>
+        <li ><a href="http://www.ivrwan.com/v/ " target="_blank">VR视频</a></li>
+        <li ><a href="http://www.maidouvr.com" target="_blank">麦逗VR</a></li>
+        <li ><a href="http://hmaoll.com" target="_blank">小幻猫VR电影</a></li>
+        <li ><a href="http://www.izhiyiwang.com" target="_blank">智壹VR网</a></li>
+        <li ><a href="http://www.haosevr.com" target="_blank">好色VR</a></li>
+        <li ><a href="http://www.52vrdy.com" target="_blank">52VR电影网</a></li>
+        <li ><a href="http://www.49zn.com" target="_blank">49智能网</a></li>
+        <li ><a href="http://vr.21znw.com/" target="_blank">VR邦</a></li>
+        <li ><a href="http://www.vrarfair.com" target="_blank">2017亚洲VR&AR博览会</a></li>
+        <li ><a href="http://www.zjjta.com" target="_blank">旅程网</a></li>
+        <li ><a href="http://www.mjsy.net/" target="_blank">漠江摄影</a></li>
+        <li ><a href="http://www.chinaphoto.cc/" target="_blank">中国摄影家</a></li>
+        <li ><a href="http://www.vr345.com" target="_blank">VR345</a></li>
+        <li ><a href="http://www.yingyanvr.com/" target="_blank">鹰眼VR</a></li>
+        <li ><a href="http://www.100ftv.com/" target="_blank">100纷VR资讯</a></li>
+        <li ><a href="http://www.icood.net" target="_blank">VR大厅资源网</a></li>
+        <li ><a href="http://www.360vrdh.com" target="_blank">360vr导航</a></li>
+        <li ><a href="http://bbs.99idev.com/" target="_blank">VR开发</a></li>
+        <li ><a href="http://www.izhiyiwang.com" target="_blank">智壹VR网</a></li>
+        <li ><a href="http://www.cnvr-expo.com" target="_blank">虚拟现实展览会</a></li>
+        
+        <li ><a href="http://www.360vrdh.com" target="_blank">360VR导航</a></li>
+        <li ><a href="http://lanmeivr.com/" target="_blank">蓝莓VR</a></li>
+</ul></div>
+<div style="clear:both;"></div>
+</div>
+
+</body>
+</html>

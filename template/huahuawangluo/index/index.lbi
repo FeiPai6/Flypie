@@ -1,0 +1,179 @@
+
+<div class="container-fluid" style="padding: 0;margin-top: 62px;">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+    
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="/template/{$_lang.moban}/css/222.jpg" width="100%">
+      <div class="carousel-caption">
+        
+      </div>
+    </div>
+    <div class="item">
+       <img src="/template/{$_lang.moban}/css/333.jpg" width="100%">
+      <div class="carousel-caption">
+       
+      </div>
+    </div>
+   
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="http://127.0.0.1/#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    
+  </a>
+  <a class="right carousel-control" href="http://127.0.0.1/#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+   
+  </a>
+</div>
+
+	
+</div>
+<div class="container con-btn">
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">房产</a>
+	</div>
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">风景</a>
+	</div>
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">校园</a>
+	</div>
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">酒店</a>
+	</div>
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">文博</a>
+	</div>
+	<div class="col-lg-2 col-md-4 col-sm-6 col-xs-6">
+		<a href="/pictures" class="btn btn-success btn-lg">婚礼</a>
+	</div>
+</div>
+<script>
+	$(function(){
+		$("#top_frame").load(function() {
+			console.log($(this).contents().find("body").height());
+			$(this).height($(window).height()*0.7);
+		})
+	})
+</script>
+
+
+<div class="container" style="margin-top:0px">
+	<div class="page-header">
+	  <h2 style="padding-left:10px;">VR全景<small>推荐全景</small>
+	  	<a href="/pictures" class="pull-right">查看更多</a>
+	  </h2>
+	</div>
+</div>
+<div class="container pubu">
+{for $i=0; $i<20; $i++}
+	<div class="col-lg-3 col-md-4 col-xs-6">	
+			<a href="/tour/{$recommend[$i]['view_uuid']}" class="tupian" target="_blank">
+				<img src="{$recommend[$i]['thumb_path']}" width="100%">
+				<div>
+					<div class="disblock">
+						<span><img src="{$recommend[$i]['thumb_path']}" width="40" height="40" style="border:#666 1px solid;background:#fff;border-radius:5px;"><br>{$recommend[$i]['name']}</span>
+					</div>
+					<p>
+						<span class="glyphicon glyphicon-heart"><span class="marl">{$recommend[$i]['praised_num']}</span></span>
+						
+						<span class="pull-right glyphicon glyphicon-thumbs-up"><span class="marl">{$recommend[$i]['browsing_num']}</span></span>
+					</p>
+					
+				</div>
+				
+			</a>
+			<h4><a href="/tour/{$recommend[$i]['view_uuid']}" target="_blank">{$recommend[$i]['name']}</a></h4>
+	  		
+	</div>
+		{/for}	
+	</div>
+<div class="container-fluid con-div top30">
+	<div class="col-lg-6 col-md-6">
+		<img width="100%" src="/template/{$_lang.moban}/css/vrst.jpg">
+	</div>
+	<div class="col-lg-6 col-md-6">
+		<img width="100%" src="/template/{$_lang.moban}/css/vrst.jpg">
+	</div>
+</div>
+
+<div class="container-fluid top30" style="background:#efefef; ">	
+<div class="container">
+	<div class="page-header">
+	  <h2 style="padding-left:10px;">最新上传<small>刚刚上传的全景</small>
+	  	<a href="/pictures" class="pull-right">查看更多&gt;</a>
+	  </h2>
+	</div>
+</div>
+<div class="container pubu">
+{foreach from=$new_join key=k item=v}
+	<div class="col-lg-3 col-md-4 col-xs-6">
+			<a href="/tour/{$v['view_uuid']}" class="tupian" target="_blank">
+				<img src="{$v['thumb_path']}" width="100%">
+				<div>
+					<div class="disblock">
+						<span><img src="{$recommend[$i]['thumb_path']}" width="40" height="40" style="border:#666 1px solid;background:#fff;border-radius:5px;"><br>{$recommend[$i]['name']}</span>
+					</div>
+					<p>
+						<span class="glyphicon glyphicon-heart"><span class="marl">3489</span></span>
+						
+						<span class="pull-right glyphicon glyphicon-thumbs-up"><span class="marl">{$recommend[$i]['browsing_num']}</span></span>
+					</p>
+					
+				</div>
+				
+			</a>
+			<h4><a href="/tour/{$v['view_uuid']}" target="_blank">{$v['name']}</a></h4>
+	  		
+	</div>
+		{/foreach}
+	</div></div>
+
+
+
+
+<div class="container-fluid top30" style="background:#efefef; ">	
+<div class="container">
+	<div class="page-header">
+	  <h2 style="padding-left:10px;">全景视频<small>推荐的全景视频</small>
+	  <a href="/videos" class="pull-right">查看更多&gt;</a></h2>
+	</div>
+</div>
+<div class="container pubu">
+{foreach from=$video_recommmend key=k item=v}
+	<div class="col-lg-3 col-md-4 col-xs-6">
+			<a href="{$_lang.cdn_host}video/play.html?vid={$v.id}" class="tupian" target="_blank">
+				<img src="{$v['thumb_path']}" width="100%">
+				<div>
+					<div class="disblock">
+						<span><img src="{$v['thumb_path']}" width="40" height="40" style="border:#666 1px solid;background:#fff;border-radius:5px;"><br>{$v['vname']}</span>
+					</div>
+					<p>
+						<span class="glyphicon glyphicon-heart"><span class="marl">18</span></span>
+					</p>
+					
+				</div>
+				
+			</a>
+			<h4><a href="{$_lang.cdn_host}video/play.html?vid={$v.id}" target="_blank">{$v['vname']}</a></h4>
+	  		
+	</div>
+		{/foreach}
+	</div></div>
+
+
+
+
+
+
+</body></html>

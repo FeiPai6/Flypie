@@ -1,0 +1,29 @@
+<!--
+	krpano - editor and options-plugins example
+-->
+
+<krpano bgcolor="0x000077">
+
+	<!-- include the both plugins -->
+	<plugin name="editor"  url="%SWFPATH%/plugins/editor.swf" keep="true"  />
+	<plugin name="options" url="%SWFPATH%/plugins/options.swf" keep="true" view="true" display="true" control="false" image="true" onloaded="open();" />
+	
+	<!-- set the path to the default lensflare image -->
+	<lensflareset name="DEFAULT" url="%SWFPATH%/plugins/krpano_default_flares.jpg" />
+	
+	<!-- use a partial pano -->
+	<image hfov="157.04" vfov="74.44" voffset="13.875">
+		<sphere url="../../supported-pano-formats/partial/partpano.jpg" />
+	</image>
+	
+	<!-- disable the viewing limitations -->
+	<view hlookat="0" vlookat="15" fov="130" limitview="off" />
+	
+	<!-- an info text -->
+	<layer name="infotext" url="%SWFPATH%/plugins/textfield.swf" enabled="false" border="false" background="false"
+		align="lefttop" x="10" y="10" width="400" autoheight="true"
+		css="text-align:left; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;"
+		html="try the PANO IMAGE settings of the options plugin to modify the partial pano..." 
+		/>
+
+</krpano>

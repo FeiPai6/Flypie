@@ -1,0 +1,1 @@
+<button type="button" class="btn" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else} title="全景中加入站外链接、电话号码或导航" onclick="openLink()"{/if}>链接、电话与导航</button>

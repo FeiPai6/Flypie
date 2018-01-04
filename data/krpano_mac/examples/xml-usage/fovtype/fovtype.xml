@@ -1,0 +1,122 @@
+<!--
+	krpano
+	- fovtype example (it's also a example of <area> and combobox usage)
+	- choose what kind of fov type the fov value represents
+	- VFOV, HFOV, DFOV or MFOV
+-->
+
+<krpano onstart="div(aspect,16,9);">
+
+	<include url="%SWFPATH%/plugins/showtext.xml" />
+	<plugin name="moretweentypes" url="%SWFPATH%/plugins/moretweentypes.swf" alturl="%SWFPATH%/plugins/moretweentypes.js" keep="true" preload="true" />
+
+	<!-- pano image -->
+	<preview url="../../panos/p4/preview.jpg" />
+	<image>
+		<cube url="../../panos/p4/pano_%s.jpg" />
+	</image>
+
+	<view hlookat="103" fovmin="50" fovmax="150" />
+
+	<textstyle name="FOVTEXT" origin="top" edge="top" yoffset="35" textalign="center" background="false" border="false" fontsize="20" textcolor="0xFFFFFF" bold="false" textshadow="2.0" showtime="2.0" fadetime="1.0" />
+
+
+	<events onresize="ifnot(in_area_tween, resizearea() );"
+			onviewchange="showfovtext();"
+			/>
+
+
+	<action name="showfovtext">
+		copy(fov,view.fov);
+		roundval(fov,2);
+		txtadd(msg,get(view.fovtype),'=',get(fov),'°');
+		showtext(get(msg),FOVTEXT);
+	</action>
+
+
+	<action name="calcaspect">
+		<!-- calc new area, result stored in: destx,desty,destwidth,destheight  -->
+		if(aspect === null, set(aspect,0));
+		if(aspect LE 0,
+			copy(destwidth, stagewidth);
+			copy(destheight, stageheight);
+		  ,
+			trace(aspect);
+			math.max(maxlength, stagewidth, stageheight);
+			if(aspect GE 1.0,
+				copy(destheight, maxlength);
+				mul(destwidth, maxlength, aspect);
+			  ,
+				div(destheight, maxlength, aspect);
+				copy(destwidth, maxlength);
+			  );
+			
+			if(destwidth GT stagewidth, div(dwnscale,stagewidth,destwidth), set(dwnscale,1.0) );
+			mul(destwidth,  destwidth, dwnscale);
+			mul(destheight, destheight, dwnscale);
+			if(destheight GT stageheight, div(dwnscale,stageheight,destheight), set(dwnscale,1.0) );
+			mul(destwidth,  destwidth, dwnscale);
+			mul(destheight, destheight, dwnscale);
+		  );
+		sub(destx, stagewidth,  destwidth);
+		sub(desty, stageheight, destheight);
+		mul(destx, destx, 0.5);
+		mul(desty, desty, 0.5);
+	</action>
+
+
+	<action name="resizearea">
+		calcaspect();
+
+		<!-- set new area size -->
+		copy(area.x,      destx);
+		copy(area.y,      desty);
+		copy(area.width,  destwidth);
+		copy(area.height, destheight);
+	</action>
+
+
+	<action name="changeaspect">
+		calcaspect();
+
+		<!-- tween(animated change) to new area -->
+		set(in_area_tween,true);
+		tween(area.x,      get(destx),      0.5, easeInOutSine);
+		tween(area.y,      get(desty),      0.5, easeInOutSine);
+		tween(area.width,  get(destwidth),  0.5, easeInOutSine);
+		tween(area.height, get(destheight), 0.5, easeInOutSine, WAIT);
+		set(in_area_tween,false);
+	</action>
+
+
+	<!-- combobox with fov-type selection -->
+	<plugin name="cb1" url="%SWFPATH%/plugins/combobox.swf" alturl="%SWFPATH%/plugins/combobox.js" align="leftbottom" x="10" y="10" width="100" dropdownwidth="78" onloaded="fillfovtypebox();" />
+
+	<action name="fillfovtypebox">
+		addIdItem(i1, 'VFOV', set(view.fovtype,VFOV); );
+		addIdItem(i2, 'HFOV', set(view.fovtype,HFOV); );
+		addIdItem(i3, 'DFOV', set(view.fovtype,DFOV); );
+		addIdItem(i4, 'MFOV', set(view.fovtype,MFOV); );
+		selectIdItem(i1);
+	</action>
+
+
+	<!-- combobox with aspect (dynamically resized area) selection - Flash only -->
+	<plugin name="cb2" url="%SWFPATH%/plugins/combobox.swf" alturl="%SWFPATH%/plugins/combobox.js" align="leftbottom" x="120" y="10" width="100" dropdownwidth="78" rowcount="10" onloaded="fillaspectbox();" />
+
+	<action name="fillaspectbox">
+		addIdItem(i1, 'full',  set(aspect,0);     changeaspect(); );
+		addIdItem(i2, '2:3' ,  div(aspect,2,3);   changeaspect(); );
+		addIdItem(i3, '1:1',   div(aspect,1,1);   changeaspect(); );
+		addIdItem(i4, '5:4',   div(aspect,5,4);   changeaspect(); );
+		addIdItem(i5, '4:3',   div(aspect,4,3);   changeaspect(); );
+		addIdItem(i6, '3:2',   div(aspect,3,2);   changeaspect(); );
+		addIdItem(i7, '16:10', div(aspect,16,10); changeaspect(); );
+		addIdItem(i8, '16:9',  div(aspect,16,9);  changeaspect(); );
+		addIdItem(i9, '21:9',  div(aspect,21,9);  changeaspect(); );
+		selectIdItem(i8);
+	</action>
+
+
+</krpano>
+

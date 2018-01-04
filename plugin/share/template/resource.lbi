@@ -1,0 +1,28 @@
+<div class="modal" id="qrCodeModal" data-backdrop="static" data-keyboard="false" style="z-index:2002">
+    <div class="modal-dialog" style="height:350px;">
+        <div class="modal-header" >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span style="color: #353535;">用手机扫描二维码分享给你的好友</span>
+        </div>
+        <div class="modal-body">
+            <div class="center-block" style="text-align: center">
+                <img id="qrcode" src="/static/images/loading.gif" width="226px" height="226px">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+         plugins_init_function.push(share_init);
+    })
+    function share_init(data){
+      if(data.hideshare_flag == "1"){
+            $("#shareDiv").hide();
+        }
+    }
+    //分享-获取二维码
+    function getQRCodePic(){
+        $("#qrCodeModal").modal('show');
+        $("#qrcode").attr("src",'/qrcode.php?viewid='+work_view_uuid);
+    }
+</script>

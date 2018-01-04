@@ -1,0 +1,15 @@
+<krpano onstart="ifnot(haveexternalinterface, error('ExternalInterface (Javascript Interface) not avaiable![br]Check your Flashplayer security settings:[br]http://krpano.com/docu/localusage/'));">
+
+	<!-- preview -->
+	<preview url="pano2.jpg" />
+
+	<!-- pano (note - to keep this example small the same image as the preview image is used here) -->
+	<image type="CUBESTRIP">
+		<cubestrip url="pano2.jpg" />
+	</image>
+	
+	<!-- view settings -->
+	<view hlookat="+170" vlookat="-10" fov="179" fovmin="60" fovmax="120" />
+	
+</krpano>
+

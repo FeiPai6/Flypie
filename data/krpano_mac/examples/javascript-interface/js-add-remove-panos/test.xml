@@ -1,0 +1,8 @@
+<krpano>
+
+	<layer name="flashlogo" url="../../images/flashlogo80.png" align="lefttop" scale="0.5" x="5" y="5" enabled="false" devices="flash" /> 
+	<layer name="html5logo" url="../../images/html5logo80.png" align="lefttop" scale="0.5" x="5" y="5" enabled="false" devices="html5" />
+	
+	<preview url="pano.jpg" />
+	
+</krpano>

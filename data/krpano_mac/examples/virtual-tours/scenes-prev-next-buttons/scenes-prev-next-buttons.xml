@@ -1,0 +1,125 @@
+<!--
+	krpano - scenes example
+	- with fully automatic previous and next buttons
+	- loop around
+-->
+
+
+<krpano version="1.16" onstart="action(start);" >
+
+	<!-- text styles for startup info -->
+	<textstyle name="infostyle" origin="top" edge="top" yoffset="20" textalign="center" background="false" border="false"  fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);" showtime="1.0" fadetime="1.0" />
+
+
+	<!-- start - load first scene -->
+	<action name="start">
+		loadscene(scene1, null, MERGE);
+		
+	</action>
+
+
+	<!-- first scene/pano -->
+	<scene name="scene1" onstart="showtext('[b][i]scene 1[/i][/b]', infostyle);">
+
+		<view hlookat="-15" vlookat="-10" fov="90" />
+		
+		<!-- same image for preview and pano -->
+		<preview url="pano1.jpg" />
+
+		<image type="CUBESTRIP">
+			<cubestrip url="pano1.jpg" />
+		</image>
+
+		<!-- place here scene local elements like plugins,hotspots, ... -->
+
+		<hotspot name="spot2" url="spot2.png" ath="-42" atv="-12" scale="0.6" zoom="true"
+		         alpha="0.3"
+		         onover="tween(alpha,1);tween(scale,1);"
+		         onout="tween(alpha,0.3);tween(scale,0.6);"
+		         onclick="looktohotspot(spot2); loadscene(scene2, null, MERGE, BLEND(1));"
+		         />
+
+	</scene>
+
+
+	<!-- second scene/pano-->
+	<scene name="scene2" onstart="showtext([b][i]scene 2[/i][/b], infostyle);">
+
+		<view hlookat="-110" vlookat="8" fov="100" />
+		
+		<!-- same image for preview and pano -->
+		<preview url="pano2.jpg" />
+
+		<image type="CUBESTRIP">
+			<cubestrip url="pano2.jpg" />
+		</image>
+
+		<!-- place here scene local elements like plugins,hotspots, ... -->
+
+		<hotspot name="spot3" url="spot3.png" ath="265" atv="0" scale="0.6" zoom="true"
+		         alpha="0.3"
+		         onover="tween(alpha,1);tween(scale,1);"
+		         onout="tween(alpha,0.3);tween(scale,0.6);"
+		         onclick="looktohotspot(spot3); loadscene(scene3, null, MERGE, BLEND(1));"
+		         />
+
+		<hotspot name="spot1" url="spot1.png" ath="165" atv="0" scale="0.6" zoom="true"
+		         alpha="0.3"
+		         onover="tween(alpha,1);tween(scale,1);"
+		         onout="tween(alpha,0.3);tween(scale,0.6);"
+		         onclick="looktohotspot(spot1); loadscene(scene1, null, MERGE, BLEND(1));"
+		         />
+
+	</scene>
+
+
+
+	<!-- third scene/pano-->
+	<scene name="scene3" onstart="showtext([b][i]scene 3[/i][/b], infostyle);">
+
+		<view hlookat="-174" vlookat="5" fov="75" />
+		
+		<!-- same image for preview and pano -->
+		<preview url="pano3.jpg" />
+
+		<image type="CUBESTRIP">
+			<cubestrip url="pano3.jpg" />
+		</image>
+
+		<!-- place here scene local elements like plugins,hotspots, ... -->
+
+		<hotspot name="spot3" url="spot2.png" ath="0" atv="0" scale="0.6" zoom="true"
+		         alpha="0.3"
+		         onover="tween(alpha,1);tween(scale,1);"
+		         onout="tween(alpha,0.3);tween(scale,0.6);"
+		         onclick="looktohotspot(spot3); loadscene(scene2, null, MERGE, BLEND(1));"
+		         />
+
+	</scene>
+
+
+
+	<!-- global elements (keep="true") -->
+	
+	<layer name="bar" keep="true" type="container" align="leftbottom" width="100%" height="40" bgcolor="0x000000" bgalpha="0.5">
+		<layer name="prev" url="prev-next-buttons.png" crop="0|0|64|64"  scale="0.5" align="left"  x="10" onclick="prevscene()" />
+		<layer name="next" url="prev-next-buttons.png" crop="64|0|64|64" scale="0.5" align="right" x="10" onclick="nextscene()" />
+	</layer>
+	
+	
+	<action name="prevscene">
+		copy(sceneindex, scene[get(xml.scene)].index);
+		sub(lastindex, scene.count, 1);
+		dec(sceneindex, 1, 0, get(lastindex));
+		loadscene(get(scene[get(sceneindex)].name), null, MERGE, BLEND(0.5));
+	</action>
+	
+	<action name="nextscene">
+		copy(sceneindex, scene[get(xml.scene)].index);
+		sub(lastindex, scene.count, 1);
+		inc(sceneindex, 1, get(lastindex), 0);
+		loadscene(get(scene[get(sceneindex)].name), null, MERGE, BLEND(0.5));
+	</action>
+
+</krpano>
+

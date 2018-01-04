@@ -1,0 +1,30 @@
+<krpano onstart="loadpano('%CURRENTXML%/../../virtual-tours/demotour-corfu/tour.xml',null,MERGE);">
+
+	<!-- stagescale tester -->
+	<layer type="container" name="stagescaletester" devices="html5" keep="true" align="center" y="-100" width="288" height="64" bgcolor="0x000000" bgalpha="0.5" bgborder="2 0xFFFFFF 1" bgroundedge="9" scalechildren="true" zorder="99">
+		<layer name="stagescaletester_ss1" url="zoombuttons.png" crop="64|0|64|64" align="lefttop" x="0" y="0"  onclick="sub(nss, stagescale, 0.25);mul(nss,4);roundval(nss);div(nss,4);if(nss LT 0.5, set(nss,0.5)); tween(stagescale,get(nss));" />
+		<layer name="stagescaletester_ss2" url="zoombuttons.png" crop="0|0|64|64"  align="lefttop" x="224" y="0" onclick="add(nss, stagescale, 0.25);mul(nss,4);roundval(nss);div(nss,4);if(nss GT 2.00, set(nss,2.00)); tween(stagescale,get(nss));" />
+		<layer name="stagescaletester_ss3" url="%SWFPATH%/plugins/textfield.swf" align="lefttop" x="64" y="0" width="160" height="64" vcenter="true" html="" css="text-align:center; font-family:Arial; color:#FFFFFF; font-weight:bold; font-size:12px;" background="false" />
+	</layer>
+
+	<events name="stagescaletester_onresize" devices="html5" keep="true"
+	        onresize="stagescaletester_update();"
+	        />
+
+	<!-- show information about the current stagescale and apply the inverse scaling to keep the stagescalertester buttons always the same size -->
+	<action name="stagescaletester_update" devices="html5">
+		copy(ss,stagescale);
+		div(layer[stagescaletester].scale,1,ss);
+		div(layer[stagescaletester].y,-100,ss);
+		div(newfontsize,12,ss);
+		roundval(newfontsize,2);
+		txtadd(layer[stagescaletester_ss3].css,'text-align:center; font-family:Arial; color:#FFFFFF; font-weight:bold; font-size:',get(newfontsize),'px;');
+		roundval(ss,2);
+		copy(pr,device.pixelratio);roundval(pr,2);
+		copy(sw,stagewidth);roundval(sw);
+		copy(sh,stageheight);roundval(sh);
+		txtadd(layer[stagescaletester_ss3].html,'stagescale=',get(ss),'[br]stagesize=',get(sw),'x',get(sh),'[br]device.pixelratio=',get(pr));
+	</action>
+
+
+</krpano>

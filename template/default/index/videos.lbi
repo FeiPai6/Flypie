@@ -1,0 +1,94 @@
+<style type="text/css">
+h2.video-tit{
+color:#888;font-weight:normal
+}
+h2.video-tit a{
+font-size:14px;
+}
+h2.video-tit .btn{
+padding:2px 5px;
+}
+.of_hide{
+	display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+<div class="container">
+
+<h2 class="video-tit">全景视频
+<div style="float:right">
+<a onclick="list_by_recommend(1,this)" class="btn btn-primary">精选</a>　<a onclick="list_by_recommend(0,this)"  class="btn">全部</a>
+</div>
+</h2>
+
+<div class="clearfix"></div>
+
+<!--一个卡片列表行-->
+<div class="row">
+	<div class="cards" style="margin:0;" id="video_content">
+		<!--卡片列表循环-->
+	         
+		<!--卡片列表循环结束-->	
+	</div>
+</div>
+<!--一个卡片列表行结束-->
+
+</div>
+<script>
+	var play_host = '{$_lang.cdn_host}video/play.html?vid=';
+ 	var page = 1;
+ 	var recommend = 1 ;
+	$(function(){
+		list();
+		$(window).scroll(function(){
+		　　var scrollTop = $(this).scrollTop();
+		　　var scrollHeight = $(document).height();
+		　　var windowHeight = $(this).height();
+		　　if(scrollTop + windowHeight == scrollHeight){
+		　　　　list();
+		　　}
+		});
+	})
+	function list(){
+		alert_notice("加载中...",'success','bottom',500);
+		$.post('/videos',{
+			'act':'list',
+			'recommend':recommend,
+			'page':page
+		},function(res){
+			if (res.length==0) {
+				alert_notice("没有更多了",'default','bottom');
+			}else{
+				var html = '';
+				for(var i=0 ; i<res.length;i++){
+					var p = res[i];
+					html+='<div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">'+
+					   '<div class="card" href="###">'+
+						' <a target="_blank" href="'+play_host+p.id+'"><img src="'+p.thumb_path+'" alt="'+p.vname+'"></a>'+
+						 '<div class="card-heading">'+
+						'	<div class="col-md-9 col-xs-8 of_hide padding0">'+
+						'		<strong class="text-primary">'+p.vname+'</strong> '+
+						'	</div>'+
+						'	<div class="col-md-3 col-xs-4 of_hide padding0">'+
+						'		<div class="pull-right text-danger"><i class="icon-heart-empty"></i>'+p.browsing_num+'</div>'+
+						'	</div>'+
+						' </div>'+
+					 ' </div>'+
+					' </div>';
+				}
+				page++;
+				$("#video_content").append(html);
+			}
+			
+		},'json');
+	}
+	function list_by_recommend(_recommend,obj){
+		page=1;
+		recommend = _recommend
+		$("#video_content").html("");
+		list();
+		$(obj).siblings().removeClass("btn-primary");
+		$(obj).addClass("btn-primary");
+	}
+</script>

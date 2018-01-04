@@ -1,0 +1,122 @@
+<krpano version="1.18">
+
+	<action name="make_gallery">
+		trace(%0 %1);
+		
+		<!-- config -->
+		set(min_movement, 50);              <!-- minimal movement in pixels needed to swipe picture -->
+		set(show_arrows,  true);            <!-- show gallery arrows -->
+		
+		<!-- creating galery -->
+		if (%1 != null,
+			<!-- removing previous gallery -->
+			for(copy(i, plugin.count), i GE 0, dec(i),
+				if(plugin[get(i)].parent == gallery_scrollarea,
+					removeplugin(get(i));
+				);
+			);
+			
+			set(activeGallery, %1);
+		
+			<!-- scroller's width -->
+			mul(layer[gallery_scrollarea].width, stagewidth, gallery[%1].img.count);
+			layer[gallery_scrollarea].setcenter(0,0);
+			set(pic_id, 0);
+        	
+
+			<!-- adding images -->
+			for(set(i,0), i LT gallery[%1].img.count, inc(i),
+				set(iname, get(gallery[%1].img[get(i)].name));
+				txtadd(cname, get(gallery[%1].img[get(i)].name), '_container');
+				addlayer(get(cname));
+				set(layer[get(cname)].type, container);
+				set(layer[get(cname)].parent, gallery_scrollarea);
+				set(layer[get(cname)].width, get(stagewidth));
+				set(layer[get(cname)].height, get(stageheight));
+				set(layer[get(cname)].bgcolor, 0x000000);
+				set(layer[get(cname)].bgalpha, 0.0);
+				set(layer[get(cname)].bgcapture, true);
+				set(layer[get(cname)].align, left);
+				set(layer[get(cname)].edge, center);
+				mul(layer[get(cname)].x, stagewidth, i);
+				div(layer[get(cname)].ox, stagewidth, 2);
+				set(layer[get(cname)].id, get(i));
+				set(layer[get(cname)].ondown, set(gallery_scrollarea_start_pos, get(layer[gallery_scrollarea].x)));
+				set(layer[get(cname)].onup, move_image());
+				
+				addlayer(get(iname));
+				set(layer[get(iname)].url, get(gallery[%1].img[get(i)].url));
+				set(layer[get(iname)].parent, gallery_scrollarea);
+				set(layer[get(iname)].align, left);
+				set(layer[get(iname)].edge, center);
+				mul(layer[get(iname)].x, stagewidth, i);
+				div(layer[get(iname)].ox, stagewidth, 2);
+				set(layer[get(iname)].enabled, false);
+				set(layer[get(iname)].onloaded, if (pixelwidth GT stagewidth OR pixelheight GT stageheight, div(hscale, stagewidth, pixelwidth); div(vscale, stageheight, pixelheight); if (hscale GT vscale, copy(height, stageheight); set(width, PROP); , copy(width, stagewidth); set(height, PROP))));
+			);
+			,
+			trace(%0: missed gallery name);
+		);
+		
+		<!-- showing/hidding arrows -->
+		if(show_arrows == true AND gallery[%1].img.count GT 1,
+			set(layer[arrow_left].visible, false);
+			set(layer[arrow_right].visible, true);
+			,
+			set(layer[arrow_left].visible, false);
+			set(layer[arrow_right].visible, false);
+		);
+	</action>
+	 	
+	<action name="move_image">
+		trace(%0 %1);
+
+		sub(gallery_scrollarea_direction, gallery_scrollarea_start_pos, layer[gallery_scrollarea].x);
+		
+		<!-- 'moving' by arrows clicking (parames left/right) -->
+		if(%1 == left, set(gallery_scrollarea_direction, -500));
+		if(%1 == right, set(gallery_scrollarea_direction, 500));
+		
+		Math.abs(movement, gallery_scrollarea_direction);
+		
+		if (movement GT min_movement,
+			if(gallery_scrollarea_direction LT 0,
+				<!-- move right -->
+				dec(pic_id);
+				if(pic_id LT 0, inc(pic_id));
+				,
+				<!-- move left -->
+				inc(pic_id);
+				if(pic_id GE gallery[get(activeGallery)].img.count, dec(pic_id));
+			);
+			
+			<!-- updating arrows status -->
+			if(show_arrows == true,
+				sub(last_img_id, gallery[get(activeGallery)].img.count, 1);
+				if(pic_id LE 0, set(layer[arrow_left].visible, false), set(layer[arrow_left].visible, true));
+				if(pic_id LT  last_img_id, set(layer[arrow_right].visible, true), set(layer[arrow_right].visible, false));
+			);
+		);
+
+		mul(gallery_scrollarea_new_pos, pic_id, stagewidth);
+		div(stagewidth2, stagewidth, 2);
+		add(gallery_scrollarea_new_pos, stagewidth2);
+		
+		layer[gallery_scrollarea].scrolltocenter(get(gallery_scrollarea_new_pos),0);
+		
+	</action>
+	
+	<action name="hide_gallery">
+		tween(layer[gallery].alpha, 0);
+	</action>
+	
+	<action name="show_gallery">
+		set(foo,%1);
+		if(%1 != activeGallery, 
+			make_gallery(%1);
+		); 
+
+		tween(layer[gallery].alpha, 1);
+	</action>
+	
+</krpano>

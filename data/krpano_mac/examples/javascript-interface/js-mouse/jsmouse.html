@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano.com - Javascript Mouse Position Example</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<style>
+		body{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; background-color:#000000; margin:0; padding:0; }
+		a{ color:#FFFFFF; text-decoration:underline; }
+		a:hover{ color:#AAAAAA; text-decoration:underline; }
+	</style>
+</head>
+<body>
+
+<center>
+	
+	<h2><i>krpano.com</i> - Javascript Mouse Position Example</h2>
+
+	<br/>	
+	get the mouse position in pixels and spherical pano coordinates via javascript<br/>
+	<br/>
+	
+	<table width="700px" style="border:1px solid white;">
+	<tr style="vertical-align:top;">
+		<td>
+			<div id="krpanoDIV" style="width:600px;height:400px;">
+				<noscript><table width="100%" height="100%"><tr style="vertical-align:middle;"><td><center>ERROR:<br><br>Javascript not activated<br><br></center></td></tr></table></noscript>
+			</div>
+		</td>
+		<td>
+			<div style="padding:5px; width:100px;">
+				<span><b><u>mouse</u></b></span><br>
+				<span>x=</span><span id="mouse_x"></span><br>
+				<span>y=</span><span id="mouse_y"></span><br>
+				<span>ath=</span><span id="mouse_ath"></span><br>
+				<span>atv=</span><span id="mouse_atv"></span><br>
+			</div>
+		</td>
+	</tr>
+	
+	</table>
+	
+</center>
+
+
+<script src="../../../viewer/embedpano.js"></script>
+
+<script>
+// <![CDATA[
+
+	embedpano({swf:"../../../viewer/krpano.swf", id:"krpanoSWFObject", xml:"pano.xml", html5:"prefer", target:"krpanoDIV"});
+
+	
+	function getlookat()
+	{
+		var krpano = document.getElementById("krpanoSWFObject");
+		
+		if (krpano && krpano.get)	// it can take some time until krpano is loaded and ready
+		{
+			krpano.call("screentosphere(mouse.x, mouse.y, mouseath, mouseatv); js( showmouseinfo() );");
+		}
+	}
+	
+	function showmouseinfo()
+	{			
+		var krpano = document.getElementById("krpanoSWFObject");
+		
+		var mouse_at_x = krpano.get("mouse.x");
+		var mouse_at_y = krpano.get("mouse.y");
+		var mouse_at_h = krpano.get("mouseath");
+		var mouse_at_v = krpano.get("mouseatv");
+						
+		document.getElementById("mouse_x").innerHTML = mouse_at_x + "px";
+		document.getElementById("mouse_y").innerHTML = mouse_at_y + "px";
+		document.getElementById("mouse_ath").innerHTML = mouse_at_h.toFixed(2) + "°";
+		document.getElementById("mouse_atv").innerHTML = mouse_at_v.toFixed(2) + "°";
+	}
+
+	// update mouse info 30 times per second
+	var lookat_interval = setInterval('getlookat()', 1000.0 / 30.0);
+	
+	
+	// disable text selection to avoid cursor flickering
+	window.onload = function() 
+	{
+  		document.onselectstart = function() {return false;} // ie
+  		document.onmousedown = function() {return false;} // mozilla
+	}
+
+// ]]>
+</script>
+
+
+</body>
+</html>
+

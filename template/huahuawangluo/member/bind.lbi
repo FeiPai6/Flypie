@@ -1,0 +1,18 @@
+{include file="{$_lang.moban}/library/member_paths.lbi"}	
+<div class="works-container">
+	<div class="container container_works" style="margin-top: 0;">
+		<div class="row row_margin_bottom" style="margin-top: 0px;">
+			<div class="col-md-10 advanced-setting-block" style="padding-top:10px;padding-bottom:10px;">
+				   <img src="/template/{$_lang.moban}/images/icon/weixin.png" class="fl">
+					<div class="fl" style="margin-left:10px">
+					{if empty($user.openid)}
+						你还没有绑定微信账号，绑定后可以使用微信扫码快捷登录{$_lang.title}<br>
+						<a href="/member/bind?act=weixin">立即绑定</a>
+					{else}
+						你已绑定微信账号，可以使用微信扫码快捷登录{$_lang.title}
+					{/if}
+				    </div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,90 @@
+<!--
+	scenes with imagemap example
+	- tour navigation via image map
+	- radar at current map point
+	- radar room masking via parent container layer elements
+-->
+
+<krpano onstart="loadscene(0);" >
+
+	<!-- the image map -->
+	<layer name="map" url="imagemap.png" keep="true" align="leftbottom" x="16" y="16" width="316" height="222"
+	        handcursor="false"
+	        scalechildren="true"
+	        maskchildren="true"
+	        onclick="closemap();"
+	>
+		<!-- 'rooms' and spots - the 'room' container elements were used for masking the radar -->
+		<layer name="room1" type="container" align="lefttop" x="125" y="4" width="187" height="115" maskchildren="true">
+			<layer name="spot1" url="mappoint.png" align="lefttop" edge="center" x="91" y="59"  zorder="2" onclick="loadscene(scene1, null, MERGE, BLEND(1));" />
+		</layer>
+		<layer name="room2" type="container" align="lefttop" x="4" y="4" width="117" height="214" maskchildren="true">
+			<layer name="spot2" url="mappoint.png" align="lefttop" edge="center" x="61" y="104"  zorder="2" onclick="loadscene(scene2, null, MERGE, BLEND(1));" />
+		</layer>
+		<layer name="room3" type="container" align="lefttop" x="125" y="123" width="187" height="95" maskchildren="true">
+			<layer name="spot3" url="mappoint.png" align="lefttop" edge="center" x="92" y="46" zorder="2" onclick="loadscene(scene3, null, MERGE, BLEND(1));" />
+		</layer>
+	</layer>
+
+
+	<!-- radar plugin, will be assigned to be a child of spot -->
+	<layer name="radar" keep="true" visible="false"
+	       url="%SWFPATH%/plugins/radar.swf"
+	       alturl="%SWFPATH%/plugins/radar.js"
+	       align="center" edge="center"
+	       fillcolor="0xFFFFFF" fillalpha="0.5" scale="3.0"
+	       headingoffset="0"
+	       />
+
+	<!-- activated spot image (child of the radar layer) -->
+	<layer name="activespot" parent="radar" url="mappointactive.png" keep="true" align="center" edge="center" />
+
+
+	<!-- actions -->
+	<action name="closemap">
+        set(onclick, openmap() );
+        tween(width,64);
+        tween(height,45);
+    </action>
+
+    <action name="openmap">
+        set(onclick, closemap() );
+        tween(width,316);
+        tween(height,222);
+    </action>
+
+
+	<!-- activatespot action - %1 = the current spot, %2 = the current radar heading -->
+	<action name="activatespot">
+		set(layer[radar].parent, layer[%1]);
+		set(layer[radar].visible, true);
+		set(layer[radar].heading, %2);
+	</action>
+
+
+	<!-- the scenes -->
+	<scene name="scene1" onstart="activatespot(spot1, 0);">
+
+		<view hlookat="0" vlookat="0" fov="100" />
+
+		<preview type="grid(cube,32,32,256,0xDD3322,0xCC3322,0xFF0000);" details="16" />
+
+	</scene>
+
+	<scene name="scene2" onstart="activatespot(spot2, 90);">
+		
+		<view hlookat="0" vlookat="0" fov="75" />
+		
+		<preview type="grid(cube,32,32,256,0x33DD22,0x33CC22,0x00FF00);" details="16" />
+		
+	</scene>
+
+	<scene name="scene3" onstart="activatespot(spot3, -90);">
+
+		<view hlookat="0" vlookat="0" fov="75" />
+
+		<preview type="grid(cube,32,32,256,0x2233CC,0x2233AA,0x0000FF);" details="16" />
+
+	</scene>
+
+</krpano>

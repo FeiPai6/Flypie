@@ -1,0 +1,36 @@
+<krpano>
+
+	<view fov="90" fovmax="130" hlookat="-50" vlookat="-3" />
+
+	<!-- pano -->
+	<preview url="../../panos/p3/preview.jpg" />
+	<image>
+		<cube url="../../panos/p3/pano_%s.jpg" />
+	</image>
+
+
+	<!-- load the soundinterface plugin -->
+	<plugin name="soundinterface"
+	        url="%SWFPATH%/plugins/soundinterface.swf"
+	        alturl="%SWFPATH%/plugins/soundinterface.js"
+	        rootpath=""
+	        preload="true"
+	        keep="true"
+	        />
+
+	<!-- start playing the sound -->
+	<events name="currentpano"
+	        onnewpano="playsound(bgsnd, 'http://krpano.com/panos/xmas/ding_dong_merrily_on_high.mp3|http://krpano.com/panos/xmas/ding_dong_merrily_on_high.ogg', 0);"
+	        onremovepano="stopsound(bgsnd);"
+	        />
+
+
+	<!-- button to pause the sound: -->
+	<plugin name="snd" url="soundonoff.png" align="leftbottom" x="10" y="10" alpha="0.25" scale="0.5" onover="tween(alpha,1);" onout="tween(alpha,0.25);"
+	        crop="0|0|50|50"
+	        onloaded="if(ismobile,set(scale,1));"
+	        onclick="pausesoundtoggle(bgsnd); switch(crop, 0|0|50|50, 0|50|50|50);"
+	        />
+
+
+</krpano>

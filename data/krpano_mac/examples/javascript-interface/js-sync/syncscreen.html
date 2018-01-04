@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano.com - Javascript Sync Example</title>
+	<style>
+		body,html{height:100%;overflow:hidden;}
+		body{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#FFFFFF; background-color:#000000; margin:0; padding:0; }
+	</style>
+	<script src="../../../viewer/embedpano.js"></script>
+</head>
+<body>
+
+	<div id="viewersDiv" style="position:absolute;  left:0; top:0; width:100%; height:100%;">
+		<div id="krpanoLeftDiv"  style="position:absolute; left:0%;  top:0; width:50%; height:100%;"></div>
+		<div id="krpanoRightDiv" style="position:absolute; left:50%; top:0; width:50%; height:100%;"></div>
+	</div>
+
+	<script>
+
+		// embed the krpano viewers
+		embedpano({swf:"../../../viewer/krpano.swf", html5:"prefer", id:"krpanoLeftViewer",  target:"krpanoLeftDiv",  xml:"pano1.xml", vars:{side:"left",  cubepathsidepostfix:"-L.tiles"}, passQueryParameters:true});
+		embedpano({swf:"../../../viewer/krpano.swf", html5:"prefer", id:"krpanoRightViewer", target:"krpanoRightDiv", xml:"pano2.xml", vars:{side:"right", cubepathsidepostfix:"-R.tiles"}, passQueryParameters:true});
+
+
+		// html5 fullscreen api
+		function requestfullscreen()
+		{
+			var div = document.getElementById("viewersDiv");
+			var fs = ["requestFullscreen","mozRequestFullScreen","webkitRequestFullscreen","webkitRequestFullScreen","msRequestFullscreen"];
+
+			for (var i=0; i<fs.length; i++)
+			{
+				if( div[fs[i]] )
+				{
+					div[fs[i]]();
+					
+					var krpano1 = document.getElementById("krpanoLeftViewer");
+					var krpano2 = document.getElementById("krpanoRightViewer");
+					krpano1.set("contextmenu.item[fs].onclick", "js( exitfullscreen() );");
+					krpano2.set("contextmenu.item[fs].onclick", "js( exitfullscreen() );");
+					
+					break;
+				}
+			}
+		}
+		
+		function exitfullscreen()
+		{
+			var fs = ["exitFullscreen","mozCancelFullScreen","webkitCancelFullScreen","webkitExitFullscreen","msExitFullscreen"];
+			
+			for (var i=0; i<fs.length; i++)
+			{
+				if( document[fs[i]] )
+				{
+					document[fs[i]]();
+					
+					var krpano1 = document.getElementById("krpanoLeftViewer");
+					var krpano2 = document.getElementById("krpanoRightViewer");
+					krpano1.set("contextmenu.item[fs].onclick", "js( requestfullscreen() );");
+					krpano2.set("contextmenu.item[fs].onclick", "js( requestfullscreen() );");
+					
+					break;
+				}
+			}
+		}
+
+
+		// sync viewer movement
+		function sync_1to2()
+		{
+			var krpano1 = document.getElementById("krpanoLeftViewer");
+			var krpano2 = document.getElementById("krpanoRightViewer");
+
+			krpano2.set("syncother",    false);
+			krpano2.set("view.hlookat", krpano1.get("view.hlookat"));
+			krpano2.set("view.vlookat", krpano1.get("view.vlookat"));
+			krpano2.set("view.fov",     krpano1.get("view.fov"));
+		}
+
+		function sync_2to1()
+		{
+			var krpano1 = document.getElementById("krpanoLeftViewer");
+			var krpano2 = document.getElementById("krpanoRightViewer");
+
+			krpano1.set("syncother",    false);
+			krpano1.set("view.hlookat", krpano2.get("view.hlookat"));
+			krpano1.set("view.vlookat", krpano2.get("view.vlookat"));
+			krpano1.set("view.fov",     krpano2.get("view.fov"));
+		}
+
+	</script>
+
+</body>
+</html>

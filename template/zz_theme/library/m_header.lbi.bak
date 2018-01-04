@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-ch">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>{if $title}{$title}-{$_lang.title}{else}{$_lang.title}-{$_lang.subtitle}{/if}</title>
+<link rel="stylesheet" href="/static/css/zui.min.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/zui-theme.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/redefine.css">
+<link rel="stylesheet" href="/template/{$_lang.moban}/css/common.css">
+<script language="JavaScript" type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/datetimepicker.js"></script>
+</head>
+
+<body>
+<header>
+	<nav class="navbar m_navbar" >
+
+	<div class="m_nav_cate">
+		<ul style="padding-left:10px;">
+			<li><a href="/" style="color: #525252;">首页</a></li>
+			<li>特色活动</li>
+			<li><a href="/#jxpp" style="color: #525252;">精选品牌</a></li>
+			<li><a href="/#new_join" style="color: #525252;">最新入驻</a></li>
+		</ul>
+	</div>
+	  <div class="container">
+	    	<div class="row">
+	    		<div class="col-xs-1">
+	    			<div id="menus" style="width:50px;position: absolute;top:5px"><i class="icon-bars icon-2x"></i></div>
+	    		</div>
+
+	    		<div class="col-xs-7 m_nav_title" style="text-align: right;">
+	    			四元VR服务平台
+	    		</div>
+	    		<div style="display:none" class="col-xs-4 m_nav_right" >
+		    		{if $user.pk_user_main lt 1}
+		    			<ul class="not_login">
+		    				<li>
+		    					<a href="/passport/" style="margin-right: 10px;">登录</a>
+			    				<span class="sep-lines"></span>
+		    				</li>
+		    				<li>
+		    					<a href="/passport/register" style="margin-left: 10px;">注册</a>
+		    				</li>
+		    			</ul>
+			    	{else}
+			    		<ul class="a_login">
+			    		   <li class="dropdown">
+	    		               <a  class="dropdown-toggle" data-toggle="dropdown" style="background:none;text-decoration: none;cursor: pointer;">{$user.nickname}<b class="caret"></b></a>
+	    		               <ul class="dropdown-menu pull-right" role="menu">
+	    		                 <li><a href="/member/profile">账户管理</a></li>
+	    		                 <li class="divider"></li>
+	    		                 <li><a href="/member/project">图片管理</a></li>
+	    		                 <li><a href="/member/project?act=videos">视频管理</a></li>
+	    		                 <li><a href="/member/mediares">素材管理</a></li>
+	    						 <li><a href="/member/logout">退　　出</a></li>
+	    		               </ul>
+	    		             </li>
+						</ul>
+			    	{/if}
+	    		</div>
+	    	</div>
+	  </div>
+	</nav>
+	<div style="height: 44px"></div>
+</header>
+	<div class="container" >
+		<div class="row ">
+			<div class="col-xs-12" style="margin-top:6px">
+				<div class="input-group">
+				  <input type="text" class="form-control " placeholder="搜索漫游图片，漫游视频">
+				  <span class="input-group-btn">
+				    <button class="btn btn-default " type="button"><i class="icon-search"></i></button>
+				  </span>
+				</div>
+			</div>
+			 <div style="display:none" class="col-xs-4" style="margin-top:6px;text-align: right;">
+				 <button  type="button" class="btn btn-warning " onclick="javascript:window.location.href='/add/pic'">
+				   <i class="cloud-upload"></i> 发布
+				  </button>
+			</div>
+		</div>
+	</div>
+    <div class="container" >
+        <div class="row ">
+            <div class="col-xs-12" style="margin-top:6px">
+                <div class="">
+                <style>
+                    .wrap{ list-style-type: none;}
+                    .wraps{ padding: 0;}
+                    .wraps>li{ width: 16.5%;;float:left;}
+                    .img { width:50px;height:50px;border-radius: 50%;margin: 0 auto;}
+                    .text{ margin-top: 5px;}
+                    .kanfang{ background:url("/template/{$_lang.moban}/images/kanfang.png") no-repeat -4px -3px;background-size: 55px;}
+                    .guangjie{ background:url("/template/{$_lang.moban}/images/guangjie.png") no-repeat -4px -3px;background-size: 55px;}
+                    .lvyou{ background:url("/template/{$_lang.moban}/images/lvyou.png") no-repeat -4px -3px;background-size: 55px;}
+                    .jiazhuang{ background:url("/template/{$_lang.moban}/images/jiazhuang.png") no-repeat -4px -3px;background-size: 55px;}
+                    .jiaoyv{ background:url("/template/{$_lang.moban}/images/jiaoyv.png") no-repeat -4px -3px;background-size: 55px;}
+                    .news{ background:url("/template/{$_lang.moban}/images/news.png") no-repeat -4px -3px;background-size: 55px;}
+                </style>
+                     <ul class="wraps col-xs-12">
+                        <li class="wrap">
+                            <a class="item item1 item-new" href="#">
+                            <div class="img kanfang"></div>
+                            <div class="text">
+                            VR看房</div>
+                            </a>
+                        </li>
+                            <li class="wrap">
+                            <a class="item item1 item-new" href="">
+                            <div class="img guangjie"></div>
+                            <div class="text">
+                            VR逛街</div>
+                            </a>
+                        </li>
+                        <li class="wrap">
+                            <a class="item item1 item-new" href="">
+                            <div class="img lvyou"></div>
+                            <div class="text">
+                            VR旅游</div>
+                            </a>
+                        </li>
+                        <li class="wrap">
+                            <a class="item item1 item-new" href="">
+                            <div class="img jiazhuang"></div>
+                            <div class="text">
+                            VR家装</div>
+                            </a>
+                        </li>
+                        <li class="wrap">
+                            <a class="item item1 item-new" href="">
+                            <div class="img jiaoyv"></div>
+                            <div class="text">
+                            VR教育</div>
+                            </a>
+                        </li>
+                        <li class="wrap">
+                            <a class="item item1 item-new" href="">
+                            <div class="img news"></div>
+                            <div class="text">
+                            VR新闻</div>
+                            </a>
+                        </li>
+                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div style="height: 10px;"></div>
+	<script>
+		$(function(){
+			$(".all_cate_span").click(function(){
+				$(".all_cate_span .sub_cate ul").toggle();
+			})
+
+			$('#menus').click(function(){
+				$('.m_nav_cate').toggle();
+			})
+
+			$('.m_nav_cate ul li').click(function(){
+				$('.m_nav_cate').hide();
+			});
+		})
+
+	</script>

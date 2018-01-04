@@ -1,0 +1,31 @@
+<style type="text/css">
+.pagebox{
+text-align:center;
+margin-top:10px;
+}
+.pagebox span{
+margin-left:-10px;
+}
+a.apage{
+height:25px;line-height:25px;padding:3px 6px;margin-right:10px;border:1px solid #ccc;border-radius:3px;
+}
+a.apage.on, a.apage:hover{
+background: #60BBFF;border:1px solid #75a2c3;color:#fff;
+}
+</style>
+{if $allPages>1}
+ <div class="pagebox">
+  <span class="s12">共{$allNum}条/{$allPages}页　</span>
+  {foreach $pages as $k=>$p}
+   <a href="{$p.url}" class="s12 apage {if $p.num==$page}on{/if}" >{$p.name}</a>
+   {if $allPages>7}
+    {if $page==1 && $k==6}
+     <span class="c66">...</span>
+    {/if}
+	{if $page>1 && ($allPages-$page)>3 && $k==8}
+     <span class="c66">...</span>
+    {/if}
+   {/if} 
+  {/foreach}
+ </div>
+{/if}

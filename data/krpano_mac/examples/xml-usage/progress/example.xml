@@ -1,0 +1,38 @@
+<krpano version="1.16">
+	
+	<include url="progress_loadinganimation.xml" />
+	<include url="progress_loadingpercent.xml" />
+	<include url="progress_loadingbar.xml" />
+
+	
+	<!-- 
+		as example-images load images directly from the krpano server
+		(with a random value as url extension to avoid caching)
+	-->
+	
+	<view hlookat="-1" vlookat="11" fovtype="MFOV" fov="120" fovmin="70" fovmax="140" limitview="auto"/>
+	
+	<preview url="http://krpano.com/tours/corfu/panos/achilleion-hof-unten.tiles/preview.jpg"/>
+	
+	<image>
+		<cube url="http://krpano.com/tours/corfu/panos/achilleion-hof-unten.tiles/pano_%s.jpg?nocache=%$random%"/>
+		<mobile>
+			<cube url="http://krpano.com/tours/corfu/panos/achilleion-hof-unten.tiles/mobile_%s.jpg?nocache=%$random%"/>
+		</mobile>
+	</image>
+	
+	
+	<!-- button for reloading to test loading again -->
+	<layer name="reloadbutton"
+	       url="%SWFPATH%/plugins/textfield.swf"
+	       children="false"
+	       vcenter="true"
+	       backgroundcolor="0x000000" backgroundalpha="0.667" roundedge="10" border="false"
+	       shadow="0.1" shadowrange="8" shadowcolor="0xFFFFFF"
+	       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:10px;"
+	       html="Reload (without cache)"
+	       align="bottom" width="140" height="22" y="40"
+	       onclick="loadpano(get(xml.url),null,KEEPALL);"
+	       />
+
+</krpano>

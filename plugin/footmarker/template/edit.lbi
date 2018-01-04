@@ -1,0 +1,19 @@
+ <div class="col-md-4">
+      <label class="col-md-6 control-label">足迹</label>
+    <div class="col-md-6" data-toggle="tooltip"  {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="是否显示足迹"{/if}>
+        <input id="footmark" name="switch_checkbox" class="form-control" type="checkbox" {if $v.level_enable eq 0}disabled{/if}/>
+    </div>
+</div>
+<script>
+	$(function(){
+		//向main_edit.js 注册初始化方法
+		plugins_init_function.push(footmark_init);
+		plugins_config_get_function.push(footmark_get);
+	})
+	function footmark_init(){
+		$("#footmark").bootstrapSwitch('state', panoConfig.footmark=='1'?true:false);
+	}
+	function footmark_get(panoConfig){
+		panoConfig.footmark = $("#footmark").bootstrapSwitch('state')?1:0;
+	}
+</script>

@@ -1,0 +1,82 @@
+<!--
+	scenes with bingmaps example
+	- load the scenes via map-spots or hotspots
+	- the first scene will be loaded in the 'onmapready' event
+-->
+<krpano>
+
+	<!-- bing map (with keep=true) -->
+	<plugin name="map" keep="true" key="An4-9WoANqtASVorNezSjENest2VC0zoAzvMhEpdTjb3uY-k6u6bMkPxYpDsolsF"
+	        url="%SWFPATH%/plugins/bingmaps.swf"
+	        alturl="%SWFPATH%/plugins/bingmaps.js"
+	        align="leftbottom" x="10" y="10" width="350" height="400"
+	        bgcolor="0x000000" bgalpha="0.5"
+	        maptype="satellite"
+	        onmapready="loadscene(0); zoomToSpotsExtent();"
+	        onmapmoved=""
+	        onmapzoomed=""
+	>
+		<radar visible="true" dragable="true" size="100" zoomwithmap="false" headingoffset="90" alpha="0.5" fillcolor="0xFFFFFF" fillalpha="1.0" linecolor="0xFFFFFF" linealpha="0.0" linewidth="0.0" glow="true" glowcolor="0xFFFFFF" glowwidth="4" glowstrength="4" />
+		<maptypecontrol visible="true" anchor="righttop" x="2" y="2"  buttonalign="v"  />
+
+		<!-- map spots -->
+		<spot name="scene1" lat="47.60064458005677" lng="16.62461042404176" heading="+90"  active="true" onclick="loadscene(scene1, null, MERGE, BLEND(1));" />
+		<spot name="scene2" lat="47.59582263650143" lng="16.61809265613557" heading="+155"               onclick="loadscene(scene2, null, MERGE, BLEND(1));" />
+		<spot name="scene3" lat="47.58584924485768" lng="16.63300573825835" heading="-127"               onclick="loadscene(scene3, null, MERGE, BLEND(1));" />
+
+	</plugin>
+
+
+	<!-- an action for updating the map when the scene was changed -->
+	<action name="selectspot">
+		plugin[map].pantospot(%1);
+		plugin[map].activatespot(%1);
+	</action>
+
+
+	<!-- a style for the hotspots -->
+	<style name="hotspotstyle" scale="0.6" zoom="true" alpha="0.3" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.3);tween(scale,0.6);" ondown="onover();" onup="onout();" />
+
+
+	<!-- the scenes -->
+	<scene name="scene1" onstart="selectspot(scene1);">
+
+		<view hlookat="-15" vlookat="-10" fov="90" fovmin="15" fovmax="160" />
+
+		<preview url="pano1.jpg" />
+		<image>
+			<cubestrip url="pano1.jpg" />
+		</image>
+
+		<hotspot name="spot2" style="hotspotstyle" url="spot2.png" ath="-42" atv="-12" onclick="looktohotspot(spot2); loadscene(scene2, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+	<scene name="scene2" onstart="selectspot(scene2);">
+
+		<view hlookat="-110" vlookat="8" fov="100" fovmin="15" fovmax="160" />
+
+		<preview url="pano2.jpg" />
+		<image>
+			<cubestrip url="pano2.jpg" />
+		</image>
+
+		<hotspot name="spot1" style="hotspotstyle" url="spot1.png" ath="165" atv="0" onclick="looktohotspot(spot1); loadscene(scene1, null, MERGE, BLEND(1));" />
+		<hotspot name="spot3" style="hotspotstyle" url="spot3.png" ath="265" atv="0" onclick="looktohotspot(spot3); loadscene(scene3, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+	<scene name="scene3" onstart="selectspot(scene3);">
+
+		<view hlookat="-174" vlookat="5" fov="75" fovmin="15" fovmax="160" />
+
+		<preview url="pano3.jpg" />
+		<image>
+			<cubestrip url="pano3.jpg" />
+		</image>
+
+		<hotspot name="spot3" style="hotspotstyle" url="spot2.png" ath="0" atv="0" onclick="looktohotspot(spot3); loadscene(scene2, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+</krpano>

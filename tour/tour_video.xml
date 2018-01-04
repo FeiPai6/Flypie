@@ -1,0 +1,68 @@
+<krpano version="1.19" title="{$project.vname}">
+
+	<security cors="anonymous">
+		<crossdomainxml url="{$cdn_host}crossdomain.xml" />
+		<allowdomain domain="{$cdn_host}" />
+	</security>
+	
+	<action name="startup" autorun="onstart">
+		
+		if(device.panovideosupport == false,
+			error('Sorry, but panoramic videos are not supported by your current browser!');
+		  ,
+			loadscene(videopano);
+		  );
+		  jscall(calc('update_title("{$project.vname}")'));
+	</action>
+
+	<scene name="videopano" title="VR视频">
+
+		<!-- include the videoplayer interface / skin (with VR support) -->
+		<!--固定路径-->
+		<include url="{$cdn_host}video/skin/videointerface.xml" />
+
+		<!-- include the videoplayer plugin -->
+		<plugin name="video"
+		        url.html5="%SWFPATH%/plugins/videoplayer.js"
+		        url.flash="%SWFPATH%/plugins/videoplayer.swf"
+		        pausedonstart="true"
+		        loop="false"
+		        volume="1.0"
+		        onloaded="add_video_sources();"
+		        />
+
+		<!-- use the videoplayer plugin as panoramic image source -->
+		<image>
+			<sphere url="plugin:video" />
+		</image>
+
+		<!-- set the default view -->
+		<view hlookat="0" vlookat="0" fovtype="DFOV" fov="130" fovmin="75" fovmax="150" distortion="0.0" />
+        
+		<!--include url="/test.php" /-->
+		<!-- add the video sources and play the video -->
+		<action name="add_video_sources">			
+			if(device.desktop || device.chrome,
+				start_play(),
+				calc(layer[skin_error_msg].html, '提示: '+'为了更好的观看体验，建议您使用谷歌浏览器打开，点此继续播放');
+				set(layer[skin_error].ondown, start_play());	
+				set(layer[skin_error].visible, true);	
+			 	);
+			
+	    </action>
+		<action name="start_play">  
+			set(layer[skin_error].ondown, '');   	        
+			{if !empty($project) }
+				{foreach $project.videos as $v}
+					videointerface_addsource('{if empty($v.progressive)}标清{else}{$v.progressive}{/if}', "{$_lang['cdn_host']}{$v.location}");
+				{/foreach}
+				videointerface_play('{if empty($project.videos[0].progressive)}标清{else}{$project.videos[0].progressive}{/if}');
+			{/if}
+		</action>
+	</scene>
+    
+	<contextmenu fullscreen="false" versioninfo="false">
+        <item name="logo" caption="{$_lang.title}" separator="true" onclick="openurl('{$_lang.host}')" devices="html5"/>
+	</contextmenu>
+
+</krpano>

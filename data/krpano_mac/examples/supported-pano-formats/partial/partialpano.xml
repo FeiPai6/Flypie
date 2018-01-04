@@ -1,0 +1,27 @@
+<krpano>
+	
+	<!-- real partial pano for flash -->
+	<krpano devices="flash">
+		
+		<view hlookat="0" vlookat="0" fov="90" fovmin="20" fovmax="150" limitview="auto" />
+		
+		<image hfov="140.0" vfov="70.0" voffset="+5.0">
+			<sphere url="partpano.jpg" />
+		</image>
+		
+	</krpano>
+	
+	
+	<!-- simulated partial pano for html5 -->
+	<krpano devices="html5">
+		
+		<view hlookat="0" vlookat="0" fov="90" fovmin="20" fovmax="150" limitview="range" hlookatmin="-70.0" hlookatmax="+70.0" vlookatmin="-30.0" vlookatmax="+40.0" />
+		
+		<preview url="cube_preview.jpg" />
+		<image>
+			<cube url="cube_%s.jpg" />
+		</image>
+		
+	</krpano>
+
+</krpano>

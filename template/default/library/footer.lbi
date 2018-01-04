@@ -1,0 +1,90 @@
+<style type="text/css">
+.footer {
+        height: 75px;
+        font-size: 12px;
+        clear: both;
+        display: none
+}
+.footer ul {
+	height: 75px;
+	line-height: 75px;
+}
+.footer-logo {
+	height: 75px;
+	line-height: 75px;
+}
+
+.cooperative p{
+	margin: 0;
+}
+.cooperative p:nth-child(1) {
+	font-size: 12px;
+}
+.cooperative p:nth-child(2) {
+	font-size: 9px;
+}
+
+.ab{
+	position: absolute;
+	bottom: 0;
+}
+@media (max-width:470px) {
+.footer{ position: relative;height: 94px;}
+.footer ul { margin-left: 5px;width: 200px;}
+.footer ul li a { padding: 5px 2px;}
+.footer-logo>a>img{ vertical-align: 14px;}
+.footer-nav>li{ line-height: 50px;}
+.cooperative>p>a>img{ width: 61px}
+.cooperative{ width:100%;top: 8px;right: 7px;}
+.hz{ text-align: center;}
+.bq{ text-align: center;}
+
+}
+</style>
+<footer class="footer">
+ <div class="footer-warper">
+  <div class="footer-logo"><a href="#"><img src="/static/images/logo.png"></a></div>
+  <ul class="footer-nav">
+   <li>
+   	{foreach $nav_links.left_bottom as $v}
+		<a target="_blank" href="/article?aid={$v.id}" title="{$v.title}">{$v.title}</a>
+	{/foreach}
+   </li>
+  </ul>
+  <div class="cooperative" style="float:right">
+   <p class="qq"><a target="blank" href="http://wpa.qq.com/msgrd?V=3&uin={$_lang.qq}&Site={$_lang.title}&Menu=yes"><img src="/static/images/qq_online.png" style="cursor:pointer;"></a></p>
+   <div class="clearfix" style="height:5px"></div>
+   <p class="hz">合作电话：{$_lang.tel} </p><p class="bq">Copyright&copy;2016 {$_lang.title} All Rights Reserved   <a style="color: #bfbfbf;text-decoration: underline;" href="#" target="_blank">{$_lang.icp}</a></p>
+   </div>
+  </div>
+</footer>
+<script language="JavaScript" type="text/javascript" src="/static/js/jquery.form.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/bootbox.js"></script> 
+<script language="JavaScript" type="text/javascript" src="/static/js/pager.js"></script> 
+<script language="JavaScript" type="text/javascript" src="/static/js/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="/static/js/zui.js"></script>
+<script>
+	var f_resize_time;
+	window.onload = function (){ 
+		f_resize_time = setTimeout(resizeFooter,1000);
+		// $(window).bind("resize",function(){
+		// 	$("footer").hide();
+		// 	if(f_resize_time) clearTimeout(f_resize_time);
+		// 	f_resize_time = setTimeout(resizeFooter,100);
+		// })
+		$(document).bind("resize",function(){
+			$("footer").hide();
+			if(f_resize_time) clearTimeout(f_resize_time);
+			f_resize_time = setTimeout(resizeFooter,100);
+		})
+	} 
+	function resizeFooter(){
+		if ($(window).height()>$(document.body).height()) {
+			$("footer").addClass("ab").show();
+		}else{
+			$("footer").removeClass("ab").show();
+		}
+	}
+</script>
+</body>
+</html>

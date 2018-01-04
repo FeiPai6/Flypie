@@ -1,0 +1,34 @@
+<FilesMatch "\.(bak|inc|lib|sh|tpl|lbi|dwt|conf)$">
+    order deny,allow
+    deny from all
+</FilesMatch>
+
+RewriteEngine On
+RewriteBase /
+
+<Files *>
+  Options -Indexes	 
+</Files>
+
+RewriteCond %{http_host} ^krpano100.com$ [nc]   
+RewriteRule ^(.*)$ http://www.krpano100.com/$1 [r=301,nc]
+
+RewriteRule ^passport/$                                  /passport\.php        		[QSA,L]
+RewriteRule ^passport/([a-zA-Z0-9_]+)$                   /passport.\php?module=$1   [QSA,L] 
+RewriteRule ^passport/([a-zA-Z0-9_]+)?redirectUrl=(.*)$               /passport.\php?module=$1&redirectUrl=$2     [QSA,L]
+
+RewriteRule ^member/$                                  /member\.php        		[QSA,L]
+RewriteRule ^member/([a-zA-Z0-9_]+)$                   /member.\php?module=$1   [QSA,L] 
+
+RewriteRule ^tour/([a-zA-Z0-9_]+)$                   /tour.\php?view_uuid=$1   [QSA,L]  
+
+RewriteRule ^edit/$                                  /edit\.php        		[QSA,L]
+RewriteRule ^edit/([a-zA-Z0-9_]+)$                   /edit.\php?module=$1   [QSA,L] 
+
+RewriteRule ^add/$                                  /add\.php        		[QSA,L]
+RewriteRule ^add/([a-zA-Z0-9_]+)$                   /add.\php?module=$1   [QSA,L] 
+
+RewriteRule ^index\.html$                            /index.\php        [QSA,L]
+RewriteRule ^([a-zA-Z0-9_]+)$                   /index.\php?module=$1   [QSA,L] 
+RewriteRule ^people/([0-9]+)$                   /index.\php?module=people&uid=$1   [QSA,L] 
+

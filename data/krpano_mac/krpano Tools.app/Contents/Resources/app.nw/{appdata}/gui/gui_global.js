@@ -1,0 +1,1 @@
+function gui_get_global(){var e=process.mainModule.exports.get_global_storage();return e.tick++,e}

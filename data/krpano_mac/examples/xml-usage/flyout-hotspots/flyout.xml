@@ -1,0 +1,76 @@
+<!--
+	krpano
+	- flyout hotspots example
+-->
+
+<krpano>
+
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+	<!-- view settings -->
+	<view hlookat="12" vlookat="40" fov="105" />
+
+
+	<hotspot name="spot"
+	         url="image1.jpg"
+	         distorted="true"
+	         ath="45"
+	         atv="54"
+	         scale="0.5"
+	         rx="-22.5" ry="-26.25" rz="-50.1"
+	         backup_rx="0"
+	         backup_ry="0"
+	         backup_rz="0"
+	         backup_scale="0"
+	         flying="0.0"
+	         onclick="if(flying == 0.0, flyout()  );
+	                  if(flying == 1.0, flyback() );"
+	         />
+
+
+	<!--
+		flyout/flyback actions
+		(for more stylish in/out moves play with different tweentypes and times)
+	-->
+
+	<action name="flyout">
+		<!--
+			save/backup the current rotation values!
+			NOTE - it is important that the backup_* variables are predefined!
+			this allows to save the variables at <hotspot> scope,
+			if the variables where not predefined, they were saved at global scope
+			and this would be a problem when more hotspots were used!
+		-->
+		copy(backup_rx,rx);
+		copy(backup_ry,ry);
+		copy(backup_rz,rz);
+		copy(backup_scale,scale);
+
+		<!-- tween the rotations values to 0 for a flat screen view -->
+		tween(rx, 0);
+		tween(ry, 0);
+		tween(rz, 0);
+		tween(scale, 1.5);
+
+		<!--
+			tween 'flying' to 1.0,
+			this makes the hotspot independent from the panorama rotation and scaling
+		-->
+		tween(flying, 1.0);
+	</action>
+
+	<action name="flyback">
+		<!-- tween back to the stored backup values -->
+		tween(rx, get(backup_rx));
+		tween(ry, get(backup_ry));
+		tween(rz, get(backup_rz));
+		tween(scale, get(backup_scale));
+
+		<!-- tween 'flying' back to 0.0 -->
+		tween(flying, 0.0);
+	</action>
+
+
+</krpano>
+

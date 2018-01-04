@@ -1,0 +1,67 @@
+<style type="text/css">
+.channel-box{
+font-family:"Hiragino Sans GB","arial","Tahoma";border-radius:5px;background:#f3f3f3;padding-left:20px;
+color:#888;padding-bottom:18px;
+}
+.channel-box h2{
+font-weight:normal;
+}
+ul.channel{
+padding:0;
+}
+ul.channel li{
+float:left;list-style-type:none;font-size:15px;width:50%;line-height:30px
+}
+ul.channel li a{
+color:#888;
+}
+ul.channel li a:hover{
+text-decoration:underline;
+}
+ul.channel li a.active{
+color:#00a3d8;
+}
+</style>
+
+<div class="container" style="padding:0">
+
+<!--一个卡片列表行-->
+<div class="row">
+	<div class="cards" style="margin:0;">
+		<!--卡片列表循环-->
+		<!-- <div class="col-md-3 col-sm-3 col-xs-12 col-lg-3">
+		 <div class="card channel-box">
+		  <h2>频道</h2>
+		  <ul class="channel">
+		   <li><a href="/pictures?tag=0" {if $tag===0}class="active"{/if}>全部</a></li>
+		   <li><a href="/pictures?tag=-1" {if $tag===-1}class="active"{/if}>编辑推荐</a></li>
+		   {foreach $picture_tags as $v}
+		   	<li><a href="/pictures?tag={$v.id}" {if $tag==$v.id}class="active"{/if}>{$v.name}</a></li>
+		   {/foreach}
+		   </ul>
+		   <div class="clearfix"></div>
+		  </div>
+		 </div> -->
+		 
+		{foreach $list.res as $k=>$v}
+		<div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+		   <div class="card" href="###">
+			 <a target="_blank" href="/tour/{$v.view_uuid}"><img src="{$v.thumb_path}" alt="{$v.name}" style="width: 100%"></a>
+			 <div class="card-heading">
+				<div class="col-md-9 col-xs-8 of_hide padding0">
+					<strong class="text-primary">{$v.name}</strong> 
+				</div>
+				<div class="col-md-3 col-xs-4 of_hide padding0">
+					<div class="pull-right text-danger"><i class="icon-heart-empty"></i> {$v.browsing_num}</div>
+				</div>
+			 </div>
+			 
+		   </div>
+		 </div>
+		{/foreach}	         
+		<!--卡片列表循环结束-->	
+	</div>
+</div>
+<!--一个卡片列表行结束-->
+<div class="list-page">{include file="../library/pages.lbi"}</div>
+</div>

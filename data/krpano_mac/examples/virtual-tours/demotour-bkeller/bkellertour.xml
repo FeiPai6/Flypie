@@ -1,0 +1,229 @@
+<krpano onstart="startup();">
+
+	<!-- include a contextmenu with several panoramic projections -->
+	<include url="contextmenu.xml" />
+
+
+	<!-- load the first scene on startup -->
+	<action name="startup">
+		loadscene(scene_bkeller2010-mitte, null, MERGE);
+	</action>
+
+
+	<!-- the map image -->
+	<layer name="map" url="graphics/map.png" keep="true" handcursor="false" capture="false"
+	       align="leftbottom"
+	       scale="0.25" scalechildren="true"
+	       onclick="openmap();"
+	       />
+
+	<!-- map opening - scale the map up to 100% (or smaller if the screen is too small) -->
+	<action name="openmap">
+		set(layer[map].onclick, closemap(); );
+		layer[map].changeorigin(center,center);
+
+		set(bigscale,1);
+		if(layer[map].imagewidth GT stagewidth, div(bigscale, stagewidth, layer[map].imagewidth); );
+
+		tween(layer[map].x, 0);
+		tween(layer[map].y, 0);
+		tween(layer[map].scale, get(bigscale));
+	</action>
+
+	<!-- map closing - scale the map back to 25% -->
+	<action name="closemap">
+		set(layer[map].onclick, openmap(); );
+		layer[map].changeorigin(leftbottom,leftbottom);
+
+		tween(layer[map].x, 0);
+		tween(layer[map].y, 0);
+		tween(layer[map].scale, 0.25);
+	</action>
+
+
+	<!-- the map spot images -->
+	<style name="mapspot" keep="true" url="graphics/camicon.png" parent="map" align="lefttop" edge="center" scale.mobile="2" />
+
+	<layer name="spot1" style="mapspot" x="474" y="314" zorder="1" onclick="mapspot_loadscene(scene_bkeller2010-mitte);" />
+	<layer name="spot2" style="mapspot" x="172" y="488" zorder="1" onclick="mapspot_loadscene(scene_bkeller2010-ecke);" />
+	<layer name="spot3" style="mapspot" x="732" y="315" zorder="1" onclick="mapspot_loadscene(scene_bkeller2010-glastuer);" />
+
+	<!-- action for loading the scene when clicking on the map spots -->
+	<action name="mapspot_loadscene">
+		if(layer[map].scale GT 0.25,
+			<!-- special mode for zoomed map: hide big map, loadscene, show small map -->
+			set(layer[map].enabled, false);
+			tween(layer[map].alpha, 0.0, 0.25, default,
+				loadscene(%1, null, MERGE, BLEND(1));
+
+				set(layer[map].onclick, openmap(); );
+				layer[map].changeorigin(leftbottom,leftbottom);
+
+				set(layer[map].x, 0);
+				set(layer[map].y, 0);
+				set(layer[map].scale, 0.25);
+
+				set(events[sceneload].onloadcomplete,
+					delayedcall(1,
+						tween(layer[map].alpha, 1.0, 0.5, default, set(layer[map].enabled, true); );
+					  );
+				  );
+			  );
+		  ,
+			<!-- small map: just load the scene -->
+			loadscene(%1, null, MERGE, BLEND(1));
+		  );
+	</action>
+
+
+	<!-- active spot image (overlays the normal spot) -->
+	<layer name="activespot" url="graphics/camicon_red.png" keep="true"
+	       align="lefttop" zorder="2" scale.mobile="2"
+	       />
+
+	<!-- radar layer (overlays the normal spot too, but is behind the activespot image) -->
+	<layer name="radar" keep="true"
+	       url.flash="%SWFPATH%/plugins/radar.swf"
+	       url.html5="%SWFPATH%/plugins/radar.js"
+	       align="center" zorder="1"
+	       scale.mobile="1.5"
+	       fillalpha="0.5" fillcolor="0x7F5F3F"
+	       linewidth="1.0" linecolor="0xE0E0A0" linealpha="0.5"
+	       />
+
+
+
+	<!-- hotspot styles (black and white hotspots) -->
+	<style name="hotspot_ani_black" editorplugin_ishotspotstyle="true"
+	       url="hotspots/hotspot_ani_black_64x64x20.png"
+	       crop="0|0|64|64"
+	       frames="20" framewidth="64" frameheight="64" frame="0"
+	       onloaded="if(device.mobile, set(scale,1.5)); hotspot_animate();"
+	       />
+
+	<style name="hotspot_ani_white" editorplugin_ishotspotstyle="true"
+	       url="hotspots/hotspot_ani_white_64x64x20.png"
+	       crop="0|0|64|64"
+	       frames="20" framewidth="64" frameheight="64" frame="0"
+	       onloaded="if(device.mobile, set(scale,1.5)); hotspot_animate();"
+	       />
+
+	<!-- hotspot animation code -->
+	<action name="hotspot_animate">
+		if(loaded,
+			inc(frame,1,get(frames),0);
+			mul(ypos,frame,frameheight);
+			txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+			delayedcall(0.03, hotspot_animate() );
+		  );
+	</action>
+
+
+
+	<!-- the tour scenes -->
+
+	<scene name="scene_bkeller2010-mitte" onstart="updateradar();">
+
+		<action name="updateradar">
+			set(layer[activespot].parent, spot1);
+			set(layer[radar].parent, spot1);
+			set(layer[radar].heading, -1.92);
+		</action>
+
+		<view hlookat="202.65" vlookat="8.12" fov="105.5" maxpixelzoom="2.0" fovmin="45" fovmax="140" />
+
+		<preview url="panos/bkeller2010-mitte.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/bkeller2010-mitte.tiles/pano_%s.jpg" />
+		</image>
+
+		<hotspot name="spot1" style="hotspot_ani_white" ath="2.56" atv="24.54"
+		         onclick="lookto(get(ath),5,60);
+		                  loadscene(scene_bkeller2010-glastuer,null,MERGE,BLEND(1));
+		                  lookat(92.85, 14.11, 109.8);
+		                  set(view.architectural,1.0);
+		                  wait(BLEND);
+		                  tween(view.architectural,0.0,2.0);
+		                  oninterrupt( tween(view.architectural,0.0,0.5) );
+		                  lookto(-99.5, 21.1, 99.5, smooth(100,100,200));
+		                  "
+		         />
+
+		<hotspot name="spot2" style="hotspot_ani_white" ath="154.20" atv="1.22"
+		         onclick="looktohotspot(get(name));
+		                  loadscene(scene_bkeller2010-ecke,null,MERGE,BLEND(1));
+		                  lookat(70.42, 4.64, 99.5);
+		                  wait(BLEND);
+		                  oninterrupt(break);
+		                  lookto(-151.42, 4.18, 99.5, smooth(100,100,200));"
+		         />
+
+	</scene>
+
+
+	<scene name="scene_bkeller2010-ecke" onstart="updateradar();">
+
+		<action name="updateradar">
+			set(layer[activespot].parent, spot2);
+			set(layer[radar].parent, spot2);
+			set(layer[radar].heading, 87.10);
+		</action>
+
+		<view hlookat="-151.42" vlookat="4.18" fov="99.5" maxpixelzoom="2.0" fovmin="45" fovmax="140" />
+
+		<preview url="panos/bkeller2010-ecke.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/bkeller2010-ecke.tiles/pano_%s.jpg" />
+		</image>
+
+		<hotspot name="spot1" style="hotspot_ani_white" ath="234.00" atv="0.00"
+		         onclick="looktohotspot(get(name));
+		                  loadscene(scene_bkeller2010-mitte,null,MERGE,BLEND(1));
+		                  lookat(320.22, 1.05, 48.15);
+		                  wait(BLEND);
+		                  oninterrupt(break);
+		                  lookto(202.65, 8.12, 105.5, smooth(100,100,200));"
+		         />
+
+	</scene>
+
+
+	<scene name="scene_bkeller2010-glastuer" onstart="updateradar();">
+
+		<action name="updateradar">
+			set(layer[activespot].parent, spot3);
+			set(layer[radar].parent, spot3);
+			set(layer[radar].heading, -91.11);
+		</action>
+
+		<view hlookat="-99.5" vlookat="21.1" fov="99.5" maxpixelzoom="2.0" fovmin="45" fovmax="140" />
+
+		<preview url="panos/bkeller2010-glastuer.tiles/preview.jpg" />
+
+		<image>
+			<cube url="panos/bkeller2010-glastuer.tiles/pano_%s.jpg" />
+		</image>
+
+		<hotspot name="spot1" style="hotspot_ani_white" ath="269.92" atv="22.91"
+		         onclick="lookto(get(ath),5,60);
+		                  loadscene(scene_bkeller2010-mitte,null,MERGE,BLEND(1));
+		                  lookat(183.13, 9.56, 59.66);
+		                  wait(BLEND);
+		                  oninterrupt(break);
+		                  lookto(202.65, 8.12, 105.5, smooth(100,100,200));"
+		         />
+
+		<hotspot name="spot2" style="hotspot_ani_white" ath="254.27" atv="-1.025"
+		         onclick="looktohotspot(get(name));
+		                  loadscene(scene_bkeller2010-ecke,null,MERGE,BLEND(1));
+		                  lookat(-116.91, -0.75, 20.78);
+		                  wait(BLEND);
+		                  oninterrupt(break);
+		                  lookto(-151.42, 4.18, 99.5, smooth(100,100,200));"
+		         />
+
+	</scene>
+
+</krpano>

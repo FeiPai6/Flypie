@@ -1,0 +1,238 @@
+{if $act=='edit'}
+  <form action="/{$_lang.admin_path}/?m=article" id="form" method="post" enctype="multipart/form-data">
+     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+      <tr>
+       <th width="90" align="right">文章标题*</th>
+       <td>
+        <input type="text" name="title" value="{$a.title}" size="80" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <th align="right">文章分类</th>
+       <td>
+        <select name="cat_id">
+            <option value="0">请选择</option>
+            {foreach $res as $v}
+              <option value="{$v.id}" {if $a.cat_id==$v.id}selected{/if}>{$v.cat_name}</option>
+              {foreach $v.sub as $v2}
+                <option value="{$v2.id}" {if $a.cat_id==$v2.id}selected{/if}>　{$v2.cat_name}</option>
+              {/foreach}
+            {/foreach}
+          </select>
+       </td>
+      </tr>
+      <tr>
+       <th align="right">关键字</th>
+       <td>
+        <input type="text" name="keywords" value="{$a.keywords}" size="50" class="inpMain" />
+       </td>
+      </tr>
+	  <tr>
+       <th align="right">导航显示</th>
+       <td>
+        <label><input type="radio" name="is_nav" value="" size="50" class="inpMain" {if empty($a.is_nav)}checked{/if} /> 无</label>　
+        <label><input type="radio" name="is_nav" value="left_bottom" size="50" class="inpMain" {if $a.is_nav=='left_bottom'}checked{/if}/> 左下底部</label>
+	   </td>
+      </tr>
+	  <tr>
+       <th align="right">排序</th>
+       <td>
+        <input type="text" name="sort" value="{if $a.sort}{$a.sort}{else}199{/if}" size="50" class="inpMain" />
+       </td>
+      </tr>
+      <tr>
+       <th align="right">文章内容*</th>
+       <td>
+        <script type="text/javascript" src="/static/kindeditor/kindeditor-min.js"></script>
+        <script type="text/javascript" src="/static/kindeditor/lang/zh_CN.js"></script> 
+        <script type="text/javascript">
+        KindEditor.ready(function(K) {
+          editor = K.create('textarea[name="content"]', {
+            resizeType : 1, 
+            allowPreviewEmoticons : false,
+            allowMediaUpload : false,
+            allowFlashUpload : false,
+            allowFileManager : false,
+            {literal}
+            afterChange : function(){this.sync();},
+            afterBlur : function(){this.sync();},
+            {/literal}
+            uploadJson : '/{$_lang.admin_path}/upload.php?act=article',
+            cssPath : '/static/kindeditor/fontSize.css',
+            items : [
+              'fullscreen','source','code','|',
+              'formatblock','forecolor', 'hilitecolor','fontname', 'fontsize', '|', 
+              'bold', 'italic', 'underline','removeformat', '|', 
+              'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist','insertunorderedlist', 'link','|',
+              'flash', 'media','image','|',
+              'baidumap','preview'
+              ]
+          });
+        });
+        </script>
+        <textarea name="content" id="content" style="width:750px;height:400px">{$a.content}</textarea>
+       </td>
+      </tr>
+      <tr>
+       <th></th>
+       <td>
+          <div id="wrong_text" class="warning" style="display:none"></div>
+          <div class="clear"></div>
+          <input type="hidden" name="act" value="edit">
+          <input type="hidden" name="id" value="{$a.id}">
+          <input type="button" class="btn" value="提交" id="sub_btn" onclick="javascript:ajaxFormSubmit('form','提交');">
+          <input class="btn" onclick="history.go(-1)" value="返回" type="button">
+       </td>
+      </tr>
+     </table>
+    </form>
+{else}
+    <h3>
+		<a href="/{$_lang.admin_path}/?m=article&act=edit" class="actionBtn add">添加文章</a>
+		<form  act="/{$_lang.admin_path}/?m=article" method="post">
+		文章分类：<select name="cat_id">
+				<option value="0">请选择</option>
+				{foreach $cats as $v}
+				  <option value="{$v.id}" {if $v.id==$cat_id} selected="selected" {/if}>{$v.cat_name}</option> 
+					{foreach $v.sub as $v2}
+					  <option value="{$v2.id}" {if $v2.id==$cat_id} selected="selected" {/if}>　{$v2.cat_name}</option> 
+					{/foreach}
+				{/foreach}
+		 </select>
+		 <input id="search" class="btn" type="submit" value="查询" />
+		</form>
+	</h3>
+
+ <div id="list">
+    <form name="action" method="post" action="article.php?rec=action">
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+     <tr>
+      <th width="22" align="center"><input name='chkall' type='checkbox' id='chkall' onclick='selectcheckbox(this.form)' value='check'></th>
+      <th width="40" align="center">文章id</th>
+      <th align="left">文章标题</th>
+      <th width="150" align="center">文章分类</th>
+	  <th width="80" align="center">排序</th>
+      <th width="80" align="center">发布日期</th>
+      <th width="80" align="center">操作</th>
+     </tr>
+     {foreach $res as $k=>$v}
+     <tr>
+      <td align="center" class="check"><input type="checkbox" name="checkbox[]" value="{$v.id}" /></td>
+      <td align="center">{$v.id}</td>
+      <td >{$v.title}</td>
+      <td align="center" class="cata"><a>{$v.cat_name}</a></td>
+      <td align="center">{$v.sort}</td>
+	  <td align="center">{$v.createtime}</td>
+      <td align="center">
+	    <a href="/{$_lang.admin_path}/?m=article&act=edit&id={$v.id}">编辑</a>　
+	    <a href="javascript:;" onclick="javascript:delete_article({$v.id});">删除</a>
+	  </td>
+     </tr>
+    {/foreach}    
+    </table>
+    <div class="action">
+     <select name="action">
+      <option value="0">请选择...</option>
+      <option value="del_all">删除</option>
+      <option value="category_move">移动分类至</option>
+     </select>
+     <select name="new_cat_id" style="display:none">
+     <option value="0">请选择</option>
+	{foreach $cats as $v}
+		  <option value="{$v.id}" {if $v.id==$cat_id} selected="selected" {/if}>{$v.cat_name}</option> 
+			{foreach $v.sub as $v2}
+			  <option value="{$v2.id}" {if $v2.id==$cat_id} selected="selected" {/if}>　{$v2.cat_name}</option> 
+			{/foreach}
+	{/foreach}
+	</select>
+     <input name="submit" class="btn" id="exec" type="button" value="执行" />
+    </div>
+    </form>
+    </div>
+    
+  </div>
+ {/if}
+
+<script type="text/javascript">
+$('[name="action"]').change(function(){
+	var act=$('[name="action"] :selected').val();
+	if(act=='category_move'){
+		$('[name="new_cat_id"]').show();
+	}else{
+		$('[name="new_cat_id"]').hide();
+	}
+});
+$('#exec').click(function(){
+	var act=$('[name="action"] :selected').val();
+    if(act==0){
+	   alert('请先选择操作');
+	   return;
+    }
+	var ids=[];
+	$(".check :checked").not('#chkall').each(function(i,n){
+	ids.push($(this).val());
+});
+        
+if(act=='del_all'){
+  if(ids.length==0){
+		alert('请至少选择一篇文章');
+		return;
+  }
+  if(confirm("确定要删除所选文章吗，删除后将不可恢复？")){          
+	  $.post('/{$_lang.admin_path}/?m=article&act=delete',{literal}{ids:ids}{/literal},function(data){
+		if(data.status==1){
+		  $(".check :checked").not('#chkall').parent('td').siblings('td').remove();
+		  $(".check :checked").parent('td').remove();
+		  alert('删除成功');
+		  window.location.reload();
+		}else{
+		  alert('删除失败');
+		}
+	  },'json');
+		
+	}
+}else if(act=='category_move'){
+        if(ids.length==0){
+          alert('请至少选择一篇文章');
+          return;
+      }
+      var newcatid=$('[name="new_cat_id"]').val();
+      if(newcatid==0){
+        alert('请选择分类!');return;
+
+      }
+
+
+    if(confirm("确定要移动文章吗？")){
+        $.post('/{$_lang.admin_path}/?m=article&act=move',{literal}{ids:ids,newcatid:newcatid}{/literal},function(data){
+          if(data.status==1){
+            var texts=$('[name="new_cat_id"]').find("option:selected").text();
+          $(".check :checked").not('#chkall').parent('td').siblings('td.cata').text(texts);
+         $("[type='checkbox']").attr('checked',false);
+            alert('移动成功');
+			window.location.reload();
+          }else{
+            alert('移动失败');
+          }
+        },'json')   
+      }
+    }else{
+    }
+})
+
+function delete_article(aid){
+    if(confirm("确认删除该文章吗？")){
+      $.post("/{$_lang.admin_path}/?m=article&act=delete",{literal}{aid:aid}{/literal},function(data){
+        var data = json_decode(data);
+        if(data.status==0){
+          alert(data.msg);
+          return false;
+        }
+        if(data.status==1){
+          alert('删除成功！');
+          window.location.reload();
+        }
+      });
+    }
+  }
+</script>

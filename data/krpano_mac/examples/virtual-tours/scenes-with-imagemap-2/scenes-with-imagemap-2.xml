@@ -1,0 +1,90 @@
+<!--
+	scenes with imagemap example 2
+	- tour navigation via image map
+	- radar at current map point
+	- radar behind the spots to allow clicking the other spots
+-->
+
+<krpano version="1.16" onstart="loadscene(0,null,MERGE);" >
+
+	<!-- the image map -->
+	<layer name="mapcontainer" keep="true" type="container" bgcolor="0x000000" bgalpha="0.5" align="leftbottom" x="0" y="0" width="264" height="264">
+		<layer name="map" url="khmap.jpg" align="lefttop" x="4" y="4" width="256" height="256" handcursor="false">
+			<!-- radar mask container -->
+			<layer name="radarmask" type="container" align="lefttop" width="100%" height="100%" maskchildren="true">
+
+				<!-- radar plugin (zoder=1 and hidden at start) -->
+				<layer name="radar" visible="false"
+				       url="%SWFPATH%/plugins/radar.swf" alturl="%SWFPATH%/plugins/radar.js"
+				       align="lefttop" edge="center" zorder="1"
+				       scale="1.0"
+				       fillcolor="0xFFFFFF" fillalpha="0.4"
+				       linecolor="0xFF0000" linewidth="0.5" linealpha="0.5"
+				       headingoffset="0"
+				       />
+
+				<!-- the spots (zorder=2) -->
+				<layer name="spot1" url="aussen_spot.png"    align="lefttop" edge="center" x="113" y="224" zorder="2" onclick="loadscene(scene_aussen, null, MERGE, BLEND(1));" />
+				<layer name="spot2" url="eingang_spot.png"   align="lefttop" edge="center" x="114" y="162" zorder="2" onclick="loadscene(scene_eingang, null, MERGE, BLEND(1));" />
+				<layer name="spot3" url="galerie_spot.png"   align="lefttop" edge="center" x="55"  y="34"  zorder="2" onclick="loadscene(scene_galerie, null, MERGE, BLEND(1));" />
+				<layer name="spot4" url="werkstatt_spot.png" align="lefttop" edge="center" x="213" y="158" zorder="2" onclick="loadscene(scene_werkstatt, null, MERGE, BLEND(1));" />
+
+				<!-- activated spot image (zorder=3 and hidden at start) -->
+				<layer name="activespot" url="mappointactive.png" align="lefttop" edge="center" ox="14" oy="14" zorder="3" visible="false" />
+			</layer>
+		</layer>
+	</layer>
+
+
+	<!-- activatespot action - %1 = the current spot, %2 = the current radar heading -->
+	<action name="activatespot">
+		<!-- copy the spot position to the radar and activespot position -->
+		copy(layer[radar].x, layer[%1].x);
+		copy(layer[radar].y, layer[%1].y);
+		copy(layer[activespot].x, layer[%1].x);
+		copy(layer[activespot].y, layer[%1].y);
+
+		<!-- set the radar heading -->
+		set(layer[radar].heading, %2);
+
+		<!-- show the radar and the activespot -->
+		set(layer[radar].visible, true);
+		set(layer[activespot].visible, true);
+	</action>
+
+
+
+	<!-- the scenes (use the panos from the 'demotour-kuchlerhaus' example) -->
+	<scene name="scene_aussen" onstart="activatespot(spot1,0);">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="95" fovmin="45" fovmax="120" />
+		<preview url="../demotour-kuchlerhaus/tour.data/aussen.tiles/preview.jpg" />
+		<image>
+			<cube url="../demotour-kuchlerhaus/tour.data/aussen.tiles/mobile_%s.jpg" />
+		</image>
+	</scene>
+
+	<scene name="scene_eingang" onstart="activatespot(spot2,90);">
+		<view hlookat="-76.73" vlookat="8.48" fovtype="MFOV" fov="110" fovmin="45" fovmax="120" />
+		<preview url="../demotour-kuchlerhaus/tour.data/eingang.tiles/preview.jpg" />
+		<image>
+			<cube url="../demotour-kuchlerhaus/tour.data/eingang.tiles/mobile_%s.jpg" />
+		</image>
+	</scene>
+
+	<scene name="scene_galerie" onstart="activatespot(spot3,90);">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="98" fovmin="45" fovmax="120" />
+		<preview url="../demotour-kuchlerhaus/tour.data/galerie.tiles/preview.jpg" />
+		<image>
+			<cube url="../demotour-kuchlerhaus/tour.data/galerie.tiles/mobile_%s.jpg" />
+		</image>
+	</scene>
+
+	<scene name="scene_werkstatt" onstart="activatespot(spot4,-105);">
+		<view hlookat="208.6" vlookat="24.84" fovtype="MFOV" fov="108.53" fovmin="45" fovmax="120" />
+		<preview url="../demotour-kuchlerhaus/tour.data/werkstatt.tiles/preview.jpg" />
+		<image>
+			<cube url="../demotour-kuchlerhaus/tour.data/werkstatt.tiles/mobile_%s.jpg" />
+		</image>
+	</scene>
+
+</krpano>

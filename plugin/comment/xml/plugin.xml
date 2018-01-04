@@ -1,0 +1,16 @@
+<krpano>
+<!-- 拖动评论热点动态获取坐标 - call it once in the ondown event -->
+<action name="dragcommenthotspot">
+  spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery, 'l');
+  sub(drag_adjustx, mouse.stagex, hotspotcenterx);
+  sub(drag_adjusty, mouse.stagey, hotspotcentery);
+  asyncloop(pressed,
+    sub(dx, mouse.stagex, drag_adjustx);
+    sub(dy, mouse.stagey, drag_adjusty);
+    screentosphere(dx, dy, ath, atv);
+    <!-- 将坐标赋值到当前热点 -->
+    set(hlookat,get(ath));
+    set(vlookat,get(atv));
+    );
+</action>
+</krpano>

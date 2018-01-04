@@ -1,0 +1,18 @@
+# Virtual Tour Skin
+# - Stacking Thumbnails
+# - Default Skin (Buttons, Context-Menu, Cursors)
+# - Animated Hotspots Style
+# - Virtual Tour Editor compatible
+# krpano 1.18
+
+xmltemplate=xml/vtour_stackingthumbnails.xml
+xmltemplate_scene=xml/vtour_scenetemplate.xml
+xmltemplate_view=xml/vtour_viewtemplate.xml
+xmltemplate_hotspot=xml/vtour_hotspottemplate.xml
+xmltemplate_additional_file=xml/skin/vtourskin_stackingthumbs.xml
+xmltemplate_additional_file=xml/skin/defaultskin.xml
+xmltemplate_additional_file=xml/skin/buttons-2.png
+xmltemplate_additional_file=xml/skin/drag-cursors-2.png
+xmltemplate_additional_file=xml/skin/qtvr-cursors.png
+xmltemplate_additional_file=xml/hotspots/hotspot_ani_white_64x64x20.png
+xmltemplate_additional_file=xml/hotspots/hotspot_ani_black_64x64x20.png

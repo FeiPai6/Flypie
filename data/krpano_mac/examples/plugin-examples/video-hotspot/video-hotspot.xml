@@ -1,0 +1,28 @@
+<krpano version="1.18">
+
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+
+	<hotspot name="videospot"
+	         url="%SWFPATH%/plugins/videoplayer.swf"
+	         alturl="%SWFPATH%/plugins/videoplayer.js"
+	         videourl="cats-short.mp4|cats-short.webm"
+	         posterurl="cats-short-poster.jpg"
+	         distorted="true"
+	         ath="0"
+	         atv="0"
+	         edge="center"
+	         scale="1.0"
+	         rx="0"
+	         ry="0"
+	         rz="0"
+	         loop="true"
+	         pausedonstart="true"
+	         directionalsound="true"
+	         range="200"
+	         volume="0.7"
+	         onclick="togglepause();"
+	         />
+
+
+</krpano>

@@ -1,0 +1,4 @@
+<div class="vrshow_logo_title">
+                    <div id="authorDiv">作者：<span id="user_nickName">{$pro.nickname}</span></div>
+                    <div style="clear:both;"></div>
+</div>

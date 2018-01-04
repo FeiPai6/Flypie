@@ -1,0 +1,16 @@
+<krpano>
+
+	<preview type="CUBESTRIP" url="preview.jpg" />
+
+	<image type="CUBE" multires="yes" progressive="false" tilesize="512" multiresthreshold="-0.33">
+		<level tiledimagewidth="1024" tiledimageheight="1024">
+			<cube  url="tiles/l2_mres_%s_%v%u.jpg" />
+		</level>
+		<level tiledimagewidth="2048" tiledimageheight="2048">
+			<cube  url="tiles/l1_mres_%s_%v%u.jpg" />
+		</level>
+	</image>
+
+
+</krpano>
+

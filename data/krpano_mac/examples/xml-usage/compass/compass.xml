@@ -1,0 +1,143 @@
+<!--
+	krpano - compass example
+
+	- it just rotates images accordingly to the viewing direction
+
+	- two examples are used - one compass with rotation pointer
+	  and one compass with rotating plate
+
+	- a user defined global variable "heading" is used for the current
+	  pano heading, the compass and the hotspots are relative to this value
+-->
+
+<krpano>
+
+	<!-- vignetting style - preload mask, then load real pano -->
+	<plugin name="mask" url="vignetting.png" width="100%" height="100%" enabled="false" alpha="0" zorder="0" onloaded="tween(alpha,1);" />
+	
+	<!-- events, show a infotext on start, and call the "onviewchange" action on a view change -->
+	<events onxmlcomplete="startup();"
+	        onviewchange="rotatecompasses();"
+			/>
+
+	<!-- show info, set heading, create hotpots -->
+	<action name="startup">
+		<!-- SET HEADING -->
+		set(heading, 0);
+
+		action(add_compass_spots);
+	</action>
+
+	<!-- change the rotation of the compass pointer / compass plate image -->
+	<action name="rotatecompasses">
+		sub(plugin[compass_pointer].rotate, view.hlookat, heading);
+		sub(plugin[compass2_plate].rotate,  heading, view.hlookat);
+	</action>
+
+
+	<!-- enable autorotation -->
+	<autorotate enabled="true" waittime="3.0" accel="0.5" speed="3" horizon="0" tofov="100" />
+
+
+
+	<!-- first compass (the one on the right side) -->
+
+
+	<!-- compass with rotating pointer -->
+	<plugin name="compass" url="compass.png" keep="true" zorder="1" children="false"
+	        align="righttop" x="10" y="10"
+	        scale="1.0" scalechildren="true"
+	        destscale="1.0"
+	        onclick="switch(destscale,1.0,0.5);tween(scale,get(destscale));"
+	        heading="0"
+	        />
+
+	<!-- compass pointer, the rotation will be changed in the "onviewchange" action -->
+	<plugin name="compass_pointer" url="compass_pointer.png" keep="true" handcursor="false"
+			parent="compass" zorder="1"
+			align="center"
+			/>
+
+	<!-- compass glass cap (flash only, because there is no blendmode in html5) -->
+	<plugin name="glass" devices="flash"  url="glass.jpg" keep="true" enabled="false"
+	        blendmode="screen" alpha="0.5"
+	        parent="compass" zorder="2"
+	        align="center"
+	        />
+
+
+
+
+	<!-- second compass (left side) -->
+
+
+	<!-- compass2 with rotating plate -->
+	<plugin name="compass2" url="compass.png" keep="true" zorder="1" children="false"
+	        align="lefttop" x="10" y="10"
+	        scale="1.0" scalechildren="true"
+	        destscale="1.0"
+	        onclick="switch(destscale,1.0,0.5);tween(scale,get(destscale));"
+	        />
+
+	<!-- compass2 plate, the rotation will be changed in the "onviewchange" action -->
+	<plugin name="compass2_plate" url="compass_plate.png" keep="true" handcursor="false"
+			parent="compass2" zorder="1"
+			align="center"
+			/>
+
+	<!-- compass2 fixed pointer -->
+	<plugin name="compass2_pointer" url="compass_pointer.png" keep="true" handcursor="false"
+			parent="compass2" zorder="2"
+			align="center"
+			/>
+
+	<!-- compass2 fixed outer ring -->
+	<plugin name="compass2_ring" url="compass_ring.png" keep="true" handcursor="false"
+			parent="compass2" zorder="3"
+			align="center"
+			/>
+
+	<!-- compass2 glass cap (flash only, because there is no blendmode in html5) -->
+	<plugin name="glass2" devices="flash" url="glass.jpg" keep="true" enabled="false"
+	        blendmode="screen" alpha="0.5"
+	        parent="compass2" zorder="4"
+	        align="center"
+	        />
+
+
+
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+
+
+	<!-- compass direction hotspots, created dynamically -->
+
+	<action name="addspot">
+		addhotspot(%1);
+		set(hotspot[%1].url,%CURRENTXML%/hotspots.png);
+		set(hotspot[%1].crop,%3);
+		add(hotspot[%1].ath,%2,heading);
+		set(hotspot[%1].atv,0);
+		set(hotspot[%1].scale,%4);
+		set(hotspot[%1].scale1,%4);
+		mul(hotspot[%1].scale2,%4,2);
+		set(hotspot[%1].zoom,true);
+		set(hotspot[%1].onover,tween(scale,get(scale2)));
+		set(hotspot[%1].onout,tween(scale,get(scale1)));
+		set(hotspot[%1].onclick,lookto(get(ath),get(atv),90,smooth(),true,true));
+	</action>
+
+	<action name="add_compass_spots">
+		addspot(n,  0,     0|0| 76|76, 1.0);
+		addspot(no, 45,   78|0|118|76, 0.5);
+		addspot(o,  90,  202|0| 71|76, 1.0);
+		addspot(so, 135, 281|0|109|76, 0.5);
+		addspot(s,  180, 400|0| 69|76, 1.0);
+		addspot(sw, 225, 469|0|134|76, 0.5);
+		addspot(w,  270, 603|0| 86|76, 1.0);
+		addspot(nw, 315, 689|0|141|76, 0.5);
+	</action>
+
+</krpano>
+

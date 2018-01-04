@@ -1,0 +1,84 @@
+
+@media screen and (min-width: 300px) and (max-width: 991px)  {
+	.container{
+		width: 100%;
+	}
+	.tupian > div{
+	position:absolute;
+	bottom:0;	
+	color: #fff;
+	background: rgba(0,0,0,0);
+	width: 100%;
+	height: 100%;
+
+
+}
+.tupian > div{
+	display: none;
+}
+.guanzhu3d{
+	
+	border-left: none;
+}
+.footer-ul {
+    overflow: hidden;
+    padding-left: 30px;
+}
+.contact-us{
+	padding-bottom:20px;
+	border-bottom: 1px solid #fff;
+	}
+.footer-p{
+	margin-top:10px;
+	text-align: center;
+	}
+.bottom_logo{
+	text-align: center;
+	}
+	.bottom_logo img{
+	margin: 0;
+	}
+.tupian > div p{
+	margin:0px 0 0 0;
+	/*padding:5px 50px;*/
+	
+	
+}
+.tupian + h4{
+	margin-top:10px;
+	}
+.tupian + h4 img{
+		display: none;
+	}
+.con-btn div{
+	margin-top: 10px;
+	}
+	.con-btn div:nth-child(even){
+		padding-right: 0;
+	}
+	.con-btn div:nth-child(odd){
+		padding-left: 0;
+	}
+	.con-div div:first-child{
+		margin-bottom: 10px;
+	}
+}
+	
+}
+@media screen and (min-width: 991px)  {
+	
+	.tp-hover>div{	
+	transform: translateY(85%);
+	transition: all .3s;
+}
+.tp-hover:hover div{
+	transform: translateY(0%);
+}
+#myTabContent  div.pubu > div{
+	padding: 0;
+}
+#myTabContent  div.pubu div:nth-child(4n+1){
+	padding-left: 0;
+	}
+	
+}

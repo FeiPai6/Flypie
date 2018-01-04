@@ -1,0 +1,49 @@
+<!--
+	krpano - scale9grid example
+-->
+
+<krpano version="1.16" onstart="showtext('[b][i]krpano[br]scale9grid example[/i][/b]', infostyle);">
+
+	<!-- text style for startup text -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-100" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="4.0" fadeintime="1.0" fadetime="1.0"
+	           />
+
+	<textstyle name="hoverstyle"
+	           background="false" border="false" textalign="center"
+	           fontsize="20" textcolor="0xFFFFFF" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           fadetime="0.2"
+	           />
+
+
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xFFFFFF,0x999999);" details="16" />
+
+
+	<!-- button with scale9grid -->
+	<plugin name="button1" url="button.png"
+	        align="center" edge="center" x="-25%"
+	        scale9grid="12|9|74|71"
+	        onhover="showtext(scale9grid button[br]click to toggle scale, hoverstyle);"
+	        onclickA="tween(scale,3);set(onclick,call(onclickB));"
+	        onclickB="tween(scale,1);set(onclick,call(onclickA));"
+	        onclick="call(onclickA);"
+	        />
+	        
+	
+
+	<!-- button without -->
+	<plugin name="button2" url="button.png"
+	        align="center" edge="center" x="+25%"
+	        onhover="showtext(normal button[br]click to toggle scale, hoverstyle);"
+	        onclickA="tween(scale,3);set(onclick,call(onclickB));"
+	        onclickB="tween(scale,1);set(onclick,call(onclickA));"
+	        onclick="call(onclickA);"
+	        />
+
+
+
+</krpano>
+

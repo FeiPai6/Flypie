@@ -1,0 +1,47 @@
+<krpano>
+	
+	<!-- loading animation text -->
+	
+	
+	<!-- loading animation events -->
+	<events name="loadinganimation" keep="true"
+	        onxmlcomplete="loadinganimation_startloading();"
+	        onloadcomplete="delayedcall(0.25, loadinganimation_stoploading() );"
+	        />
+
+
+	<!-- loading animation graphic -->
+	<layer name="loadinganimation"
+	       keep="true"
+	       visible="false"
+	       url="loadinganimation.png"
+	       crop="0|0|64|64"
+	       align="top" y="25%"
+	       frame="0" frames="8"
+	       />
+
+
+	<!-- loading percent actions -->	
+	<action name="loadinganimation_startloading">
+		set(loadinganimation_isloading, true);
+		set(layer[loadinganimation].visible, true);
+		loadinganimation_animate();
+	</action>
+	
+	<action name="loadinganimation_stoploading">
+		set(loadinganimation_isloading, false); 
+		set(layer[loadinganimation].visible, false);
+	</action>
+	
+	<action name="loadinganimation_animate">
+		mul(xcrop, layer[loadinganimation].frame, 64);
+		txtadd(layer[loadinganimation].crop, get(xcrop), '|0|64|64');
+		
+		if(loadinganimation_isloading,
+			inc(layer[loadinganimation].frame);
+			if(layer[loadinganimation].frame GE layer[loadinganimation].frames, set(layer[loadinganimation].frame,0));
+			delayedcall(0.05, loadinganimation_animate() );
+		  );
+	</action>
+
+</krpano>

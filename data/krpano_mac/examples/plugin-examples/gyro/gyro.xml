@@ -1,0 +1,50 @@
+<krpano version="1.16">
+	
+	<progress showload="none" showwait="none" />
+	
+	<plugin name="gyro" devices="html5" url="%SWFPATH%/plugins/gyro.js" enabled="false" camroll="true" friction="0" velastic="0" 
+	        onavailable="set(layer[gyrobutton].visible,true); set(layer[infotext].html,'Gyroscope available, press the gyro button...');"
+	        onloaded="delayedcall(1,ifnot(available, showgyrowarning() ));"
+	        />
+	        
+	<events onxmlcomplete="showgyrowarning();" devices="flash" />
+		
+	<action name="showgyrowarning">
+		set(layer[infotext].html,'Gyroscope NOT available...'))
+	</action>
+	
+	<view hlookat="0" vlookat="0" fovmin="60" fov="100" fovmax="150" />
+	
+	<preview url="../../panos/p1/preview.jpg" />
+	
+	<image>
+		<cube url="../../panos/p1/pano_%s.jpg" />
+	</image>
+	
+	
+	<layer name="bottombar" type="container" bgcolor="0x000000" bgalpha="0.5" align="leftbottom" width="100%" height="40">
+		
+		<layer name="infotext" url="%SWFPATH%/plugins/textfield.swf"
+		       background="false" border="false" enabled="false"
+		       html=""
+		       css="text-align:left; color:#FFFFFF; font-family:Arial; font-size:14px; font-weight:bold;"
+		       align="left" x="10" height="100%" vcenter="true"
+		       />
+			
+		<layer name="gyrobutton" url="gyroicon.png" scale="0.5" align="right" x="10" visible="false" 
+		       onclick="switch(plugin[gyro].enabled);"
+		       />
+		       
+	</layer>
+
+	<!-- bigger mobile layout -->	
+	<layer name="bottombar" height="80" devices="mobile">
+		<layer name="infotext" css="text-align:left; color:#FFFFFF; font-family:Arial; font-size:22px; font-weight:bold;" />
+		<layer name="gyrobutton" scale="1.0" />
+	</layer>
+	
+	
+	<!-- adjust the examples backbutton position (if available) -->
+	<events name="backbutton_adjust" onxmlcomplete="if(layer[backbutton], if(device.mobile, set(layer[backbutton].y,110), set(layer[backbutton].y,70)));" />
+	
+</krpano>

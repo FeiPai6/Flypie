@@ -1,0 +1,98 @@
+<krpano>
+	<!-- krpano 1.18 - Virtual Tour ComboBoxes Skin -->
+
+	<progress showload="none" showwait="none" />
+	
+	
+	<!-- Skin Hotspot Style (the hotspots need a 'linkedscene' attribute to be clickable)-->
+	<style name="skin_hotspotstyle" url="vtourskin_hotspot.png" scale="0.5" edge="top" oy="0" onclick="if(linkedscene, tween(scale,0.25,0.5); tween(oy,-20,0.5); tween(alpha,0,0.5); looktohotspot(); loadscene(get(linkedscene),null,MERGE,BLEND(1)); plugin[skin_cb_scenes].selectiditem(get(linkedscene)); );" />
+
+
+	<!-- Skin Comboboxes: One for Scenes, One for Settings -->
+	<style name="skin_combobox" url="%SWFPATH%/plugins/combobox.swf" alturl="%SWFPATH%/plugins/combobox.js" native="false" />
+	
+	<plugin name="skin_cb_scenes"  keep="true" style="skin_combobox" align="righttop" x="10" y="10" onloaded="skin_fillwithscenes();" rowcount="14" />
+	
+	<plugin name="skin_cb_settings"  keep="true" style="skin_combobox" align="leftbottom" x="10" y="10" width="150" rowcount="10">
+		<item name="settings" caption="SETTINGS" />
+		<item name="norm"     caption="Normal Projection"        onclick="skin_normal_projection();        selectiditem(settings);" />
+		<item name="archi"    caption="Architectural Projection" onclick="skin_architectural_projection(); selectiditem(settings);" />
+		<item name="fisheye"  caption="Fisheye Projection"       onclick="skin_fisheye_projection();       selectiditem(settings);" devices="Flash" />
+		<item name="stereo"   caption="Stereographic Projection" onclick="skin_stereographic_projection(); selectiditem(settings);" devices="Flash" />
+		<item name="planet"   caption="Little Planet"            onclick="skin_littleplanet_projection();  selectiditem(settings);" devices="Flash" />
+		<item name="drag2d"   caption="Drag Control"   onclick="set(control.mousetype,drag2D); set(control.touchtype,drag2D); selectiditem(settings);" />
+		<item name="moveto"   caption="MoveTo Control" onclick="set(control.mousetype,moveto); set(control.touchtype,moveto); selectiditem(settings);" />
+	</plugin>
+
+	
+	<action name="skin_fillwithscenes">
+		for(set(i,0), i LT scene.count, inc(i),
+		  txtadd(itemcall, 'loadscene(',get(scene[get(i)].name),',null,MERGE,BLEND(1));');
+		  addIdItem(get(scene[get(i)].name), get(scene[get(i)].title), get(itemcall));
+		);
+	</action>
+
+
+	<!-- Gyroscope -->
+	<plugin name="skin_gyro" url="%SWFPATH%/plugins/gyro.js" devices="HTML5" keep="true" enabled="false" friction="0" velastic="0" camroll="true" onavailable="skin_addgyrosetting();" />
+		
+	<action name="skin_addgyrosetting">
+		<!-- check if the settings combobox and the gyro plugin were loaded -->
+		set(ready,true);
+		ifnot(plugin[skin_cb_settings].loaded, set(ready,false));
+		ifnot(plugin[skin_gyro].loaded, set(ready,false));
+		if(ready,
+			if(plugin[skin_gyro].available,
+				<!-- plugins loaded and gyro is available = add gyro items --> 
+				plugin[skin_cb_settings].addItem('Enable Gyro', set(plugin[skin_gyro].enabled,true); plugin[skin_cb_settings].selectiditem(settings); );
+				plugin[skin_cb_settings].addItem('Disable Gyro', set(plugin[skin_gyro].enabled,false); tween(view.camroll,0); plugin[skin_cb_settings].selectiditem(settings); );
+			  );
+		  ,
+			<!-- try later again -->
+			delayedcall(0.1, skin_addgyrosetting());
+		  );
+	</action>
+
+
+	<!-- Projection Actions -->
+	
+	<action name="skin_normal_projection">
+		if(backup_fovmax, 
+			if(view.fov GT backup_fovmax, tween(view.fov,get(backup_fovmax),0.25,default,WAIT); );
+			copy(view.fovmax,backup_fovmax); 
+			delete(backup_fovmax); 
+		);
+		tween(view.fisheye, 0.0, 0.5, default, set(view.stereographic,false); );
+		tween(view.architectural, 0.0);
+		if(view.vlookat GT 80, tween(view.vlookat, 0); );
+	</action>
+	
+	<action name="skin_architectural_projection">
+		skin_normal_projection();
+		tween(view.architectural, 1.0);
+	</action>
+	
+	<action name="skin_fisheye_projection">
+		tween(view.architectural, 0.0);
+		if(view.stereographic == true, if(view.fisheye GT 0, tween(view.fisheye,0,0.25,default,WAIT); set(view.stereographic,false); ); );
+		ifnot(backup_fovmax, copy(backup_fovmax, view.fovmax); );
+		tween(view.fovmax, 179, 0.25);
+		tween(view.fisheye, 0.35);
+	</action>
+	
+	<action name="skin_stereographic_projection">
+		tween(view.architectural, 0.0);
+		if(view.stereographic == false, if(view.fisheye GT 0,  tween(view.fisheye,0,0.25,default,WAIT); ); );
+		set(view.stereographic,true); 
+		ifnot(backup_fovmax, copy(backup_fovmax, view.fovmax); );
+		tween(view.fovmax, 160, 0.25);
+		tween(view.fisheye, 1.0);
+	</action>
+	
+	<action name="skin_littleplanet_projection">
+		skin_stereographic_projection();
+		tween(view.vlookat, 90);
+		tween(view.fov, 150);
+	</action>
+
+</krpano>

@@ -1,0 +1,290 @@
+<!-- 
+	krpano Virtual Tour Demo - Kuchlerhaus
+		http://krpano.com/tours/kuchlerhaus/
+	
+	This tour was build with the MAKE VTOUR (Normal) Droplet from the 1.0.8.14 krpano tools version and then refined manually.
+	Note - this is an reduced example (smaller images, stronger compression, fewer panos) to keep the download package small!
+-->
+<krpano onstart="wait(0);startup();">
+	
+	<!-- adjust the examples backbutton position (if available), the wait(0) in the onstart action allows executing this event -->
+	<events name="backbutton_adjust" onxmlcomplete="if(layer[backbutton], set(layer[backbutton].y,105));" />
+	
+	
+	<action name="startup">
+		if(startscene === null, set(startscene,get(scene[0].name)) );
+		loadscene(get(startscene),null,MERGE); 
+		
+		addthumbs();
+	</action>
+
+	<!-- global progress and display settings -->
+	<progress showload="none" showwait="none" />
+	<display details="22" />
+
+
+	<!-- hotspot styles -->
+	<style name="arrowspot1" url="tour.data/graphics/pfeil1.png" zoom="true" distorted="true" alpha="0.0" />
+	<style name="arrowspot2" url="tour.data/graphics/pfeil2.png" zoom="true" distorted="true" alpha="0.0" />
+	<style name="arrowspot3" url="tour.data/graphics/pfeil3.png" zoom="true" distorted="true" alpha="0.0" />
+	<style name="arrowspot4" url="tour.data/graphics/pfeil4.png" zoom="true" distorted="true" alpha="0.0" />
+	<style name="arrowspot5" url="tour.data/graphics/pfeil5.png" zoom="true" distorted="true" alpha="0.0" />
+	<style name="zoomspot" url="tour.data/graphics/zoomicon.png" zoom="true" distorted="true" alpha="0.0" />
+
+	<!-- thumbs -->
+	<layer name="thumbs" keep="true" type="container" align="leftbottom" width="100" height="100%" x="-102" y="0" state="closed">
+		<layer name="thumbsicon" url="tour.data/graphics/thumbs.png" align="rightbottom" x="-10" y="5" edge="leftbottom" onclick="if(layer[thumbs].state == 'closed', tween(layer[thumbs].x,0,0.5,easeOutQuint), tween(layer[thumbs].x,-102,0.5,easeOutQuint)); switch(layer[thumbs].state,'closed','opened');" />
+		<layer name="thumbbar" keep="true" type="container" align="leftbottom" width="100" height="100%" x="0" y="0" bgcolor="0xFFFFFF" bgalpha="0.7">
+			<layer name="scrollarea" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="center" width="100" height="100%" direction="v" onloaded="setcenter(0,0);" />
+		</layer>
+	</layer>
+	
+	<action name="addthumbs">
+		mul(thumbarheight, scene.count, 90);
+		add(thumbarheight,10);
+		copy(layer[scrollarea].height, thumbarheight);
+		for(set(i,0), i LT scene.count, inc(i),
+			txtadd(thumbname,'thumb_',get(i));
+			addlayer(get(thumbname));
+			copy(layer[get(thumbname)].url, scene[get(i)].thumburl);
+			set(layer[get(thumbname)].keep, true);
+			set(layer[get(thumbname)].parent, 'scrollarea');
+			set(layer[get(thumbname)].align, lefttop);
+			mul(thumby, i, 90);
+			add(thumby, 10);
+			copy(layer[get(thumbname)].y, thumby);
+			set(layer[get(thumbname)].x, 10);
+			set(layer[get(thumbname)].linkedscene, get(scene[get(i)].name) );
+			set(layer[get(thumbname)].onclick, tween(layer[thumbs].x,-102,0.2,easeOutQuint,wait); set(layer[thumbs].state,'closed');  loadscene(get(linkedscene), null, MERGE, BLEND(0.5)); );
+		   );
+	</action>
+
+	<!-- logo -->
+	<plugin name="logo"
+	        url="tour.data/graphics/kuchlerhaus-logo.png"
+	        keep="true"
+	        enabled="false"
+	        align="rightbottom"
+	        x="10" y="5"
+	        />
+
+	<!-- loading information -->
+	<plugin name="loading"
+	        url="tour.data/graphics/loading.png"
+	        scale="0.5"
+	        keep="true"
+	        align="center"
+	        enabled="false"
+	        visible="false"
+	        />
+
+	<events onxmlcomplete="set(plugin[loading].visible,true);" 
+	        onloadcomplete="set(plugin[loading].visible,false); fade_in_hotspots();" 
+	        />
+
+
+	<!-- contextmenu settings -->
+	<contextmenu enterfs="Vollbild Modus" exitfs="Vollbild Modus beenden">
+		<item name="fs" caption="FULLSCREEN" />
+		<item name="title" caption="Kuchlerhaus Homepage" separator="true" onclick="openurl('http://www.kuchlerhaus.at/',_self);" />
+		<item name="mail" caption="Eine E-Mail an glas@kuchlerhaus.at senden..." onclick="openurl('mailto:glas@kuchlerhaus.at',_self);" />
+		<item caption="KRPANO" separator="true" />
+	</contextmenu>
+
+
+	<!-- transition action
+		%1 = name of the hotspot to move
+		%2 = destination ath for the hotspot
+		%3 = destination atv for the hotspot
+		%4 = destination rotate for the hotspot
+		%5 = new scene
+		%6 = hlookat startup position in the new scene
+		%7 = vlookat startup position in the new scene
+		%8 = startup fov in the new scene
+	-->
+	<action name="transition">
+		<!-- move the hotspot to the destination position -->
+		tween(hotspot[%1].alpha, 0.0, 0.25, default);
+		tween(hotspot[%1].rotate, %4, 0.25, default);
+		tween(hotspot[%1].ath,    %2, 0.25, default);
+		tween(hotspot[%1].atv,    %3, 0.25, default, WAIT);
+
+		<!-- look at the hotspot position -->
+		looktohotspot(%1);
+
+		set(plugin[loading].visible,true);
+		
+		<!-- load and blend to the new scene -->
+		loadscene(%5, null, MERGE, BLEND(2));
+
+		<!-- save the startup view position of the scene-->
+		copy(startview_hlookat, view.hlookat);
+		copy(startview_vlookat, view.vlookat);
+		copy(startview_fov, view.fov);
+
+		<!-- look at the given position and wait for blending -->
+		lookat(%6, %7, %8);
+		wait(LOAD);
+		
+		set(plugin[loading].visible,false);
+		
+		wait(BLEND);
+		
+		fade_in_hotspots();
+
+		<!-- return to startup position -->
+		oninterrupt(break);
+		lookto(get(startview_hlookat), get(startview_vlookat), get(startview_fov), smooth(60,-60,180));
+
+	</action>
+	
+	<action name="fade_hotspots">
+		tween(hotspot[%1].alpha, %2);
+	</action>
+	
+	<action name="fade_in_hotspots">
+		if(%1 != NEXT, set(i,0));
+		if(i LT hotspot.count,
+			fade_hotspots(get(hotspot[get(i)].name), 1.0);
+			inc(i);
+			fade_in_hotspots(NEXT);
+		  );
+	</action>
+
+	<!-- calc the max. flyout size of a hotspot for the current screen size -->
+	<action name="calc_flyout_size">
+		div(screen_sideaspect, stagewidth, stageheight);
+		div(hotspot_sideaspect, hotspot[%1].width, hotspot[%1].height);
+		
+		if(screen_sideaspect LT hotspot_sideaspect,
+			div(hotspot[%1].width,stagewidth,stageheight);
+			mul(hotspot[%1].width,80);
+			txtadd(hotspot[%1].width,'%');
+			set(hotspot[%1].height,prop);
+		  ,
+			set(hotspot[%1].width,prop);
+			set(hotspot[%1].height,80%);
+		  );
+	</action>
+
+	<!-- fly in a hotspot = show hotspot fixed at screen -->
+	<action name="flyin">
+		if(hotspot[%1].flying == 0.0, hotspot[%1].resetsize(); calc_flyout_size(%1); );
+		if(hotspot[%1].oldscale === null, copy(hotspot[%1].oldscale, hotspot[%1].scale) );
+		if(hotspot[%1].oldrx === null, copy(hotspot[%1].oldrx, hotspot[%1].rx) );
+		if(hotspot[%1].oldry === null, copy(hotspot[%1].oldry, hotspot[%1].ry) );
+		if(hotspot[%1].oldrz === null, copy(hotspot[%1].oldrz, hotspot[%1].rz) );
+		set(hotspot[%1].enabled,true);
+		set(hotspot[%1].visible,true);
+		tween(hotspot[%1].alpha,  1.0);
+		tween(hotspot[%1].flying, 1.0);
+		tween(hotspot[%1].scale,  1.0);
+		tween(hotspot[%1].rx, 0.0);
+		tween(hotspot[%1].ry, 0.0);
+		tween(hotspot[%1].rz, 0.0);
+	</action>
+
+	<!-- fly the hotspot out/back -->
+	<action name="flyout">
+		set(hotspot[%1].enabled,false);
+		tween(hotspot[%1].alpha,  0.0, 0.5, default, set(hotspot[%1].visible,false); );
+		tween(hotspot[%1].flying, 0.0);
+		tween(hotspot[%1].scale,  get(hotspot[%1].oldscale));
+		tween(hotspot[%1].rx,  get(hotspot[%1].oldrx));
+		tween(hotspot[%1].ry,  get(hotspot[%1].oldry));
+		tween(hotspot[%1].rz,  get(hotspot[%1].oldrz));
+	</action>
+
+
+
+	<!-- scenes -->
+
+
+	<scene name="scene_aussen" title="aussen" onstart="" thumburl="tour.data/aussen.tiles/thumb.jpg">
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="95" fovmin="45" fovmax="120" />
+
+		<preview url="tour.data/aussen.tiles/preview.jpg" />
+
+		<image>
+			<cube url="tour.data/aussen.tiles/mobile_%s.jpg" />
+		</image>
+
+		<hotspot name="spot_eingang"   style="arrowspot1" ath="1"     atv="10"  scale="0.40" onclick="transition(spot_eingang,     1.0,  0.0, 0, scene_eingang,     -86, 3, 45);" />
+		<hotspot name="spot_werkstatt" style="arrowspot2" ath="80.5"  atv="3"   scale="0.20" onclick="transition(spot_werkstatt,  77.0,  2.6, 0, scene_werkstatt,  347, 7, 63);" />
+		<hotspot name="spot_galerie"   style="arrowspot5" ath="-66.1" atv="3.3" scale="0.23" onclick="transition(spot_galerie,   -63.9,  2.1, 0, scene_galerie,                 -272, 0, 40);" />
+		
+	</scene>
+
+
+	<scene name="scene_eingang" title="eingang" onstart="" thumburl="tour.data/eingang.tiles/thumb.jpg">
+
+		<view hlookat="-76.73" vlookat="8.48" fovtype="MFOV" fov="110" fovmin="45" fovmax="120" />
+
+		<preview url="tour.data/eingang.tiles/preview.jpg" />
+
+		<image>
+			<cube url="tour.data/eingang.tiles/mobile_%s.jpg" />
+		</image>
+
+		<hotspot name="spot_aussen"    style="arrowspot3" ath="92"   atv="20"   scale="0.5"               onclick="transition(spot_aussen,    92.0,   5.0, 0, scene_aussen,     178,  6, 38);" />
+		<hotspot name="spot_galerie"   style="arrowspot2" ath="265"  atv="-3"   scale="0.3"               onclick="transition(spot_galerie,   260.0, -3.0, 0, scene_galerie,   -136,  0, 34);" />
+		<hotspot name="spot_werkstatt" style="arrowspot1" ath="19.4" atv="16.1" scale="0.55" rotate="-40" onclick="transition(spot_werkstatt,  13.1, 10.2, 0, scene_werkstatt,  351, 12, 25);" />
+
+	</scene>
+
+
+
+
+
+
+	<scene name="scene_galerie" title="galerie" onstart="" thumburl="tour.data/galerie.tiles/thumb.jpg">
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="98" fovmin="45" fovmax="120" />
+
+		<preview url="tour.data/galerie.tiles/preview.jpg" />
+
+		<image>
+			<cube url="tour.data/galerie.tiles/mobile_%s.jpg" />
+		</image>
+
+		<hotspot name="spot_eingang"  style="arrowspot5" ath="-140.0" atv="5.0"  scale="0.30" onclick="transition(spot_eingang, -135.0, 2.0, 0, scene_eingang,  -98,  0, 31);" />
+		<hotspot name="spot_aussen"   style="arrowspot1" ath="106.9"  atv="23.3" scale="0.45" onclick="transition(spot_aussen,   106.9, 0.0, 0, scene_aussen,  -373, -6, 20);" />
+		
+		<hotspot name="spot_zoombild" style="zoomspot"   ath="138.6"  atv="3.2"  scale="0.60" zorder="1" onclick="flyin( zoombild );" />
+
+		<hotspot name="zoombild" url="tour.data/graphics/bild.jpg"
+		         ath="133.5846" atv="-2.4199"
+		         distorted="true"
+		         zorder="2"
+		         scale="0.1376"
+		         rx="-1.75" ry="-44.75" rz="0.7571"
+		         enabled="false"
+		         visible="false"
+		         alpha="0.0"
+		         flying="0.0"
+		         onclick="flyout(zoombild);"
+		         />
+
+	</scene>
+
+
+
+
+	<scene name="scene_werkstatt" title="werkstatt" onstart="" thumburl="tour.data/werkstatt.tiles/thumb.jpg">
+
+		<view hlookat="208.6" vlookat="24.84" fovtype="MFOV" fov="108.53" fovmin="45" fovmax="120" />
+
+		<preview url="tour.data/werkstatt.tiles/preview.jpg" />
+
+		<image>
+			<cube url="tour.data/werkstatt.tiles/mobile_%s.jpg" />
+		</image>
+
+		<hotspot name="spot_eingang"  style="arrowspot1" ath="20.8" atv="13.3" scale="0.45" onclick="transition(spot_eingang, 20.7, 5.1, 0, scene_eingang, -290, 6, 20.8);" />
+		<hotspot name="spot_aussen"   style="arrowspot2" ath="-6.5" atv="6.2"  scale="0.50" onclick="transition(spot_aussen, -10.1, 5.2, 0, scene_aussen,    76, 2, 20.8);" />
+
+	</scene>
+
+
+</krpano>

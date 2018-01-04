@@ -1,0 +1,20 @@
+<!--
+	krpano
+	- buttonsbar example
+-->
+
+<krpano>
+
+	<!-- include buttons template (based on the buttons.png image)-->
+	<include url="buttonsbar-include.xml" />
+	
+	<!-- pano image -->
+	<preview url="../../panos/p1/preview.jpg" />
+	<image>
+		<cube url="../../panos/p1/pano_%s.jpg" />
+	</image>
+	
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="MFOV" fov="100" fovmin="50" fovmax="150" />
+
+</krpano>

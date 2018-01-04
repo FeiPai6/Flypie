@@ -1,0 +1,12 @@
+<script>
+$(function(){
+	plugins_init_function.push(showlogo_init);
+})
+function showlogo_init(data){
+	if(data.hidelogo_flag=='1'){
+        $("#logoImg").hide();
+    }else{
+    	$("#logoImg").show();
+    }
+}
+</script>

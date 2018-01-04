@@ -1,0 +1,43 @@
+<!--
+	krpano
+	- a xml driven image gallery example
+	- click a small image to view it large
+-->
+
+<krpano onstart="start();">
+	
+	<!-- use only a grid preview pano (to save download space) -->
+	<preview type="grid(cube,2,1,256,0x000000,0x000000,0x222222);" details="16" />
+	<view limitview="lookat" vlookatmin="0" vlookatmax="0" />
+	
+	
+	<!-- include image thumbbar xml script code -->
+	<include url="thumbbar.xml" />
+
+
+	<action name="start">
+		<!--
+			syntax: 
+				create_thumbbar(numberofimages, align, orientation, x,y, width,height, border); 
+				
+			numberofimages ... number of images
+			align          ... position of the imagebar (lefttop,left,leftright,top,center,bottom,righttop,right,bottom)
+			orientation    ... orientation of the imagebar (h or v)
+			x,y            ... position offsets
+			width,height   ... thumbnail imagesize
+			border         ... border around images
+		-->
+		create_thumbbar(6, left, v, 10,10, 90,60, 6);
+
+		thumbbar_addimage('images/IMG_1683.jpg');
+		thumbbar_addimage('images/IMG_1685.jpg');
+		thumbbar_addimage('images/IMG_1688.jpg');
+		thumbbar_addimage('images/IMG_1696.jpg');
+		thumbbar_addimage('images/IMG_1702.jpg');
+		thumbbar_addimage('images/IMG_1704.jpg');
+	</action>
+
+</krpano>
+
+
+

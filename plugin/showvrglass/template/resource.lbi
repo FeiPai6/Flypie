@@ -1,0 +1,11 @@
+<script>
+$(function(){
+	plugins_init_function.push(showvrglass_init);
+})
+function showvrglass_init(data,settings){
+	settings['skin_settings.webvr'] = data.hidevrglasses_flag==1 ? false : true;
+}
+function showWebvrBtn(){
+    $('.btn_vrmode').show();
+}
+</script>

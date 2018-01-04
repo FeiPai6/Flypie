@@ -1,0 +1,17 @@
+<script>
+$(function(){
+    $("#logoImg").show();
+	plugins_init_function.push(custom_logo_init);
+})
+function custom_logo_init(data){
+	var logoObj = data.custom_logo;
+	if(logoObj){
+		if(logoObj.useCustomLogo)
+        	$('.vrshow_container_logo img').attr('src',logoObj.logoImgPath);
+        if(logoObj.logoLink)
+            $('.vrshow_container_logo img').attr('onclick','javascript:window.open("'+logoObj.logoLink+'")');
+        
+    }
+}
+</script>
+

@@ -1,0 +1,7 @@
+<krpano>
+	<layer name="open_alert" url="" keep="true" align="center" edge="center" x="0" y="0" maxwidth="160" maxheight="160"
+           enabled="false" visible="false"/>
+    <action name="show_open_alert">set(layer[open_alert].url,%1); set(layer[open_alert].visible,true); delayedcall(5,
+        tween(layer[open_alert].alpha,0,1));
+    </action>
+</krpano>

@@ -1,0 +1,55 @@
+<!--
+	krpano - little planet intro example
+-->
+
+<krpano>
+
+	<!-- pano image -->
+	<preview url="../../panos/p3/preview.jpg" />
+	<image>
+		<cube url="../../panos/p3/pano_%s.jpg" />
+	</image>
+
+
+	<!-- startup view settings for 'little planet view' (stereographic=true + fisheye=1.0 + fov>120 + vlookat>70) -->
+	<view stereographic="true"
+		  fisheye="1.0"
+		  fov="155"
+		  fovtype="VFOV"
+		  fovmax="150"
+		  hlookat="-60"
+		  vlookat="77"
+		  />
+
+
+	<!-- fisheye and little planets projections are needing more cpu rendering performance,
+		 to reduce the cpu need and get better performance and frame rate, switch to Flash9
+		 rendering while in fisheye/littleplanet/stereographic mode -->
+	<display flash10="off" details="24" />
+
+
+
+	<!-- when the loading is done, wait 2 seconds and then start with the animation to an normal view -->
+	<events onloadcomplete="delayedcall(2.0, normalview());" />
+
+
+	<action name="normalview">
+		tween(view.hlookat, -40, 2.5, easeInOutQuad);
+		tween(view.vlookat, -35, 2.5, easeInOutQuad);
+		tween(view.fov,     85,  2.5, easeInOutQuad);
+		tween(view.fisheye, 0.0, 2.5, easeInOutQuad);
+		wait(2.7);
+		set(display.flash10, on);
+		showtext('[b][i]krpano[br]little planet intro example[/i][/b]', infostyle)
+	</action>
+
+
+	<!-- showtext() textstyle -->
+	<textstyle name="infostyle"
+	           origin="center" edge="center" yoffset="-39" textalign="center" background="false" border="false"
+	           fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);"
+	           showtime="3.0" fadeintime="1.0" fadetime="1.0"
+	           />
+
+
+</krpano>

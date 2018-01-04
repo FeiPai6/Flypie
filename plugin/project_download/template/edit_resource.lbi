@@ -1,0 +1,19 @@
+<div id="projectDownModal" class="modal fade" data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-height: 200px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">离线下载</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">提示：离线下载的项目里，将无法使用说一说，浏览统计，点赞统计等需要联网操作的功能。</p>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-md-12 text-center">
+                         <a class="btn btn-primary" target="_blank" href="javascript:;" onClick="javascript:confirmDownload();">确认下载</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/plugin/project_download/js/project_download.js?v=1.4.2"></script>

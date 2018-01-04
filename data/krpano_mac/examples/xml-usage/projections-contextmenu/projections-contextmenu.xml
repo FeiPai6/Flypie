@@ -1,0 +1,23 @@
+<krpano>
+	
+	<!-- include the contextmenu -->
+	<include url="contextmenu.xml" />
+
+	<!-- info text -->
+	<layer name="infotext" url="%SWFPATH%/plugins/textfield.swf" enabled="false" border="false" background="false"
+		align="top" x="0" y="10" width="90%" autoheight="true"
+		css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;"
+		html.desktop="Use the right-click context-menu to change the projection..."
+		html.no-desktop="Long press to open the context-menu to change the projection..."
+		/>
+
+	<!-- startup view -->
+	<view hlookat="0" vlookat="10" fov="110" />
+
+	<!-- the pano image -->
+	<preview url="../../panos/p2/preview.jpg" />
+	<image>
+		<cube url="../../panos/p2/pano_%s.jpg" />
+	</image>
+
+</krpano>

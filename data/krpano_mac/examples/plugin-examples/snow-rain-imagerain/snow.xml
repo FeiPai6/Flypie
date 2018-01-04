@@ -1,0 +1,185 @@
+<krpano onstart="randomizehorizon();">
+
+	<progress showwait="none" showload="none" />
+	
+	<!-- set reduced display quality for faster rendering performance -->
+	<display details="14" flash10="off" movequality="LOW" stillquality="LOW" devices="flash" />
+
+	
+	<!-- pano image -->
+	<preview url="../../panos/p3/preview.jpg" />
+	<image>
+		<cube url="../../panos/p3/pano_%s.jpg" />
+	</image>
+	
+	
+	<!-- startup view -->
+	<view hlookat="0" vlookat="-80" fov="90" fisheye="0.35" fovmax="150" />
+
+	<!-- enable autorotation - and enable returing to horizon -->
+	<autorotate enabled="true" waittime="0.5" accel="1.0" speed="5.0" horizon="0.0" tofov="90" />
+	
+	
+	<!-- randomize autorotation horison every 4 seconds -->
+	<action name="randomizehorizon">
+		sub(tmp, random, 0.5);
+		mul(autorotate.horizon, tmp, 180.0);
+		delayedcall(4, randomizehorizon());
+	</action>
+		
+
+	<!-- the snow plugin -->
+	<plugin name="snow" zorder="1"
+	        url="%SWFPATH%/plugins/snow.swf"
+	        alturl="%SWFPATH%/plugins/snow.js"
+	        floor="0.7"
+	        onloaded="snowballs();"
+	        />
+
+	<action name="defaultsnow">
+		set(plugin[snow].mode,          snow);
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        4000);
+		set(plugin[snow].color,         0xFFFFFF);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     4.0);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="snowballs">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/snowball.png');
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        2000);
+		set(plugin[snow].imagescale,    0.5);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     2.0);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="snowflakes">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/snowflake.png');
+		set(plugin[snow].blendmode,     add);
+		set(plugin[snow].flakes,        2000);
+		set(plugin[snow].imagescale,    0.4);
+		set(plugin[snow].speed,         0.5);
+		set(plugin[snow].shake,         8.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     2.0);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="silverstars">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/silverstar.png');
+		set(plugin[snow].blendmode,     add);
+		set(plugin[snow].flakes,        2000);
+		set(plugin[snow].imagescale,    0.3);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     2.0);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="goldenstars">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/star.png');
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        1000);
+		set(plugin[snow].imagescale,    1.0);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     1.9);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="hearts">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/heart.png');
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        250);
+		set(plugin[snow].imagescale,    0.5);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     1.5);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="smileys">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/smiley.png');
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        1000);
+		set(plugin[snow].imagescale,    1.0);
+		set(plugin[snow].speed,         1.0);
+		set(plugin[snow].shake,         4.0);
+		set(plugin[snow].speedvariance, 2.0);
+		set(plugin[snow].spreading,     1.5);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="money">
+		set(plugin[snow].mode,          image);
+		set(plugin[snow].imageurl,      '%CURRENTXML%/money.png');
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        500);
+		set(plugin[snow].imagescale,    0.8);
+		set(plugin[snow].speed,         0.8);
+		set(plugin[snow].shake,         8.0);
+		set(plugin[snow].speedvariance, 3.0);
+		set(plugin[snow].spreading,     2.5);
+		set(plugin[snow].wind,          0.0);
+	</action>
+	
+	<action name="rain">
+		set(plugin[snow].mode,          rain);
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        2000);
+		set(plugin[snow].color,         0x7FAFFF);
+		set(plugin[snow].speed,         3.5);
+		set(plugin[snow].shake,         1.0);
+		set(plugin[snow].speedvariance, 1.0);
+		set(plugin[snow].spreading,     3.0);
+		set(plugin[snow].rainwidth,     1.0);
+		set(plugin[snow].rainalpha,     0.5);
+		set(plugin[snow].wind,          2.0);
+	</action>	
+	
+	<action name="heavyrain">
+		set(plugin[snow].mode,          rain);
+		set(plugin[snow].blendmode,     normal);
+		set(plugin[snow].flakes,        4000);
+		set(plugin[snow].color,         0x9FAFFF);
+		set(plugin[snow].speed,         4.1);
+		set(plugin[snow].shake,         0.0);
+		set(plugin[snow].speedvariance, 1.5);
+		set(plugin[snow].spreading,     4.0);
+		set(plugin[snow].rainwidth,     1.5);
+		set(plugin[snow].rainalpha,     0.3);
+		set(plugin[snow].wind,          3.0);
+	</action>
+	
+	
+	<!-- a combobox for selecting different snow effect -->
+	<plugin name="combobox" url="%SWFPATH%/plugins/combobox.swf" alturl="%SWFPATH%/plugins/combobox.js" align="leftbottom" x="10" y="10" zorder="2" rowcount="10">
+		<item name="opt1"  caption="Snow Balls"      onclick="snowballs();"   />
+		<item name="opt2"  caption="Snow Flakes"     onclick="snowflakes();"  />
+		<item name="opt3"  caption="Silver Stars"    onclick="silverstars();" />
+		<item name="opt4"  caption="Golden Stars"    onclick="goldenstars();" />
+		<item name="opt5"  caption="Hearts"          onclick="hearts();"      />
+		<item name="opt6"  caption="Smileys"         onclick="smileys();"     />
+		<item name="opt7"  caption="Money"           onclick="money();"       />
+		<item name="opt8"  caption="Rain"            onclick="rain();"        />
+		<item name="opt9"  caption="Heavy Rain"      onclick="heavyrain();"   />
+		<item name="opt10" caption="Default Snow"    onclick="defaultsnow();" />
+	</plugin>
+
+</krpano>

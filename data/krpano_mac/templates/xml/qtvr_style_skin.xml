@@ -1,0 +1,49 @@
+<krpano>
+	<!-- kmakemultires qtvr_style_skin.xml template -->
+	
+	
+	<!-- set initial view -->
+	<view hlookat="0" vlookat="0" fov="90" fovmin="50" fovmax="150" [VIEWLIMITS]/>
+	
+	
+	<!-- qtvr style movement -->
+	<control mousetype="moveto"
+	         mouseaccelerate="3"
+	         mousefriction="0"
+	         />
+	           
+	<!-- qtvr style cursor -->
+	<cursors url="%SWFPATH%/skin/qtvr-cursors.png"
+	         type="8way"
+	         move    = " 0|0|16|16"
+	         drag    = "16|0|16|16"
+	         arrow_u = "32|0|16|16"
+	         arrow_d = "48|0|16|16"
+	         arrow_l = "64|0|16|16"
+	         arrow_r = "80|0|16|16"
+	         arrow_lu= "96|0|16|16"
+	         arrow_ru="112|0|16|16"
+	         arrow_rd="128|0|16|16"
+	         arrow_ld="144|0|16|16"
+	         />
+	
+	<!-- qtvr showtext() style -->
+	<textstyle name="qtvrstyle" font="Arial" bold="false" fontsize="10" border="false" background="false" textcolor="0x000000" 
+	           origin="leftbottom" xoffset="36" yoffset="-1" edge="leftbottom" textalign="left"
+	           />	         
+	         
+	<!-- qtvr bar with zoom and fullscreen buttons -->
+	<plugin name="bar" align="leftbottom"  x="0"  width="100%" height="16" url="%SWFPATH%/skin/qtvr-bar.png" zorder="0" scale9grid="34|16|5|16" enabled="false" />
+	<plugin name="in"  align="leftbottom"  x="0"  url="%SWFPATH%/skin/qtvr-bar.png" zorder="1" crop="0|0|17|16"  ondowncrop="0|16|17|16"  ondown="set(fov_moveforce,+1);"  onup="set(fov_moveforce,0);" onhover="showtext(Zoom Out, qtvrstyle);" />
+	<plugin name="out" align="leftbottom"  x="16" url="%SWFPATH%/skin/qtvr-bar.png" zorder="1" crop="16|0|17|16" ondowncrop="16|16|17|16" ondown="set(fov_moveforce,-1);"  onup="set(fov_moveforce,0);" onhover="showtext(Zoom In,  qtvrstyle);" />
+	<plugin name="fs"  align="rightbottom" x="0"  url="%SWFPATH%/skin/qtvr-bar.png" zorder="1" crop="40|0|17|16" onclick="switch(fullscreen);" onhover="showtext(Change Fullscreen Mode,  qtvrstyle);" />
+	
+	
+	<!-- the preview and pano image -->	        
+	<preview type="grid(CUBE);" />
+		
+	[PREVIEW]
+
+	[IMAGE]
+
+</krpano>

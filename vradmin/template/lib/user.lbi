@@ -1,0 +1,136 @@
+{if $act=='profile'}
+			<form action="/{$_lang.admin_path}/?m=user" method="post" id="uform" enctype="multipart/form-data">
+				<table class="tableBasic" border="0" cellpadding="4" cellspacing="0"  width="100%">
+					<tbody>
+					{if $row.pk_user_main>0}
+					<tr>
+						<th width="120"><i class="require-red">*</i>会员ID：</th>
+						<td>
+							{$row.pk_user_main}
+						</td>
+					</tr>
+					<tr>
+						<th width="120"><i class="require-red">*</i>头像：</th>
+						<td>
+							<img src="{$row.avatar}" width="108" height="108">
+						</td>
+					</tr>
+					{/if}
+						<tr>
+							<th width="120"><i class="require-red">*</i>登录手机：</th>
+							<td>
+								<input class="common-text required" name="phone" value="{$row.phone}" type="text">
+								　<span class="red">手机号是用户登录的唯一凭证</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="120">{if !$row.pk_user_main}<i class="require-red">*</i>{/if}登录密码：</th>
+							<td>
+								<input class="common-text required" name="passwd" type="password">　
+								不修改请保持为空
+							</td>
+						</tr>
+						<tr>
+							<th><i class="require-red">*</i>昵称：</th>
+							<td><input class="common-text required" name="nickname" value="{$row.nickname}" type="text"></td>
+						</tr>
+						
+						
+						{if $row.pk_user_main>0}
+						<tr>
+							<th>注册时间：</th>
+							<td>{$row.create_time}</td>
+						</tr>
+						<tr>
+							<th>最后登录：</th>
+							<td>{$row.last_time}</td>
+						</tr>
+						{/if}
+						<tr>
+							<th>用户组：</th>
+							<td>
+								<select name="level" id="level">
+									{foreach $level_groups as $group}
+										<option value="{$group.id}" {if $group.id eq $row.level}selected="selected"{/if}>{$group.level_name}</option>
+									{/foreach}
+								}
+								</select>　
+								编辑会员用户组后，会员须退出重新登录才能生效
+							</td>
+						</tr>
+						<tr>
+							<th>项目数量上限：</th>
+							<td>
+								<input class="common-text required" name="limit_num" type="text" value="{$row.limit_num}" />　
+								允许用户发布的全景项目数量上限，为0则不限制；大于0时，用户上传的全景项目将无法删除
+							</td>
+						</tr>
+						<tr>
+							<th>屏蔽项目：</th>
+							<td><input type="checkbox" name="state" {if $row.state==1}checked{/if} value="1">　<span class="red">屏蔽项目后，该用户发表的所有全景项目都将禁止展现</span></td>
+						</tr>
+						<tr>
+							<th></th>
+							<td>
+							    <div id="wrong_text" class="warning" style="display:none"></div>
+								<div class="clear"></div>
+							    <input type="hidden" name="uid" value="{$row.pk_user_main}">
+								<input type="hidden" name="act" value="edit_profile">
+								<input type="button" class="btn btn-primary btn6 mr10" value="提交" id="sub_btn" onclick="javascript:ajaxFormSubmit('uform','提交');">
+								<input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+							</td>
+						</tr>
+					</tbody></table>
+			</form>
+ {else}
+	   <h3>
+	   <a href="/{$_lang.admin_path}/?m=user&act=profile" class="actionBtn add">添加会员</a>
+	   <form action="/{$_lang.admin_path}/?m=user" method="post">
+			<table>
+				<tr>
+					<th width="60">会员ID:</th>
+					<td>
+					   <input  placeholder="请输入会员ID" name="uid" value="{$uid}" size="10" type="text"/> 
+					</td>
+					<th width="60">用户组:</th>
+					<td>
+						<select name="level">
+							<option value="0">所有用户</option>
+							{foreach $levels as $k=>$v}
+								<option value="{$k}" {if $k==$level}selected{/if}>{$v}</option>
+							{/foreach}
+						</select>
+					</td>
+					<th width="60">手机号:</th>
+					<td><input placeholder="请输入会员手机号" name="phone" value="{$phone}" type="text"></td>
+					<th width="60">昵称:</th>
+					<td>
+					   <input placeholder="请输入会员昵称" name="nickname" value="{$nickname}" type="text"/> 
+					</td>
+					<td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+				</tr>
+			</table>
+		</form>
+		</h3>
+		<table  class="tableBasic" border="0" cellpadding="8" cellspacing="0"  width="100%">
+			<tr>
+				<th class="tc">会员ID</th>
+				<th>昵称</th>
+				<th>手机号</th>
+				<th>用户组</th>
+				<th>注册时间</th>
+				<th>操作</th>
+			</tr>
+			{foreach $res.res as $k=>$v}
+			<tr>
+				<td>{$v.pk_user_main}</td> 
+				<td>{$v.nickname}</td>
+				<td>{$v.phone}</td> 
+				<td>{$levels[$v.level]}</td>
+				<td>{$v.create_time}</td> 
+				<td><a class="red" href="/{$_lang.admin_path}/?m=user&act=profile&uid={$v.pk_user_main}">编辑</a></td>
+			</tr>
+			{/foreach}
+		</table>
+		<div class="list-page">{include file="lib/pages.lbi"}</div>
+{/if}	

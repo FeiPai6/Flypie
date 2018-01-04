@@ -1,0 +1,4 @@
+ <div class="vrshow_logo_title">
+    <div id="viewnumDiv">人气：<span id="user_viewNum">0</span></div>
+    <div style="clear:both;"></div>
+</div>

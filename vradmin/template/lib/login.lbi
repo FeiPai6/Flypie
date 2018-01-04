@@ -1,0 +1,12 @@
+<div id="login">
+  <div class="dologo"></div>
+  <form id="admin_login" action="/{$_lang.admin_path}/?m=login" method="post" enctype="multipart/form-data">
+   <div id="wrong_text" class="warning" style="display:none"></div>
+   <ul>  
+    <li class="inpLi"><b>登录账号</b><input type="text" name="admin_name" class="inpLogin"></li>
+    <li class="inpLi"><b>登录密码</b><input type="password" name="passwd" class="inpLogin"></li>
+    <li style="height:auto"><label><input type="checkbox" name="remember" value="1"> 7天内免登录</label></li>
+    <li class="sub"><input type="button" id="sub_btn" value="确认登录" class="btn" style="width:100%;" onclick="javascript:ajaxFormSubmit('admin_login','登录');"></li> 
+   </ul>
+  </form>
+</div>

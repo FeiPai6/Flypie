@@ -1,0 +1,175 @@
+/**
+ * @fileoverview 默认皮肤的样式
+ * @author 首作<aloysious.ld@taobao.com>
+ * @date 2015-01-12
+ *
+ * 约定：
+ * 1. 这个文件只定义所有ui组件的尺寸、在prite图中的位置（background、width、height）；
+ * 2. 与layout相关的属性（position、margin等）不在此定义，而交由js的layout模块完成；
+ * 3. 对于复杂的ui组件，其内层的所有样式都可以在这个文件定制（如进度条、音量控制条）；
+ * 4. 在首次迭代中，这个文件开发者会手动编辑，以后与sprite图相关的属性应由代码自动化生成。
+ */
+.prism-player .prism-big-play-btn {
+  width: 90px;
+  height: 90px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -2px -2px;
+}
+.prism-player .prism-play-btn {
+  width: 27px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -2px -250px;
+}
+.prism-player .prism-live-display {
+  width: 56px;
+  height: 19px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -186px -2px;
+}
+.prism-player .prism-play-btn.playing {
+  width: 27px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -208px -269px;
+}
+.prism-player .prism-fullscreen-btn {
+  width: 30px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -124px -190px;
+}
+.prism-player .prism-fullscreen-btn.fullscreen {
+  width: 30px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -161px -183px;
+}
+.prism-player .prism-volume {
+  width: 33px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -199px -119px;
+}
+.prism-player .prism-volume.mute {
+  width: 33px;
+  height: 30px;
+  background: url("//gw.alicdn.com/tps/TB1YuE3KFXXXXaAXFXXXXXXXXXX-256-512.png") no-repeat -164px -151px;
+}
+.prism-player {
+  background-color: #000;
+  position: relative;
+  /* bigPlayButton */
+  /* controlBar */
+  /* playButton */
+  /* liveDisplay */
+  /* timeDisplay */
+  /* fullscreenButton */
+  /* volume */
+  /* progress */
+}
+.prism-player .prism-cover {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.prism-player .prism-controlbar {
+  width: 100%;
+  height: 61px;
+  position: relative;
+  z-index: 1;
+}
+.prism-player .prism-controlbar .prism-controlbar-bg {
+  background-color: #262626;
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+.prism-player .prism-time-display {
+  height: 33px;
+  line-height: 33px;
+  color: #666666;
+}
+.prism-player .prism-time-display .current-time {
+  color: #fff;
+}
+.prism-player .prism-progress {
+  width: 100%;
+  height: 6px;
+  margin-top: 5px;
+  background-color: #363636;
+  position: relative;
+}
+.prism-player .prism-progress .prism-progress-loaded {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #7e2c1f;
+}
+.prism-player .prism-progress .prism-progress-played {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #ee2a10;
+}
+.prism-player .prism-progress .prism-progress-cursor {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: -5px;
+  left: 0;
+  margin-left: -8px;
+  background-color: #5b5b5b;
+  border: 4px solid #fff;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 5px #000;
+  box-shadow: 0 0 5px #000;
+  overflow: hidden;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+:-webkit-full-screen {
+  width: 100%!important;
+  height: 100%!important;
+}
+:-moz-full-screen {
+  width: 100%!important;
+  height: 100%!important;
+}
+:-ms-full-screen {
+  width: 100%!important;
+  height: 100%!important;
+}
+:-ms-fullscreen {
+  width: 100%!important;
+  height: 100%!important;
+}
+:fullscreen {
+  width: 100%!important;
+  height: 100%!important;
+}
+body.prism-full-window {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow-y: auto;
+}
+.prism-fullscreen {
+  position: fixed;
+  overflow: hidden;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100% !important;
+  height: 100% !important;
+  _position: absolute;
+}

@@ -1,0 +1,80 @@
+ <div class="container-fluid footer-bg-border">
+		<div class="container footer">
+			
+				<div class="col-lg-2 col-md-2 footer-ul">
+					<ul>
+						<li>Browse</li>
+						<li>网站导航</li>
+							{foreach $nav_links.left_bottom as $v}
+		<li><a target="_blank" href="/article?aid={$v.id}" title="{$v.title}">{$v.title}</a></li>
+	{/foreach}
+					
+					</ul>
+					<ul>
+						<li><a href="">我要加盟</a></li>
+						<li><a href="">案例推荐</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-5 col-md-5">
+					<div class="col-lg-6 col-md-6">
+						<ul class="contact-us">
+							<li>Contact Us</li>
+							<li>联系我们</li>
+							<li><a href="">联系电话：{$_lang.tel}</a></li>
+							<li><a href="">地址：{$_lang.address}</a></li>
+							<li><a target="blank" href="http://wpa.qq.com/msgrd?V=3&uin={$_lang.qq}&Site={$_lang.title}&Menu=yes"><img src="/static/images/qq_online.png" style="cursor:pointer;"></a></li>
+						</ul>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<p class="footer-p">热线：<span>{$_lang.tel}</span></p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 guanzhu3d">
+					<p>关注<span>全景网络</span>官方微信   在线联系客服解答疑惑</p>
+					<dl>
+						<dt><img src="/template/{$_lang.moban}/css/weixingongzhonghao.jpg" width="100%" alt=""></dt>
+						<dd>官方微信</dd>
+					</dl>
+					<dl>
+						<dt><img src="/template/{$_lang.moban}/css/kefu.jpg" width="100%" alt=""></dt>
+						<dd>在线客服</dd>
+					</dl>
+				</div>
+				<div class="col-lg-2 col-md-2 bottom_logo">
+					<img src="/template/{$_lang.moban}/css/bottom_logo.png">
+				</div>
+			</div>
+			
+			<div class="banquan">
+				<p>Copyright © 2016 {$_lang.title} All Rights Reserved </p>
+				<p><a style="color: #bfbfbf;text-decoration: underline;" href="/" target="_blank">{$_lang.icp}</a></p>
+			</div>
+		</div>
+<script language="JavaScript" type="text/javascript" src="/template/{$_lang.moban}/css/jquery.form.js"></script>
+<script language="JavaScript" type="text/javascript" src="/template/{$_lang.moban}/css/bootbox.js"></script> 
+<script language="JavaScript" type="text/javascript" src="/template/{$_lang.moban}/css/pager.js"></script> 
+<script language="JavaScript" type="text/javascript" src="/template/{$_lang.moban}/css/common.js"></script>
+<script language="JavaScript" type="text/javascript" src="/template/{$_lang.moban}/css/zui.js"></script>
+<script>
+	var f_resize_time;
+	window.onload = function (){ 
+		f_resize_time = setTimeout(resizeFooter,1000);
+		// $(window).bind("resize",function(){
+		// 	$("footer").hide();
+		// 	if(f_resize_time) clearTimeout(f_resize_time);
+		// 	f_resize_time = setTimeout(resizeFooter,100);
+		// })
+		$(document).bind("resize",function(){
+			$("footer").hide();
+			if(f_resize_time) clearTimeout(f_resize_time);
+			f_resize_time = setTimeout(resizeFooter,100);
+		})
+	} 
+	function resizeFooter(){
+		if ($(window).height()>$(document.body).height()) {
+			$("footer").addClass("ab").show();
+		}else{
+			$("footer").removeClass("ab").show();
+		}
+	}
+</script>

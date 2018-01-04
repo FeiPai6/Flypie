@@ -1,0 +1,53 @@
+<!--
+	krpano - scrolling textfield example
+	- scrollbar with dragable slider and up/down buttons
+	- mousewheel scrolling
+	- dragging scrolling
+	- scale9grid scaled plugin size
+-->
+
+<krpano>
+
+	<!-- use a grid preview pano as background -->
+	<preview type="grid(cube,16,16,512,0xCCCCCC,0xF6F6F6,0x999999);" details="16" />
+
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="VFOV" fov="100" fovmin="60" fovmax="150" />
+
+
+	<!-- the textfield -->
+	<layer name="textfield" url="textfield.png" align="center" x="0" y="0" width="50%" height="300" scale9grid="6|6|268|188">
+
+		<!-- the scrolling text -->
+		<layer name="textmask" type="container" align="lefttop" x="5" y="5" width="-30" height="-10" maskchildren="true">
+			<layer name="textscroller" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" mwheel="true" direction="v" overscroll="0" align="lefttop" width="100%" height="100%" onscroll="if(hoverflow GT 0, div(yp,toverflow,hoverflow);Math.min(yp,1);Math.max(yp,0); copy(th,layer[scrollbar].pixelheight);sub(th,layer[scrollup].pixelheight);sub(th,layer[scrolldown].pixelheight);sub(th,layer[scrollslider].pixelheight); mul(yp,th);add(yp,layer[scrollup].pixelheight); copy(layer[scrollslider].y,yp); );">
+				<layer name="text" url="%SWFPATH%/plugins/textfield.swf" align="lefttop" x="0" y="0" width="100%" autoheight="true" background="false" border="false" onautosized="copy(layer[textscroller].height, height);"
+				       padding="10 15"
+				       html="data:testtext"
+				       css="color:#000000; font-family:Arial; font-size:12px;"
+				       />
+			</layer>
+		</layer>
+
+		<!-- the scrollbar -->
+		<layer name="scrollbar" type="container" bgcolor="0x000000" bgalpha="0.25" align="righttop" x="5" y="5" width="19" height="-10">
+			<layer name="scrollup"     url="dirbutton.png"    align="righttop"    x="19" rotate="-90" crop="0|0|19|19" onovercrop="0|19|19|19" ondowncrop="0|38|19|19" ondown="asyncloop(pressed, layer[textscroller].scrollby(0,+1));" />
+			<layer name="scrolldown"   url="dirbutton.png"    align="rightbottom" x="19" rotate="+90" crop="0|0|19|19" onovercrop="0|19|19|19" ondowncrop="0|38|19|19" ondown="asyncloop(pressed, layer[textscroller].scrollby(0,-1));" />
+			<layer name="scrollslider" url="sliderbutton.png" align="righttop"    x="0"  y="19"       crop="0|0|19|19" onovercrop="0|19|19|19" ondowncrop="0|38|19|19" ondown="if(layer[textscroller].hoverflow GT 0, copy(cy,y);copy(sy,mouse.stagey);dragging(); );" dragging="if(pressed, sub(dy,mouse.stagey,sy);add(ny,cy,dy);Math.max(ny,layer[scrollup].pixelheight); copy(th,layer[scrollbar].pixelheight);sub(th,layer[scrolldown].pixelheight);sub(th,layer[scrollslider].pixelheight);Math.min(ny,th); copy(y,ny); sub(ny,layer[scrollup].pixelheight);sub(th,layer[scrollslider].pixelheight);div(ny,th); copy(fh,layer[textscroller].hoverflow); mul(fh,-1); mul(ny,fh); layer[textscroller].stopscrolling(); copy(layer[textscroller].y,ny); delayedcall(0,dragging()); );" />
+		</layer>
+
+	</layer>
+
+
+	<!-- the text for testing -->
+	<data name="testtext">
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+		Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+		Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+		At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
+		Consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,  sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+	</data>
+
+</krpano>

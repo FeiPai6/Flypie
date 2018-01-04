@@ -1,0 +1,19 @@
+ <div class="col-md-4">
+     <label name="namehot"  class="col-md-6 control-label">隐藏VR眼镜</label>
+    <div name="namehot"  class="col-md-6" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="隐藏VR眼镜"{/if}>
+        <input id="showvrglass" name="switch_checkbox" class="form-control" type="checkbox" {if $v.level_enable eq 0}disabled{/if}/>
+    </div>
+</div>
+<script>
+	$(function(){
+		//向main_edit.js 注册初始化方法
+		plugins_init_function.push(showvrglass_init);
+		plugins_works_get_function.push(showvrglass_get);
+	})
+	function showvrglass_init(){
+    	$("#showvrglass").bootstrapSwitch('state', worksmain.hidevrglasses_flag=='1'?true:false);
+	}
+	function showvrglass_get(worksMaindata){
+	    worksMaindata.hidevrglasses_flag =  $("#showvrglass").bootstrapSwitch('state')?1:0;
+	}
+</script>

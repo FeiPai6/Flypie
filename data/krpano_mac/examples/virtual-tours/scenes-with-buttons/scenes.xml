@@ -1,0 +1,61 @@
+<!--
+	scenes with image-map example
+	- load the scenes via map-spots or hotspots
+-->
+
+<krpano onstart="loadscene(0);">
+
+	<!-- the buttons -->
+	<layer name="buttons" keep="true" type="container" align="bottom" width="250" height="70" y="0" bgcolor="0x000000" bgalpha="0.5">
+		<layer name="button1" url="spot1.png" crop="15|25|70|50" align="left" x="10" onclick="loadscene(scene1, null, MERGE, BLEND(1));" />
+		<layer name="button2" url="spot2.png" crop="15|25|70|50" align="left" x="90"    onclick="loadscene(scene2, null, MERGE, BLEND(1));" />
+		<layer name="button3" url="spot3.png" crop="15|25|70|50" align="left" x="170" onclick="loadscene(scene3, null, MERGE, BLEND(1));" />
+	</layer>
+
+
+	<!-- a style for the hotspots -->
+	<style name="hotspotstyle" scale="0.6" zoom="true" alpha="0.3" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.3);tween(scale,0.6);" ondown="onover();" onup="onout();" />
+
+
+	<!-- the scenes -->
+	<scene name="scene1" title="Scene 1" onstart="select_box_item(scene1);">
+
+		<view hlookat="-15" vlookat="-10" fov="90" />
+
+		<preview url="pano1.jpg" />
+		<image>
+			<cubestrip url="pano1.jpg" />
+		</image>
+
+		<hotspot name="spot2" style="hotspotstyle" url="spot2.png" ath="-42" atv="-12" onclick="looktohotspot(spot2); loadscene(scene2, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+	<scene name="scene2" title="Scene 2" onstart="select_box_item(scene2);">
+
+		<view hlookat="-110" vlookat="8" fov="100" />
+
+		<preview url="pano2.jpg" />
+		<image>
+			<cubestrip url="pano2.jpg" />
+		</image>
+
+		<hotspot name="spot1" style="hotspotstyle" url="spot1.png" ath="165" atv="0" onclick="looktohotspot(spot1); loadscene(scene1, null, MERGE, BLEND(1));" />
+		<hotspot name="spot3" style="hotspotstyle" url="spot3.png" ath="265" atv="0" onclick="looktohotspot(spot3); loadscene(scene3, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+	<scene name="scene3" title="Scene 3" onstart="select_box_item(scene3);">
+
+		<view hlookat="-174" vlookat="5" fov="75" />
+
+		<preview url="pano3.jpg" />
+		<image>
+			<cubestrip url="pano3.jpg" />
+		</image>
+
+		<hotspot name="spot3" style="hotspotstyle" url="spot2.png" ath="0" atv="0" onclick="looktohotspot(spot3); loadscene(scene2, null, MERGE, BLEND(1));" />
+
+	</scene>
+
+</krpano>

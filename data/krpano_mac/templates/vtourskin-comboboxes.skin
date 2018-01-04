@@ -1,0 +1,17 @@
+# Virtual Tour Skin
+# - Combobox with Scene Selection
+# - Combobox with Settings
+# - Gyroscope Plugin
+# - Retina resolution images
+# - Virtual Tour Editor compatible
+# krpano 1.18
+
+xmltemplate=xml/vtour_comboboxes.xml
+xmltemplate_scene=xml/vtour_scenetemplate.xml
+xmltemplate_view=xml/vtour_viewtemplate.xml
+xmltemplate_hotspot=xml/vtour_hotspottemplate.xml
+xmltemplate_additional_file=xml/skin/vtourskin_comboboxes.xml
+xmltemplate_additional_file=xml/plugins/combobox.swf
+xmltemplate_additional_file=xml/plugins/combobox.js
+xmltemplate_additional_file=xml/plugins/gyro.js
+xmltemplate_additional_file=xml/skin/vtourskin_hotspot.png

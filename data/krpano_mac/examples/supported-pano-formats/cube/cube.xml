@@ -1,0 +1,10 @@
+<krpano>
+
+	<view hlookat="45" vlookat="45" fov="120" />
+
+	<image>
+		<cube  url="pano_%s.jpg" />
+	</image>
+
+</krpano>
+

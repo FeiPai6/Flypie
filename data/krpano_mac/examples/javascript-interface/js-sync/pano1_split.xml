@@ -1,0 +1,19 @@
+<krpano syncother="true" onstart="ifnot(haveexternalinterface, error('ExternalInterface (Javascript Interface) not avaiable![br][br]Check your Flashplayer security settings:[br][br]                           http://krpano.com/docu/localusage/'));">
+
+	<image>
+		<cube url="../../xml-usage/slider-blend-cubes/pano1_%s.jpg" />
+	</image>
+	
+	<area x="0%" width="200%" />
+	
+	<contextmenu fullscreen="false">
+		<item name="kr" caption="KRPANO" />
+		<item name="fs" caption="Toggle Fullscreen" onclick="js( requestfullscreen() );" />
+	</contextmenu>
+
+	<events onmousedown="set(syncother,true); events.onviewchange();"
+	        onmousewheel="events.onmousedown();"
+	        onviewchange="if(syncother, js( sync_1to2() ) );" 
+	        />
+
+</krpano>

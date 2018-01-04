@@ -1,0 +1,1 @@
+<button type="button" class="btn" data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else} title="右键菜单加入站外链接、电话号码" onclick="open_custom_right()"{/if}>自定义右键</button>

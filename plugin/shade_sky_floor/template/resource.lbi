@@ -1,0 +1,48 @@
+{literal}
+<script>
+	$(function(){
+		plugins_init_function.push(shade_sky_floor_init);
+	})
+	function shade_sky_floor_init(data,settings){
+		if (data.sky_land_shade.isWhole) {//全局遮罩
+		    var useShade = data.sky_land_shade.useShade;
+		    if (useShade) {
+		        var imgPath = data.sky_land_shade.shadeSetting.imgPath;
+		        var location = data.sky_land_shade.shadeSetting.location;
+		        if (location == 0) {
+		            location = -90;
+		        } else {
+		            location = 90;
+		        }
+		        settings["events[skin_events].onloadcomplete"] += "show_shade('" + imgPath + "'," + location + ",true);";
+		    }
+		} else {//单场景遮罩
+		    settings["events[skin_events].onloadcomplete"]+="js(getShade(get(xml.scene)));";
+		}
+	}
+	function getShade(sceneName) {
+	    var imgUuid = sceneName.substring(sceneName.indexOf('_') + 1).toLowerCase();
+	    var panoData = $("body").data("panoData");
+	    var shadeSetting = panoData.sky_land_shade.shadeSetting;
+	    if (shadeSetting) {
+	        for(var i = 0;i < shadeSetting.length ; i++){
+	            var obj = shadeSetting[i];
+	           if(imgUuid == obj.imgUuid){
+	               var useShade = obj.useShade;
+	               if (useShade) {
+	                   var imgPath = obj.imgPath;
+	                   var location = obj.location;
+	                   if (location == 0) {
+	                       location = -90;
+	                   } else {
+	                       location = 90;
+	                   }
+	                   var krpano = document.getElementById('krpanoSWFObject');
+	                   krpano.call("addShade('" + imgUuid + "','" + imgPath + "'," + location + ");");
+	               }
+	           }
+	        }
+	    }
+	}
+</script>
+{/literal}

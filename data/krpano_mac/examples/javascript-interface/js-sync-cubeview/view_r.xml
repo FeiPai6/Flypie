@@ -1,0 +1,8 @@
+<krpano syncother="true" onstart="ifnot(haveexternalinterface, error('ExternalInterface (Javascript Interface) not avaiable![br][br]Check your Flashplayer security settings:[br][br]http://krpano.com/docu/localusage/'));">
+
+	<control usercontrol="none" />
+	<view fovtype="VFOV" fov="90" fovmin="90" fovmax="90" />
+
+	<include url="pano.xml" />
+
+</krpano>

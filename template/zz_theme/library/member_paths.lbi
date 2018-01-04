@@ -1,0 +1,32 @@
+<style type="text/css">
+.navbar{
+margin-bottom:0;
+}
+.navbar-default .navbar-second li>a{
+padding-top:7px;
+padding-bottom:8px;
+}
+.navbar-default .navbar-second>.active>a, .navbar-default .navbar-second>.active>a:focus, .navbar-default .navbar-second>li>a:hover, .navbar-default .navbar-second>.active>a:hover{
+background:none;
+line-height:27px;
+border-bottom:3px solid #4aab4e;
+}
+</style>
+<div class="navbar" style="margin-bottom:20px;z-index:0;background:#fff;">
+	<div class="container" style="line-height:45px">
+		<div class="navbar-right navbar-default" style="background:none">
+			<ul class="navbar-second nav navbar-nav">
+				{if $module=='profile' || $module=='passwd' || $module=='bind'}
+					<li {if $module=='profile'}class="active"{/if}><a href="/member/profile">作者资料</a></li>
+					<li {if $module=='passwd'}class="active"{/if}><a href="/member/passwd">修改密码</a></li>
+					<li {if $module=='bind'}class="active"{/if}><a href="/member/bind">社交绑定</a></li>
+				{else}
+					<li {if $module=='pic'}class="active"{/if}><a href="/add/pic">发布作品</a></li>
+					<li {if $module=='project' && $act=='list'}class="active"{/if}><a href="/member/project">全景图片</a></li>
+					<li {if $module=='project' && $act=='videos'}class="active"{/if}><a href="/member/project?act=videos">全景视频</a></li>
+					<li {if $module=='mediares'}class="active"{/if}><a href="/member/mediares">素材管理</a></li>
+				{/if}
+		  </ul>
+		</div>
+	</div>
+</div>

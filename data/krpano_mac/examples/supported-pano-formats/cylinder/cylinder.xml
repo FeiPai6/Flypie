@@ -1,0 +1,10 @@
+<krpano>
+
+	<display details="24" />
+
+	<image type="CYLINDER">
+		<cylinder url="cylinder.png" />
+	</image>
+
+</krpano>
+

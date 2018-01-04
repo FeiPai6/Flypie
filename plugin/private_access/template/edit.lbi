@@ -1,0 +1,1 @@
+ <button type="button" class="btn btn-custom-logo"  data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="设置输入密码才能访问项目" onclick="openPrivacyWordModal()"{/if} >密码访问</button>

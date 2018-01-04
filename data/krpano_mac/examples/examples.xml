@@ -1,0 +1,293 @@
+<krpano version="1.18" onstart="startup();">
+
+
+	<!-- use a grid preview pano as background -->
+	<preview type="grid(cube,64,64,512,0xCCCCCC,0xF6F6F6,0x999999);" />
+
+
+	<!-- view settings -->
+	<view hlookat="0" vlookat="0" fovtype="VFOV" fov="100" fovmin="60" fovmax="150" />
+
+
+	<!-- display a Flash or HTML5 logo to visualize which viewer was used -->
+	<layer name="flashlogo" url="images/flashlogo80.png" align="righttop" x="10" y="10" scale="0.5" enabled="false" keep="true" devices="flash" />
+	<layer name="html5logo" url="images/html5logo80.png" align="righttop" x="10" y="10" scale="0.5" enabled="false" keep="true" devices="html5" />
+	<layer name="webgl"     url="images/webgl_logo.png"  align="lefttop"  x="10" y="10" scale="0.5" enabled="false" keep="true" devices="webgl" />
+	<layer name="css3d"     url="images/css3d_logo.png"  align="lefttop"  x="10" y="10" scale="0.5" enabled="false" keep="true" devices="css3d+!webgl" />
+
+
+	<!-- define a button style -->
+	<style name="button"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:10px;"
+		vcenter="true"
+		backgroundcolor="0x000000" backgroundalpha="0.667" roundedge="1" border="true" bordercolor="0xDDDDDD"
+		width="150"
+		height="24"
+		shadow="0"
+		/>
+
+
+	<!-- Flash/HTML5 only logos for some example -->
+	<style name="flashonly" enabled="false" alpha="0.7" devices="html5" />
+	<style name="html5only" enabled="false" alpha="0.7" devices="flash" />
+	<style name="flashonly_logo" url="images/flashlogo80.png" align="rightbottom" scale="0.25" x="-5" y="-5" enabled="false" />
+	<style name="html5only_logo" url="images/html5logo80.png" align="rightbottom" scale="0.25" x="-5" y="-5" enabled="false" />
+
+
+	<!-- define a simple text style -->
+	<style name="text"
+		url="%SWFPATH%/plugins/textfield.swf"
+		children="false"
+		background="false"
+		border="false"
+		enabled="false"
+		/>
+
+	<!-- add a text-shadow to the text style (only for HTML5) -->
+	<style name="text" devices="html5"
+		textshadow="0.1"
+		textshadowrange="4"
+		textshadowcolor="0x000000"
+		textshadowalpha="1.0"
+		/>
+
+	<!-- for Flash add a glowing+shadow effect to hide the bad non-antialiased Flashplayer font rendering -->
+	<style name="text" devices="flash"
+		effect="glow(0xFFFFFF,0.6,4,2);glow(0x000000,1,2,2);dropshadow(0,0,0x000000,1,0.5);"
+		/>
+
+
+	<!-- layout / elements only for desktop and tablet devices -->
+	<krpano devices="desktop|tablet">
+
+		<!-- the title and info texts -->
+		<layer name="text1" style="text" align="center" y="-195"  zorder="1" alpha="0" html="krpano 1.18 examples"                                           css="text-align:center; color:#FFFFFF; font-family:Arial; font-size:26px; font-weight:bold; font-style:italic;" />
+		<layer name="text2" style="text" align="center" y="+205" zorder="1" alpha="0" html="...see also the other examples in the %27examples%27 folder..." css="text-align:center; color:#FFFFFF; font-family:Arial; font-size:14px; font-style:italic;" />
+
+
+		<!-- the 'from left sliding' button container -->
+		<layer name="bg1" type="container" align="left" width="50%" height="450" x="-55%" bgcolor="0x000000" bgalpha="0.5" zorder="0">
+			<layer name="bsp01" style="button"           align="righttop" x="180" y="55"  html="Animated Hotspots"       onclick="loadexample('xml-usage/animated-hotspots/anihotspots.xml');" />
+			<layer name="bsp02" style="button"           align="righttop" x="180" y="85"  html="Background Sound"        onclick="loadexample('plugin-examples/backgroundsound/backgroundsound.xml');" />
+			<layer name="bsp03" style="button"           align="righttop" x="180" y="115" html="Bing Maps"               onclick="loadexample('plugin-examples/bingmaps/bingmaps.xml');" />
+			<layer name="bsp04" style="button"           align="righttop" x="180" y="145" html="Buttons"                 onclick="loadexample('xml-usage/buttons/buttons.xml');" />
+			<layer name="bsp05" style="button"           align="righttop" x="180" y="175" html="Buttons-Bar"             onclick="loadexample('xml-usage/buttonsbar/buttonsbar.xml');" />
+			<layer name="bsp06" style="button"           align="righttop" x="180" y="205" html="Compass"                 onclick="loadexample('xml-usage/compass/compass.xml');" />
+			<layer name="bsp07" style="button"           align="righttop" x="180" y="235" html="Demo Tour - Celler"      onclick="loadexample('virtual-tours/demotour-bkeller/bkellertour.xml');" />
+			<layer name="bsp08" style="button"           align="righttop" x="180" y="265" html="Demo Tour - Corfu"       onclick="loadexample('virtual-tours/demotour-corfu/tour.xml');" />
+			<layer name="bsp09" style="button"           align="righttop" x="180" y="295" html="Demo Tour - Kuchlerhaus" onclick="loadexample('virtual-tours/demotour-kuchlerhaus/tour.xml');" />
+			<layer name="bsp10" style="button"           align="righttop" x="180" y="325" html="Demo Tour - Wine-Cellar" onclick="loadexample('virtual-tours/demotour-weingut/tour.xml');" />
+			<layer name="bsp11" style="button|flashonly" align="righttop" x="180" y="355" html="Directional Sound"       onclick="loadexample('plugin-examples/directionalsound/directionalsound.xml');"><layer name="bsp11l" style="flashonly_logo" /></layer>
+			<layer name="bsp12" style="button"           align="righttop" x="180" y="385" html="Dragable Hotspots"       onclick="loadexample('xml-usage/dragable-hotspots/dragable-hotspots.xml');" />
+
+			<layer name="bsp13" style="button"           align="righttop" x="10"  y="55"  html="Dragable Layers/Plugins" onclick="loadexample('xml-usage/dragable-layers-plugins/dragable-layers.xml');" />
+			<layer name="bsp14" style="button|flashonly" align="righttop" x="10"  y="85"  html="Editor/Option Plugins"   onclick="loadexample('plugin-examples/editor-options-plugins/editor-options-plugins.xml');"><layer name="bsp14l" style="flashonly_logo" /></layer>
+			<layer name="bsp15" style="button"           align="righttop" x="10"  y="115" html="Events"                  onclick="loadexample('xml-usage/events/events.xml');" />
+			<layer name="bsp16" style="button"           align="righttop" x="10"  y="145" html="FOV Types"               onclick="loadexample('xml-usage/fovtype/fovtype.xml');" />
+			<layer name="bsp17" style="button"           align="righttop" x="10"  y="175" html="Flyout Hotspots"         onclick="loadexample('xml-usage/flyout-hotspots/flyout-more-hotspots.xml');" />
+			<layer name="bsp18" style="button|html5only" align="righttop" x="10"  y="205" html="Gyroscope"               onclick="loadexample('plugin-examples/gyro/gyro.xml');"><layer name="bsp18l" style="html5only_logo" /></layer>
+			<layer name="bsp19" style="button"           align="righttop" x="10"  y="235" html="JS: Add/Remove panos"    onclick="openurl('javascript-interface/js-add-remove-panos/add-remove-panos.html',_self);" />
+			<layer name="bsp20" style="button"           align="righttop" x="10"  y="265" html="JS: Splitscreen"         onclick="openurl('javascript-interface/js-sync/splitscreen.html',_self);" /> />
+			<layer name="bsp21" style="button|html5only" align="righttop" x="10"  y="295" html="iPhone/iPad Simulator"   onclick="openurl('iphone-ipad-simulator/iphone-ipad-simulator.html',_self);"><layer name="bsp21l" style="html5only_logo" /></layer>
+			<layer name="bsp22" style="button"           align="righttop" x="10"  y="325" html="Image Gallery"           onclick="loadexample('xml-usage/image-gallery/imagegallery.xml');" />
+			<layer name="bsp23" style="button"           align="righttop" x="10"  y="355" html="Interactive Area"        onclick="loadexample('xml-usage/interactivearea/interactivearea.xml');" />
+			<layer name="bsp24" style="button"           align="righttop" x="10"  y="385" html="Intro Image"             onclick="loadexample('xml-usage/introimage/introimage.xml');" />
+		</layer>
+
+		<!-- the 'from right sliding' button container -->
+		<layer name="bg2" type="container" align="right" width="50%" height="450" x="-55%" bgcolor="0x000000" bgalpha="0.5" zorder="0">
+			<layer name="bsp25" style="button"           align="lefttop" x="10"  y="55"  html="Layers / Containers"     onclick="loadexample('xml-usage/layers-containers/layers-containers.xml');" />
+			<layer name="bsp26" style="button"           align="lefttop" x="10"  y="85"  html="Little-Planet Intro"     onclick="loadexample('xml-usage/littleplanet-intro/littleplanet-intro.xml');" />
+			<layer name="bsp27" style="button"           align="lefttop" x="10"  y="115" html="Mouse-Wheel-Test"        onclick="openurl('mousewheeltest/mousewheelfix.html',_self);" />
+			<layer name="bsp28" style="button"           align="lefttop" x="10"  y="145" html="Nadir Logo"              onclick="loadexample('xml-usage/nadir-logo/nadir-logo.xml');" />
+			<layer name="bsp29" style="button|flashonly" align="lefttop" x="10"  y="175" html="Overlay Masks"           onclick="loadexample('xml-usage/masks/masks.xml');"><layer name="bsp29l" style="flashonly_logo" /></layer>
+			<layer name="bsp30" style="button"           align="lefttop" x="10"  y="205" html="Parent-Child System"     onclick="loadexample('xml-usage/parent-child-system/parentchild.xml');" />
+			<layer name="bsp31" style="button"           align="lefttop" x="10"  y="235" html="Partial Pano"            onclick="loadexample('supported-pano-formats/partial/partialpano.xml');" />
+			<layer name="bsp32" style="button"           align="lefttop" x="10"  y="265" html="Projections Contextmenu" onclick="loadexample('xml-usage/projections-contextmenu/projections-contextmenu.xml');" />
+			<layer name="bsp33" style="button"           align="lefttop" x="10"  y="295" html="Progress Animations"     onclick="loadexample('xml-usage/progress/example.xml');" />
+			<layer name="bsp34" style="button"           align="lefttop" x="10"  y="325" html="Scale9Grid"              onclick="loadexample('xml-usage/scale9grid/scale9grid.xml');" />
+			<layer name="bsp35" style="button"           align="lefttop" x="10"  y="355" html="Scenes with Bing Maps"   onclick="loadexample('virtual-tours/scenes-with-bingmaps/scenes-with-bingmaps.xml');" />
+			<layer name="bsp36" style="button"           align="lefttop" x="10"  y="385" html="Scenes with Buttons"     onclick="loadexample('virtual-tours/scenes-with-buttons/scenes.xml');" />
+
+			<layer name="bsp37" style="button"           align="lefttop" x="180" y="55"  html="Scenes with Combobox"    onclick="loadexample('virtual-tours/scenes-with-combobox/scenes-with-combobox.xml');" />
+			<layer name="bsp38" style="button"           align="lefttop" x="180" y="85"  html="Scenes with Imagemap 2"  onclick="loadexample('virtual-tours/scenes-with-imagemap-2/scenes-with-imagemap-2.xml');" />
+			<layer name="bsp39" style="button"           align="lefttop" x="180" y="115" html="Scenes with Prev/Next"   onclick="loadexample('virtual-tours/scenes-prev-next-buttons/scenes-prev-next-stop-buttons.xml');" />
+			<layer name="bsp40" style="button"           align="lefttop" x="180" y="145" html="Scrolling Textfield"     onclick="loadexample('xml-usage/scrollingtextfield/scrollingtextfield.xml');" />
+			<layer name="bsp41" style="button"           align="lefttop" x="180" y="175" html="Scrolling Thumbnails"    onclick="loadexample('plugin-examples/scrollarea/scrollingthumbnails.xml');" />
+			<layer name="bsp42" style="button"           align="lefttop" x="180" y="205" html="Showtext / Textstyles"   onclick="loadexample('xml-usage/textstyles/textstyles.xml');" />
+			<layer name="bsp43" style="button"           align="lefttop" x="180" y="235" html="Slider / Blending"       onclick="loadexample('xml-usage/slider-blend-cubes/slider.xml');" />
+			<layer name="bsp44" style="button"           align="lefttop" x="180" y="265" html="Snow / Rain / Imagerain" onclick="loadexample('plugin-examples/snow-rain-imagerain/snow.xml');" />
+			<layer name="bsp45" style="button|html5only" align="lefttop" x="180" y="295" html="Stagescale Testing"      onclick="loadexample('xml-usage/stagescale-test/stagescale-test.xml');"><layer name="bsp46l" style="html5only_logo" /></layer>
+			<layer name="bsp46" style="button"           align="lefttop" x="180" y="325" html="Tooltips"                onclick="loadexample('xml-usage/tooltips/tooltips.xml');" />
+			<layer name="bsp47" style="button"           align="lefttop" x="180" y="355" html="Video Hotspot"           onclick="loadexample('plugin-examples/video-hotspot/video-hotspot.xml');" />
+			<layer name="bsp48" style="button"           align="lefttop" x="180" y="385" html="Videoplayer 360"         onclick="loadexample('videointerface/video.xml');" />
+		</layer>
+
+	</krpano>
+
+
+	<!-- layout / elements only for mobile devices - an alternative smaller layout with fewer examples -->
+	<krpano devices="mobile">
+
+		<!-- set a bigger font-size for the button style -->
+		<style name="button" height="52" css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:15px;" />
+
+		<!-- the title and info texts -->
+		<layer name="text1" style="text" align="center" y="-225" zorder="1" alpha="0" html="krpano 1.18 examples"                                           css="text-align:center; color:#FFFFFF; font-family:Arial; font-size:26px; font-weight:bold; font-style:italic;" />
+		<layer name="text2" style="text" align="center" y="+230" zorder="1" alpha="0" html="...see also the other examples in the %27examples%27 folder..." css="text-align:center; color:#FFFFFF; font-family:Arial; font-size:14px; font-style:italic;" />
+
+
+		<!-- the 'from left sliding' button container -->
+		<layer name="bg1" type="container" align="left" width="50%" height="500" x="-55%" bgcolor="0x000000" bgalpha="0.5" zorder="0">
+			<layer name="bsp11" style="button" align="righttop" x="10" y="50"  html="Animated Hotspots"       onclick="loadexample('xml-usage/animated-hotspots/anihotspots.xml');" />
+			<layer name="bsp12" style="button" align="righttop" x="10" y="110" html="Background Sound"        onclick="loadexample('plugin-examples/backgroundsound/backgroundsound.xml');" />
+			<layer name="bsp13" style="button" align="righttop" x="10" y="170" html="Demo Tour - Corfu"       onclick="loadexample('virtual-tours/demotour-corfu/tour.xml');" />
+			<layer name="bsp14" style="button" align="righttop" x="10" y="230" html="Demo Tour - Kuchlerhaus" onclick="loadexample('virtual-tours/demotour-kuchlerhaus/tour.xml');" />
+			<layer name="bsp15" style="button" align="righttop" x="10" y="290" html="Demo Tour - Wine-cellar" onclick="loadexample('virtual-tours/demotour-weingut/tour.xml');" />
+			<layer name="bsp16" style="button" align="righttop" x="10" y="350" html="Dragable Hotspots"       onclick="loadexample('xml-usage/dragable-hotspots/dragable-hotspots.xml');" />
+			<layer name="bsp17" style="button" align="righttop" x="10" y="410" html="Dragable Layers/Plugins" onclick="loadexample('xml-usage/dragable-layers-plugins/dragable-layers.xml');" />
+		</layer>
+
+		<!-- the 'from right sliding' button container -->
+		<layer name="bg2" type="container" align="right" width="50%" height="500" x="-55%" bgcolor="0x000000" bgalpha="0.5" zorder="0">
+			<layer name="bsp21" style="button" align="lefttop" x="10" y="50"  html="Gyroscope"            onclick="loadexample('plugin-examples/gyro/gyro.xml');"><layer name="bsp21l" style="html5only_logo" /></layer>
+			<layer name="bsp22" style="button" align="lefttop" x="10" y="110" html="Image Gallery"        onclick="loadexample('xml-usage/image-gallery/imagegallery.xml');" />
+			<layer name="bsp23" style="button" align="lefttop" x="10" y="170" html="Interactive Area"     onclick="loadexample('xml-usage/interactivearea/interactivearea.xml');" />
+			<layer name="bsp24" style="button" align="lefttop" x="10" y="230" html="Nadir Logo"           onclick="loadexample('xml-usage/nadir-logo/nadir-logo.xml');" />
+			<layer name="bsp25" style="button" align="lefttop" x="10" y="290" html="Scenes with Combobox" onclick="loadexample('virtual-tours/scenes-with-combobox/scenes-with-combobox.xml');" />
+			<layer name="bsp26" style="button" align="lefttop" x="10" y="350" html="Scrolling Thumbnails" onclick="loadexample('plugin-examples/scrollarea/scrollingthumbnails.xml');" />
+			<layer name="bsp27" style="button" align="lefttop" x="10" y="410" html="Video Hotspot"        onclick="loadexample('plugin-examples/video-hotspot/video-hotspot.xml');" />
+		</layer>
+	</krpano>
+
+
+	<!-- resize the left and right containers manually to avoid overlappings because of rounding errors -->
+	<events name="exampleevents"
+	        onresize="mul(w1,stagewidth,0.5); roundval(w1); sub(w2,stagewidth,w1); copy(layer[bg1].width,w1); copy(layer[bg2].width,w2);"
+	        />
+
+
+	<action name="startup">
+		<!-- startup action (called from the onstart event) - slide-in the example-button-containers -->
+		delayedcall(0.5, slide_in_examples() );
+	</action>
+
+
+	<action name="loadexample">
+		<!-- clear the ondown, onclick events from the caller (to avoid double clicking) -->
+		set(ondown,null);
+		set(onclick,null);
+
+		<!-- first slide out the example button containers to left and to right -->
+		slide_out_examples();
+
+		<!-- then add an 'back' button with keep=true for returning to the start xml -->
+		add_back_button();
+
+		<!-- and finally load the given example (a bit delayed to see the slide out animation) -->
+		delayedcall(0.7, loadpano(%1, null, MERGE, BLEND(0.5)) );
+	</action>
+
+
+	<action name="slide_in_examples">
+		tween(layer[bg1].x, 0%, 0.5, easeOutQuint);
+		tween(layer[bg2].x, 0%, 0.5, easeOutQuint);
+		delayedcall(0.5,
+			tween(layer[text1].alpha, 1.0, 0.5, easeOutQuint);
+			tween(layer[text2].alpha, 1.0, 0.5, easeOutQuint);
+		  );
+	</action>
+
+	<action name="slide_out_examples">
+		tween(layer[bg1].x, -55%, 0.75, easeOutCubic);
+		tween(layer[bg2].x, -55%, 0.75, easeOutCubic);
+		tween(layer[bg1].alpha, 0, 0.75, easeOutCubic);
+		tween(layer[bg2].alpha, 0, 0.75, easeOutCubic);
+		tween(layer[text1].alpha, 0.0, 0.75, easeOutQuint);
+		tween(layer[text2].alpha, 0.0, 0.75, easeOutQuint);
+	</action>
+
+	<action name="add_back_button">
+		addlayer(backbutton);
+		layer[backbutton].loadstyle('button');
+		set(layer[backbutton].style, null);
+		set(layer[backbutton].keep, true);
+		set(layer[backbutton].html, 'BACK');
+		set(layer[backbutton].align, 'rightbottom');
+		set(layer[backbutton].x, 32);
+		set(layer[backbutton].y, 32);
+		set(layer[backbutton].width, 70);
+		set(layer[backbutton].height, 50);
+		set(layer[backbutton].zorder, 99999);
+		set(layer[backbutton].alpha, 0.0);
+		set(layer[backbutton].onloaded, delayedcall(1.0,tween(alpha,1.0)); );
+		set(layer[backbutton].ondown, 'set(ondown,null); resetkrpano(); loadpano(%SWFPATH%/../examples/examples.xml,null,IGNOREKEEP,BLEND(1));' );
+	</action>
+
+
+	<action name="resetkrpano">
+		<!-- reset/clear everything from previous examples -->
+
+		<!-- remove all scene/data/action/events/style elements -->
+		set(scene.count, 0);
+		set(data.count, 0);
+		set(action.count, 0);
+		set(events.count, 0);
+		set(style.count, 0);
+
+		<!-- stop all timers/tweens -->
+		breakall();
+
+		<!-- if there is a soundinterface - stop all sounds -->
+		if(stopallsounds !== null, stopallsounds() );
+
+		<!-- remove all global events -->
+		set(onstart, null);
+		set(events.onenterfullscreen, null);
+		set(events.onexitfullscreen, null);
+		set(events.onxmlcomplete, null);
+		set(events.onpreviewcomplete, null);
+		set(events.onloadcomplete, null);
+		set(events.onloaderror, null);
+		set(events.onnewpano, null);
+		set(events.onremovepano, null);
+		set(events.onkeydown, null);
+		set(events.onkeyup, null);
+		set(events.onviewchange, null);
+		set(events.onclick, null);
+		set(events.onmousedown, null);
+		set(events.onmouseup, null);
+		set(events.onmousewheel, null);
+		set(events.onidle, null);
+		set(events.onresize, null);
+
+		<!-- remove contextmenu items -->
+		set(contextmenu.item.count, 0);
+
+		<!-- remove custom cursors -->
+		set(cursors.url, null);
+
+		<!-- set default control settings -->
+		set(control.mousetype, moveto);
+		set(control.touchtype, drag2d);
+
+		<!-- disable autorotate -->
+		set(autorotate.enabled, false);
+
+		<!-- reset area -->
+		set(area.x, 0);
+		set(area.y, 0);
+		set(area.width, 100%);
+		set(area.height, 100%);
+		
+		<!-- enable flash10 -->
+		set(display.flash10, on);
+
+		<!-- if defined delete the 'startscene' variable (used by many tours as startup setting) -->
+		delete(startscene);
+	</action>
+
+
+</krpano>

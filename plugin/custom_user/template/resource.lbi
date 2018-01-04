@@ -1,0 +1,13 @@
+<script>
+$(function(){
+	$("#authorDiv").show();
+	plugins_init_function.push(custom_user_init);
+})
+function custom_user_init(data){
+	var logoObj = data.custom_logo;
+	if(logoObj && logoObj.user){
+        $("#user_nickName").text(logoObj.user);
+    }
+}
+</script>
+

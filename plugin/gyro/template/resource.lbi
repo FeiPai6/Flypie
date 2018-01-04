@@ -1,0 +1,36 @@
+<script>
+$(function(){
+	plugins_init_function.push(gyro_init);
+})
+function gyro_init(data,settings){
+	 if (data.gyro!="0") {
+            $(".btn_gyro").show;
+     }
+     settings['skin_settings.gyro'] = data.gyro=="1" ? true : false;
+}
+function showGyroBtn() {
+    var gyro = $("body").data("panoData").gyro;
+    if (gyro) {
+        var krpano = document.getElementById('krpanoSWFObject');
+        krpano.set("plugin[skin_gyro].enabled",true);
+        $(".btn_gyro").show();
+    }
+}
+
+function toggleGyro(el) {
+    var krpano = document.getElementById('krpanoSWFObject');
+    if ($(el).hasClass("btn_gyro")) {
+        krpano.set("plugin[skin_gyro].enabled",false);
+        $(el).removeClass("btn_gyro");
+        $(el).addClass("btn_gyro_off");
+    } else {
+        krpano.set("plugin[skin_gyro].enabled",true);
+        $(el).removeClass("btn_gyro_off");
+        $(el).addClass("btn_gyro");
+    }
+}
+function openGyro(){
+    var krpano = document.getElementById('krpanoSWFObject');
+    alert(krpano.get("plugin[skin_gyro].isavailable"));
+}
+</script>

@@ -1,0 +1,1 @@
+ <button type="button" class="btn btn-custom-logo"  data-toggle="tooltip" {if $v.level_enable eq 0}title="您当前没有该权限"{else}title="为全景加入左上角自定义作者名" onclick="openUserModal()"{/if} >自定义作者名</button>

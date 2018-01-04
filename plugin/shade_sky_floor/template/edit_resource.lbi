@@ -1,0 +1,54 @@
+<div class="modal fade" id="skyModal" data-backdrop="static" data-keyboard="false" data-position="5%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <h2>天空地面遮罩</h2>
+        </div>
+        <div class="modal-body">
+            <div class="sky">
+                <div class="radio allSingle">
+                    <label><input type="radio" id="shadeWholeSetting" name="radioOptionsExample" value="0" checked="checked"> 全局设置</label>
+                    <label><input type="radio" id="shadeOneSetting" name="radioOptionsExample" value="1"> 单场设置</label>
+                </div>
+                <div class="sky_content">
+                    <div id="wholeDiv">
+                        <div class="row">
+                            <div class="label_radio">
+                                <div class="col-md-4">
+                                    <div class="radio">
+                                        <label><input type="radio" name="radio1" value="0" checked="checked"> 不使用遮罩</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="radio1" value="1">使用{$_lang.title}遮罩</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <a data-modalid="#media_icon" data-imgtype="custom" href="javascript:void(0);" class="icon_media">从媒体库选择图片</a>
+                            </div>
+                            <div class="use_around" style="display:none">
+                                <div class="col-md-1">
+                                    <img style="margin-top: 10px;" src="/plugin/shade_sky_floor/images/shade_sky_floor.png">
+                                </div>
+                                <div class="col-md-4">
+                                    <label style="margin-top: 10px;">{$_lang.title}补地</label>
+
+                                    <div class="radio" style="margin-top:-10px;">
+                                        <label><input type="radio" name="radio" value="0">天空</label>
+                                        <label><input type="radio" name="radio" value="1" checked="checked">地面</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: none;" id="oneDiv">
+
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal">完成</button>
+        </div>
+    </div>
+</div>
+<script src="/plugin/shade_sky_floor/js/shade_sky_floor.js"></script>

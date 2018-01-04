@@ -1,0 +1,78 @@
+<krpano>
+
+	<preview url="../../panos/p1/preview.jpg" />
+	
+	<image>
+		<cube url="../../panos/p1/pano_%s.jpg" />
+	</image>
+
+	<plugin name="getlinkbutton"
+	        url="%SWFPATH%/plugins/textfield.swf"
+	        html="Click here to get the url of the pano with the current view via XML"
+	        css="color:#000000;font-family:Arial;font-weight:bold;font-size:12;margin-left:5;margin-right:5;text-align:center;"
+	        children="false"
+	        backgroundcolor="0xFFFFFF"
+	        roundedge="0"
+	        shadow="2"
+	        borderwidth="1"
+	        bordercolor="0"
+	        blendmode="layer"
+	        autosize="center"
+	        width="400"
+	        align="bottom" x="0" y="20"
+	        onclick="buildlink();"
+	        />
+
+	<plugin name="linktextfield"
+	        url="%SWFPATH%/plugins/textfield.swf"
+	        html="link: ...."
+	        css="color:#000000;font-family:Arial;font-size:14;margin-left:5;margin-right:5;text-align:left;"
+	        backgroundcolor="0xFFFFFF"
+	        roundedge="0"
+	        shadow="2"
+	        borderwidth="1"
+	        bordercolor="0"
+	        blendmode="layer"
+	        width="90%"
+	        autosize="left"
+	        align="center"
+	        visible="false"
+	        />
+
+	<data name="linkheader">
+			<i>Here the link to the current view:</i>
+			<br/>
+			<br/>
+	</data>
+
+	<data name="linktrailer">
+			<br/>
+			<br/>
+			<a href="event:closetextfield();" style="color:#000000;"><b>Close</b></a>
+	</data>
+	
+	
+	<action name="closetextfield">
+		set(plugin[linktextfield].visible,false);
+	</action>
+	
+
+	<action name="buildlink">
+		copy(cur_hlookat,view.hlookat);
+		mod(cur_hlookat,cur_hlookat,360);
+		roundval(cur_hlookat,2);
+		copy(cur_vlookat,view.vlookat);
+		roundval(cur_vlookat,2);
+		copy(cur_fov,view.fov);
+		roundval(cur_fov,1);
+
+		txtadd(plugin[linktextfield].html,
+			get(data[linkheader].content),
+			get(js_htmlpath),'?xml=',get(xml.url),'&amp;view.hlookat=', get(cur_hlookat),'&amp;view.vlookat=', get(cur_vlookat),'&amp;view.fov=', get(cur_fov),
+			get(data[linktrailer].content),
+		   );
+		   
+		set(plugin[linktextfield].visible,true);
+	</action>
+
+</krpano>

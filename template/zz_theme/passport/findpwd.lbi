@@ -1,0 +1,76 @@
+<div class="container">
+	
+	<div class="passport_container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<a href="/"><img src="/static/images/logo.png" alt="{$_lang.title}"></a>
+			</div>
+		</div>
+		<div class="row top15">
+			<h3>与世界分享你的全景</h3>
+		</div>
+		<div class="row top15">
+			<div class="col-md-3 col-md-offset-3 {if $step=='validate'}text-success{/if}"><strong>验证手机</strong></div> 
+			<div class="col-md-3 {if $step=='reset'}text-success{/if}"><strong>重设密码</strong></div>
+		</div>
+		<div class="row ">
+			<div class="col-md-12 top15">
+			{if $step=='validate'}
+			<form id="find_form" action="/passport/findpwd" method="post">
+				<div class="input-group top15">
+				 <span class="input-group-addon">验证码</span>
+				  <input type="text" id="pic_captcha" class="form-control" width="200">
+				  <span class="input-group-addon" style="width:89px;padding:0;border:0"><img id="captcha_img" src="/captcha.php?act=find" alt="点击图片，切换验证码" style="width:100%;height:32px;cursor:pointer"></span>
+				</div>
+				<div class="input-group top15">
+				  <span class="input-group-addon"><i class="icon icon-tablet"></i></span>
+				  <input type="text" id="phone" name="phone" class="form-control" placeholder="手机号" width="200">
+				  <span class="input-group-btn">
+				      <button class="btn btn-info" type="button" id="send_btn">获取验证码</button>
+				   </span>
+				</div>
+				<div class="input-group top15">
+				 <span class="input-group-addon">手机验证码</span>
+				  <input type="text" id="sms_captcha" name="sms_captcha" class="form-control">
+				</div>
+				<button class="btn btn-block btn-primary top15" type="button" id="find_btn" onclick="ajaxFormSubmit('find_form','find_btn');">验证手机</button>
+			</form>
+			{/if}
+			{if $step=='reset'}
+			<form id="find_form" action="/passport/findpwd" method="post">
+				<div class="input-group top15">
+				 <span class="input-group-addon">密　　码</span>
+				  <input type="password" name="pwd" class="form-control">
+				</div>
+				<div class="input-group top15">
+				 <span class="input-group-addon">重复密码</span>
+				  <input type="password" name="repwd" class="form-control">
+				</div>
+				<button class="btn btn-block btn-primary top15" type="button" id="find_btn" onclick="ajaxFormSubmit('find_form','find_btn');">验证手机</button>
+			</form>
+			{/if}
+			</div>
+		</div>
+	</div>
+
+</div>
+<script src="/static/js/sendsms.js"></script>
+<script type="text/javascript">
+    $("#captcha_img").click(function(){
+		$(this).attr('src','/captcha.php?act=reg&v'+(new Date().getTime()));
+	});
+	$("#send_btn").click(function(){
+		$(".input-group").removeClass('has-error');
+		var pic_captcha = $.trim($("#pic_captcha").val());
+		if (pic_captcha=="") {
+			showerr("请输入正确图形验证码",$("#pic_captcha"));
+			return false;
+		}
+		var phone = $.trim($("#phone").val());
+		if (phone.length!=11) {
+			showerr("请输入正确的手机号",$("#phone"));
+			return false;
+		}
+		sendSms("find",phone,pic_captcha);
+	})
+</script>
